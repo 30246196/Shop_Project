@@ -20,12 +20,12 @@ public class OrderLine {
     
     //Getters and Setters
     // Getters
-    public int  getorderLineId()
+    public int  getOrderLineId()
     {
         return orderLineId;
     }
     // Setters
-    public void setorderLineId(int orderLineIdIn)
+    public void setOrderLineId(int orderLineIdIn)
     {
         orderLineId=orderLineIdIn;
     }
@@ -50,8 +50,9 @@ public class OrderLine {
     {
         quantity=quantityIn;
     }
+    
     // Getters
-    public double  getlineTotal() // check
+    public double  getLineTotal() // check
     {
         return lineTotal;
     }
@@ -82,7 +83,7 @@ public class OrderLine {
         lineTotal=product.getPrice()*quantityIn;
     }
    
-    // Constructor just
+    // Constructor just with product and quantity
     public OrderLine(Product productIn, int quantityIn)
     {
         orderLineId = 0;

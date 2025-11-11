@@ -6,6 +6,8 @@ package views;
 
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
+import models.Customer;
+import models.DBManager;
 import models.Order;
 import models.OrderLine;
 
@@ -13,17 +15,27 @@ import models.OrderLine;
  *
  * @author 30246196
  */
-public class Basket extends javax.swing.JFrame {
+public class Basket extends javax.swing.JFrame { 
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Basket.class.getName());
 
+    // Declaration of currentOrder and loggedInCustomer
+    private Order currentOrder;
+    private Customer loggedInCustomer;//fix imports
+    
     /**
      * Creates new form Basket
      * @param currentOrder
      */
-    public Basket(Order currentOrder)// fix imports
+    public Basket(Customer c,Order o)// fix imports
     {
+        loggedInCustomer = c;
+        currentOrder = o;
+        
         initComponents();
+        
+        // check with a  customised welcome:
+        lblWelcomeBasket.setText("This is your basket, " + loggedInCustomer.getFirstName());
         
         DefaultTableModel productBasketModel = (DefaultTableModel)tblProductBasket.getModel();
         // entrySet convert a hashmap into smth readable
@@ -33,17 +45,18 @@ public class Basket extends javax.swing.JFrame {
            //put into the table in a list first
            productBasketModel.addRow(new Object[]
            {
-                   // animal id animal cost
+                   // 
                 actualOrderLine.getProduct().getProductId(),// TODO
-                //actualOrderLine.getProduct().getType() + " -"+
                 actualOrderLine.getProduct().getProductName() + " £" ,
                 actualOrderLine.getProduct().getPrice(),
                 actualOrderLine.getQuantity()//
-                  // creat getQuantity() method
+                  // create getQuantity() method
             } );
             
          tblProductBasket.setModel(productBasketModel);
         }
+        
+        
     }
 
     /**
@@ -58,6 +71,8 @@ public class Basket extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductBasket = new javax.swing.JTable();
         btnAddMoreProducts = new javax.swing.JButton();
+        btnBuy = new javax.swing.JButton();
+        lblWelcomeBasket = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,6 +108,15 @@ public class Basket extends javax.swing.JFrame {
             }
         });
 
+        btnBuy.setText("BUY");
+        btnBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuyActionPerformed(evt);
+            }
+        });
+
+        lblWelcomeBasket.setText("This is your basket");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,20 +125,29 @@ public class Basket extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAddMoreProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(btnBuy))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(btnAddMoreProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(34, 34, 34)
+                        .addComponent(lblWelcomeBasket, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(9, 9, 9)
+                .addComponent(lblWelcomeBasket)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                .addComponent(btnAddMoreProducts)
-                .addGap(26, 26, 26))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddMoreProducts)
+                    .addComponent(btnBuy))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -123,6 +156,27 @@ public class Basket extends javax.swing.JFrame {
     private void btnAddMoreProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoreProductsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddMoreProductsActionPerformed
+
+    // button Buy pressed
+    // Saves the order to the database 
+    // transitions the user to an Confirmation screen/page.
+    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
+        // Create a new DBManager instance to interact with the database.
+        DBManager db = new DBManager();//fix imports
+        
+        // Save the current order to the database
+        // uses the logged-in Customer's Username as identifier
+        db.writeOrder(currentOrder,loggedInCustomer.getUsername());
+        
+        // Show the Confirmation page
+        Confirmation conf = new Confirmation(loggedInCustomer);
+        
+        // display the confirmation frame
+        conf.setVisible(true);
+        this.setVisible(false);
+        //dispose(); // optional: close current frame
+               
+    }//GEN-LAST:event_btnBuyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,7 +205,9 @@ public class Basket extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMoreProducts;
+    private javax.swing.JButton btnBuy;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblWelcomeBasket;
     private javax.swing.JTable tblProductBasket;
     // End of variables declaration//GEN-END:variables
 }

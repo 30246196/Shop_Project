@@ -139,7 +139,7 @@ public class CustomerLogin extends javax.swing.JFrame {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         
-        // Edith improvement to check that they are not empty
+        // Edith's improvement to check that they are not empty
         if (username.isEmpty() || password.isEmpty()) 
         {
             lblErrorMessage.setText("Please enter both username and password.");
@@ -152,8 +152,9 @@ public class CustomerLogin extends javax.swing.JFrame {
         Customer loggedInCustomer =db.CustomerLogin(username, password);
         
         if (loggedInCustomer != null)
-        {
-            CustomerHome cHome = new CustomerHome();
+        {   // changed in stage 8 
+            //CustomerHome cHome = new CustomerHome();
+            CustomerHome cHome = new CustomerHome(loggedInCustomer);// changed in stage 8
             cHome.setVisible(true);
             this.setVisible(false);
             

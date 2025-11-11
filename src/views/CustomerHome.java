@@ -4,6 +4,10 @@
  */
 package views;
 
+import models.Customer;// ADDED FROM fix imports in btnBrowseProductsActionPerformed loggedInCustomer definition
+import models.Order; // added from fix imports in btnBrowseProductsActionPerformed
+
+
 /**
  *
  * @author 30246196
@@ -12,11 +16,21 @@ public class CustomerHome extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerHome.class.getName());
 
-    /**
-     * Creates new form CustomerHome
-     */
-    public CustomerHome() {
+    /*
+     Creates new form CustomerHome
+     In assessment 8 logged in person passed to here from the CustomerLogin page
+     Modify CustomerHome to accept a Customer object in its constructor.
+    */
+    // added in assesment 8 to pass a customer objectr from CustomerLogin
+    // declaration of loggedInCustomer as Customer object
+    private Customer loggedInCustomer;// added in stage 8
+    public CustomerHome(Customer customer)// added the parameter in stage 8 
+    {
+        this.loggedInCustomer = customer;//added in stage 8
         initComponents();
+        
+        // Show personalised welcome:
+        lblWelcomeCustomer.setText("Welcome to our shop, " + loggedInCustomer.getFirstName() + "!");
     }
 
     /**
@@ -109,8 +123,18 @@ public class CustomerHome extends javax.swing.JFrame {
 
     private void btnBrowseProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseProductsActionPerformed
         // TODO add your handling code here:
-         // FROM Customer Home Frame to Shop Page For Customer Frame
-        ShopPageForCustomers sShopPageForCustomers = new ShopPageForCustomers();
+        // stage 8 passs the looggedIn customer and the current order
+        // add the customer
+        
+        //Customer loggedInCustomer = new Customer();// fix imports  //commented
+        
+        // setter for username in customer already created
+        //loggedInCustomer.setUsername();// CHECK 
+        
+        Order currentOrder = new Order();// fix imports
+        
+         // FROM CustomerHome Frame to Shop Page For Customer Frame
+        ShopPageForCustomers sShopPageForCustomers = new ShopPageForCustomers(loggedInCustomer, currentOrder);
         // get visible the new form
         sShopPageForCustomers.setVisible(true);
         // hide the current form
@@ -139,7 +163,7 @@ public class CustomerHome extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new CustomerHome().setVisible(true));
+ //       java.awt.EventQueue.invokeLater(() -> new CustomerHome().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

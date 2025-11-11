@@ -1,12 +1,12 @@
 package models;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.sql.PreparedStatement;// added manually
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -22,6 +22,43 @@ public class DBManager {
     private final String driver = "net.ucanaccess.jdbc.UcanaccessDriver";
     // we need a connection for a db
     private final String connectionString="jdbc:ucanaccess://Data\\ShopDB.accdb";
+    
+    // writeOrder() method added in stage 8
+    // Insert a new order record into a database.
+    // Purpose is to save an Order object into a database table called Orders,
+    // associating it with a customer's username.
+    // Order o is an object containing date,status and total
+    public void writeOrder(Order o, String customerUsername)
+    {
+        // using PreparedStatement  for safety and clarity:
+        String sql ="INSERT INTO Orders(OrderDate,Username,OrderTotal,Status) VALUES (?,?,?,?)";
+        // try check
+        try (Connection conn = DriverManager.getConnection(connectionString);
+             PreparedStatement pstmt = conn.prepareStatement(sql))
+        {
+            // Loads the JDBC driver class dynamically using its fully qualified
+            // stored in the driver variable("net.ucanaccess.jdbc.UcanaccessDriver")
+            // this step ensures the driver is registeed with the JDBC DriveManager.
+            Class.forName(driver);
+            // Establish a connection to the database using the connectionString
+            // ("jdbc:ucanaccess://Data\\ShopDB.accdb")
+            //Connection conn = DriverManager.getConnection(connectionString);
+            // Create a Statemnet object to execute SQL queries.
+            //Statement stmt = conn.createStatement();
+            
+            // Set parameters safely using PreparedStatement
+            pstmt.setString(1, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(o.getOrderDate()));
+            pstmt.setString(2, customerUsername);
+            pstmt.setDouble(3, o.getOrderTotal());
+            pstmt.setString(4, o.getStatus());
+            
+            pstmt.executeUpdate();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error writing Order: " + ex.getMessage());
+        }
+    }
     
     // create a method loadCustomers() for ddbb
     public ArrayList<Customer> loadCustomers()// right click, Fix Imports

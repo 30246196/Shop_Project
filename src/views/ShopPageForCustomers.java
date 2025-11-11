@@ -7,6 +7,7 @@ package views;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import models.Customer;
 import models.DBManager;
 import models.Order;
 import models.OrderLine;
@@ -20,27 +21,26 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ShopPageForCustomers.class.getName());
     
-    // added
-    private ArrayList<Product> allProducts ;// global variable
-    /**
-     * Creates new form ShopPageForCustomers
-     */
+    // declaration added stage 8
+    private ArrayList<Product> allProducts ;// global variable   
+    private Order currentOrder;// fix imports   
+    private Customer loggedInCustomer;
     
-    private Order currentOrder;// fix imports
-    /*
-        Creates a new form Shop
-    */
-    
-    public ShopPageForCustomers() {
-        // added
-        
-        currentOrder = new Order();// empty order
-        
-        DBManager db  = new DBManager();
-        
+    //public ShopPageForCustomers() { //modify in stage 8 to add Customer and Order
+    public ShopPageForCustomers(Customer c,Order o) 
+    {
+        // added       
+        //currentOrder = new Order();// empty order
+        this.currentOrder = o;// added this.
+        this.loggedInCustomer = c;// added 
+                
+        DBManager db  = new DBManager();       
         allProducts = db.loadProducts();
         
         initComponents();
+        
+        // Personalise the basket with customer 's name:
+        lblWelcomeBasket.setText("These are our products, " + loggedInCustomer.getFirstName());
     }
 
     /**
@@ -65,6 +65,7 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         lblQuantity = new javax.swing.JLabel();
         txtQuantity = new javax.swing.JTextField();
         lblConfirmation = new javax.swing.JLabel();
+        lblWelcomeBasket = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,78 +112,88 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
 
         lblQuantity.setText("Quantity: ");
 
+        txtQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQuantityActionPerformed(evt);
+            }
+        });
+
+        lblWelcomeBasket.setText("Shop Welcome");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCategories)
+                        .addGap(158, 158, 158)
+                        .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBack))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCategories)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(107, 107, 107))
+                                .addComponent(lblWelcomeBasket, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnBack)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(38, 38, 38)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(14, 14, 14)
                                         .addComponent(lblProducts)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnViewBasket)
-                                        .addGap(80, 80, 80))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(28, 28, 28)
-                                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                        .addGap(121, 121, 121)
+                                        .addComponent(btnViewBasket)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAddToBasket, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(118, 118, 118))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddToBasket, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 99, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(lblWelcomeBasket)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(btnBack))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblProducts)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCategories)
+                            .addComponent(lblProduct)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblProducts)
-                            .addComponent(btnViewBasket))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnViewBasket)
+                        .addGap(56, 56, 56)))
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblProduct)
-                    .addComponent(lblCategories))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblQuantity))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addGap(2, 2, 2)
+                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(btnAddToBasket)
-                .addGap(16, 16, 16))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -211,7 +222,7 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         // return to CustomerHome frame
-        CustomerHome cHome = new CustomerHome();
+        CustomerHome cHome = new CustomerHome(loggedInCustomer);//changed stage 8
         cHome.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnBackActionPerformed
@@ -232,7 +243,7 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         {
             // get the product which is selected
             // convert into an Product
-            //Animal selectedAnimal = (Animal)lstAnimals.getSelectedValue();
+            
             // getSelectedValue() returns a String, it cannot convert directly into String
             //change to: top level Object that includes a String
             Object selectedProductObject = (Object)lstProductsByCategory.getSelectedValue();                        
@@ -242,10 +253,10 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
             int stock = selectedProduct.getStockLevel();
             
             // now that I got the Product I can check on Product
-            if (selectedProduct.getStockLevel()>=q) //  TODO check!!!!!!!!!!!!!
+            if (selectedProduct.getStockLevel()>=q) //  TODO check
             {
                 // create OrderLine with that product
-                // CHECK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // CHECK !!!!!!!!
                 OrderLine ol = new OrderLine(selectedProduct,q);// ctrl + space bar to get the parameters
                 
                 // create an getter for orderlineId
@@ -269,11 +280,21 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddToBasketActionPerformed
 
     private void btnViewBasketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewBasketActionPerformed
-        // TODO add your handling code here:
-        Basket b = new Basket(currentOrder);
+        
+        Basket b = new Basket(loggedInCustomer,currentOrder);//modified
         b.setVisible(true);
         this.setVisible(false);
+        // added in stage 8
+        // pass the logged in customer and the current order
+        
+//        // check with a  customised welcome:
+//        lblWelcomeBasket.setText("This is your basket, " + loggedInCustomer.getFirstName());
+        
     }//GEN-LAST:event_btnViewBasketActionPerformed
+
+    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQuantityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,7 +318,8 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ShopPageForCustomers().setVisible(true));
+// comment in stage 8
+//        java.awt.EventQueue.invokeLater(() -> new ShopPageForCustomers().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -311,6 +333,7 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProducts;
     private javax.swing.JLabel lblQuantity;
+    private javax.swing.JLabel lblWelcomeBasket;
     private javax.swing.JList<String> lstCategories;
     private javax.swing.JList<String> lstProductsByCategory;
     private javax.swing.JTextField txtQuantity;
