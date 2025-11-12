@@ -1,7 +1,17 @@
-package models;
+/*
+The Order class represents a customer order with 
+attributes :orderId,orderDate, status and orderTotal
+The order will be stored in a table called Orders from a db 
+with an attribute from customer(username)
+Manages multiple OrderLine item objects(each representing a product and quantity)
+using a HashMap 
+and recalculates the total whenever items are added.
+*/
+package models;// Order class belongs to the models package
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Date;// for storing the order date
+import java.util.HashMap;//used to store multiple OrderLine objects in a collection
+// Map also to store multiple OrderLine objects in a collection
 import java.util.Map;// added when fix imports in the for loop of calculateOrderTotal() method
 
 /*
@@ -14,64 +24,54 @@ import java.util.Map;// added when fix imports in the for loop of calculateOrder
  * @author 30246196
  */
 public class Order {
-            
-    // Attributes
+    
+    // 1. Static constants
+    
+    // private static final String DEFAULT_STATUS = "Ongoing";
+    
+    // 2. Attributes
+    
     // all attributes should be private
-    private int orderId;
-    private Date orderDate;/*select the all line and right button -> fix imports*/
-    private String status;
-    private double orderTotal;
+    private int orderId; // unique identifier for the order
+    private Date orderDate;// when the order was created
+    /*select the all line and right button -> fix imports*/
+    private String status;// current state of the order("Ongoing","Completed")
+    private double orderTotal;//Total cost of the order
     
+    // A HashMap where:
     // HashMap<Data_Type_of_key,Data_Type_of_Value>
-    private HashMap <Integer,OrderLine> orderLines;// connect order with the 
-    // Integer because of orderLineId, instead of int
+    private HashMap <Integer,OrderLine> orderLines;//Collection of OrderLine objects
+    // connect order with the OrderLine
+    // Key:Integer because of orderLineId, instead of int
+    // Value: OrderLine object
     // HashMap is the equivalent to dictionary in C#       
-    // orderLines is a collection of orderline 
+    // orderLines is a collection of several Orderline 
     
-    //added stage 8
-    
-    // calculateOrderTotal() method
-    // This method calculates the total cost of all items in an order
-    // by summing up the individual totals from each OrderLiine object 
-    // stored in a map called orderLines.
-    public void calculateOrderTotal()
+    // 3. Constructors
+
+    //Constructors - give an started value
+    // -0 imput parameter
+    public Order()
     {
-        // initialise the total to 0
+        orderId=0;
+        orderDate=new Date();
+        status="Ongoing";// we can add DEFAULT_STATUS static constant
         orderTotal=0;
-        // for (Map.Entry<Type of the Key, Type of the Value>...
-        // Loop through each entry in the orderLines map
-        for(Map.Entry<Integer,OrderLine> olMapEntry : orderLines.entrySet())//fix imports
-        {
-           //Get the actual OrderLine object from the map entry
-           OrderLine actualOrderLine = olMapEntry.getValue();
-           
-           //TODO create getLineTotal() method inside OrderLine model
-           //DONE
-           
-           //Add the line total of this OrderLine to the overall
-           orderTotal = orderTotal + actualOrderLine.getLineTotal();
-        }
+        orderLines=new HashMap();
     }
     
-    // added in stage 7
-    public void addOrderLine(OrderLine ol)
+    //Constructor - 4 input parameters
+    public Order(int orderIdIn,Date orderDateIn,String statusIn,
+            double orderTotalIn,HashMap<Integer,OrderLine>orderLines)
     {
-        int orderLineId=0;
-        
-        while(orderLines.containsKey(orderLineId))
-        {
-            orderLineId++; // if the id orderLineId exists, then advance at the end
-            // assigns to orderLineId 
-        }
-        ol.setOrderLineId(orderLineId);
-        // create a set OrderLineId() in OrderLine
-        orderLines.put(orderLineId, ol);  
-        
-        // add calculateOrderTotal() method
-        calculateOrderTotal();
+        orderId=orderIdIn;
+        orderDate=orderDateIn;
+        status=statusIn;
+        orderTotal=orderTotalIn;
+        orderLines=new HashMap();
     }
     
-    //Getters and setters
+    // 4. Getters and setters
     
     // Getter
     public int  getorderId()
@@ -128,26 +128,66 @@ public class Order {
         orderLines=orderLinesIn;
     }
     
-    //Constructors - give an started value
-    // -0 imput parameter
-    public Order()
-    {
-        orderId=0;
-        orderDate=new Date();
-        status="Ongoing";
-        orderTotal=0;
-        orderLines=new HashMap();
-    }
     
-    //Constructor - 4 input parameters
-    public Order(int orderIdIn,Date orderDateIn,String statusIn,
-            double orderTotalIn,HashMap<Integer,OrderLine>orderLines)
+    // 5. Business methods
+    
+    //added stage 8
+    
+    // a) Method calculateOrderTotal() 
+    
+    // This method calculates the total cost of all items in an order
+    // by summing up the individual totals from each OrderLine object 
+    // stored in a map called orderLines.
+    public void calculateOrderTotal()
     {
-        orderId=orderIdIn;
-        orderDate=orderDateIn;
-        status=statusIn;
-        orderTotal=orderTotalIn;
-        orderLines=new HashMap();
-    }
+        
+        orderTotal=0;// initialise the orderTotal to 0
+        // for (Map.Entry<Type of the Key, Type of the Value>...
+        // Loop through each OrderLine object in the orderLines map
+        for(Map.Entry<Integer,OrderLine> olMapEntry : orderLines.entrySet())//fix imports
+        {
+           //Get the actual OrderLine object from the map entry
+           OrderLine actualOrderLine = olMapEntry.getValue();
+           
+           //TODO create getLineTotal() method inside OrderLine model
+           //DONE
+           
+           //Add the line total of this OrderLine to the overall
+           orderTotal = orderTotal + actualOrderLine.getLineTotal();
+        }
+    }//end calculateOrderTotal()
+    
+    // added in stage 7
+    
+    // b) Method addOrderLine(OrderLine ol)
+    
+    // adds a new OrderLine to the Order,
+    // automatically assigns a unique orderLineId,
+    // Updates the orderTotal value
+    public void addOrderLine(OrderLine ol)
+    {
+        int orderLineId=0;// initialises orderLineId to 0
+        // while the id orderLineId exists, then add 1
+        // The loop checks if the orderLines map already contains the key orderLineId.
+        // If it does, orderLineId is incremented by 1 to find the next available ID.
+        // This ensures unique keys for each OrderLine in the HashMap.
+        while(orderLines.containsKey(orderLineId))
+        {
+            orderLineId++; //orderLineId = orderLineId + 1;
+            //orderLineId++ increases the value of the variable orderLineId by 1.
+            //post-increment operator because it returns the current value first, then increments it.
+        }
+        ol.setOrderLineId(orderLineId);//assigns the unique orderLineId to the OrderLine object (ol)
+        
+        orderLines.put(orderLineId, ol);//adds the OrderLine object to the orderLines map
+        //Key: orderLineId (unique integer)
+        //Value: ol (the orderLine object)
+        
+        // TODO calculateOrderTotal() method DONE
+        calculateOrderTotal();
+        
+    }//end addOrderLine(OrderLine ol)
+    
+           
      
-}
+}//end public class Order

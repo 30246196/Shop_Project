@@ -11,14 +11,16 @@ package models;
  */
 public class User {
     
-    // Attributes
+    // 1. Static constants
+    
+    // 2. Attributes
     private String username;
     private String password; // changed to private
     private String firstName;
     private String lastName;
     
     
-    // Constructors
+    // 3. Constructors
     
     // User() -0 Parameters
     public User()
@@ -36,11 +38,9 @@ public class User {
         password = passwordIn;
         firstName =firstNameIn;
         lastName =lastNameIn;
-    }
+    }    
     
-    // Methods
-    
-    // Getters (ctrl + space bar)  a getter does not require no input
+    // 4. Getters (ctrl + space bar)  a getter does not require no input
     
     public String getUsername() {
         return username;

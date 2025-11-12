@@ -1,8 +1,20 @@
-package models;
+/*
+This class models a Customer with personal details and a list of orders.
+It uses inheritance for common user info and a HashMap to manage multiple orders.
+
+Key Concepts
+
+Inheritance: Customer extends User → reuse common attributes.
+Composition: Customer has a collection of Order objects.
+Encapsulation: Attributes are private; accessed via getters/setters.
+HashMap: Efficient way to store and retrieve orders by ID.
+*/
+
+package models;// the class belongs to the models package
 
 
-import models.User;
-import java.util.HashMap;
+//import models.User;
+import java.util.HashMap;// used to store multiple Order objects for this customer
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -13,9 +25,15 @@ import java.util.HashMap;
  *
  * @author 30246196
  */
-// Customer inherits from User
+// Inheritance: Customer inherits from User
+// customer has all attributes and methods of User(like username, password, firstName, lastName)
+// plus its own.
 public class Customer extends User{
-    //Attributes
+    
+    // 1. Static constants
+    
+    // 2. Attributes
+    
     private String addressLine1;
     private String addressLine2;
     private String town;
@@ -24,7 +42,46 @@ public class Customer extends User{
     // new attribute Assessment 3 TODO
     private HashMap<Integer,Order> orders;// right button to Fix Imports
     
+    // 3. Constructors    
+    
     //orders= new HashMap(); to add in the Constructors
+    
+    //Constructor 
+    
+    //Constructor Customer(0-input parameter)
+    public Customer()
+    {
+        // Call Customer()
+        super();//we use super(as parent class) instead Customer()
+        //object class
+        
+        addressLine1="1/1";
+        addressLine2=" 100 North Street";
+	town="Lanark";
+	postcode="G1 1UZ";
+	isRegistered=true;
+        // added in Assessment 3
+        orders= new HashMap();
+    }
+    //Constructor Customer(Everything EXCEPT isRegistered - 8 parameters
+    public Customer(String userNameIn, String passwordIn, String firstNameIn, 
+            String lastNameIn,String AddressLine1In,String AddressLine2In,
+            String townIn,String postcodeIn)
+    {
+        //Customer(String userNameIn, String passwordIn, String firstNameIn, 
+        //   String lastNameIn)
+        // when you do a call do not write the variable type      
+        super(userNameIn, passwordIn, firstNameIn, lastNameIn);
+        addressLine1=AddressLine1In;
+        addressLine2=AddressLine2In;
+	town=townIn;
+	postcode=postcodeIn;
+        isRegistered=false; 
+        // added in Assessment 3
+        orders= new HashMap();// TODO check
+    }
+    
+    // 4. Getters and Setters
     
     //Getter
     public String getAddressLine1()
@@ -81,50 +138,18 @@ public class Customer extends User{
         isRegistered=isRegisteredIn;
     }
     
-    //add getter and setter for Orders HashMap of Orders
+    //getter and setter for Orders HashMap of Orders
     //Getter
     public HashMap<Integer,Order> getOrders() //**** TODO
     {
         return orders;
-    }
-    
+    }   
     //Setter
     public void setOrders(HashMap<Integer,Order> ordersIn)
     {
         orders=ordersIn;
     }
-    //Constructor Customer()
-    //Constructor Customer(0-input parameter)
-    public Customer()
-    {
-        // Call Customer()
-        super();//we use super(as parent class) instead Customer()
-        //object class
+    
         
-        addressLine1="1/1";
-        addressLine2=" 100 North Street";
-	town="Lanark";
-	postcode="G1 1UZ";
-	isRegistered=true;
-        // added in Assessment 3
-        orders= new HashMap();
-    }
-    //Constructor Customer(Everything EXCEPT isRegistered - 8 parameters
-    public Customer(String userNameIn, String passwordIn, String firstNameIn, 
-            String lastNameIn,String AddressLine1In,String AddressLine2In,
-            String townIn,String postcodeIn)
-    {
-        //Customer(String userNameIn, String passwordIn, String firstNameIn, 
-        //   String lastNameIn)
-        // when you do a call do not write the variable type      
-        super(userNameIn, passwordIn, firstNameIn, lastNameIn);
-        addressLine1=AddressLine1In;
-        addressLine2=AddressLine2In;
-	town=townIn;
-	postcode=postcodeIn;
-        isRegistered=false; 
-        // added in Assessment 3
-        orders= new HashMap();
-    }
        
-}
+}//end Customer class
