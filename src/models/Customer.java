@@ -1,14 +1,4 @@
-/*
-This class models a Customer with personal details and a list of orders.
-It uses inheritance for common user info and a HashMap to manage multiple orders.
 
-Key Concepts
-
-Inheritance: Customer extends User → reuse common attributes.
-Composition: Customer has a collection of Order objects.
-Encapsulation: Attributes are private; accessed via getters/setters.
-HashMap: Efficient way to store and retrieve orders by ID.
-*/
 
 package models;// the class belongs to the models package
 
@@ -23,10 +13,20 @@ import java.util.HashMap;// used to store multiple Order objects for this custom
 
 /**
  *
+This class models a Customer with personal details and a list of orders.
+It uses inheritance for common User info and a HashMap to manage multiple orders.
+
+Key Concepts
+
+Inheritance: Customer extends User → reuse common attributes.
+Composition: Customer has a collection of Order objects.
+Encapsulation: Attributes are private; accessed via getters/setters.
+HashMap: Efficient way to store and retrieve orders by ID.
+*
  * @author 30246196
  */
 // Inheritance: Customer inherits from User
-// customer has all attributes and methods of User(like username, password, firstName, lastName)
+// Customer has all attributes and methods of User(like username, password, firstName, lastName)
 // plus its own.
 public class Customer extends User{
     
@@ -39,7 +39,7 @@ public class Customer extends User{
     private String town;
     private String postcode;
     private boolean isRegistered;
-    // new attribute Assessment 3 TODO
+    // new attribute Assessment 3 TODO DONE
     private HashMap<Integer,Order> orders;// right button to Fix Imports
     
     // 3. Constructors    

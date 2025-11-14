@@ -14,6 +14,8 @@ import models.Order; // added from fix imports in btnBrowseProductsActionPerform
  */
 public class CustomerHome extends javax.swing.JFrame {
     
+    // 1. Static variables
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerHome.class.getName());
 
     /*
@@ -23,7 +25,10 @@ public class CustomerHome extends javax.swing.JFrame {
     */
     // added in assesment 8 to pass a customer objectr from CustomerLogin
     // declaration of loggedInCustomer as Customer object
-    private Customer loggedInCustomer;// added in stage 8
+    private final Customer loggedInCustomer;// added in stage 8 // changed to final
+    
+    // 2. Constructor(s)
+    
     public CustomerHome(Customer customer)// added the parameter in stage 8 
     {
         this.loggedInCustomer = customer;//added in stage 8
@@ -110,6 +115,10 @@ public class CustomerHome extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // 3. Event Handlers
+    
+    // a) btnLogOut
+    
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         
         // FROM Customer Home Frame to Main Menu Frame
@@ -120,10 +129,11 @@ public class CustomerHome extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_btnLogOutActionPerformed
-
+    
+    // b) btnBrowseProducts
+    
     private void btnBrowseProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseProductsActionPerformed
-        // TODO add your handling code here:
-        // stage 8 passs the looggedIn customer and the current order
+        // stage 8 passes the looggedIn customer and the current order
         // add the customer
         
         //Customer loggedInCustomer = new Customer();// fix imports  //commented
@@ -141,6 +151,9 @@ public class CustomerHome extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnBrowseProductsActionPerformed
 
+    
+    // 4. Main
+    
     /**
      * @param args the command line arguments
      */
@@ -166,6 +179,8 @@ public class CustomerHome extends javax.swing.JFrame {
  //       java.awt.EventQueue.invokeLater(() -> new CustomerHome().setVisible(true));
     }
 
+    // 5. Variable declaration
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowseProducts;
     private javax.swing.JButton btnEditDetails;

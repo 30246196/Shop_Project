@@ -1,11 +1,30 @@
-package models;
+/*
+This Java class DBManager is a data access layer that connects to 
+a Microsoft Access database (ShopDB.accdb) using the UCanAccess JDBC driver. 
+It handles reading and writing data for orders, customers, staff, and products.
 
-import java.sql.Connection;
+Key Concepts
+
+JDBC (Java Database Connectivity): connects and interacts with the Access database.
+Encapsulation : Each method encapsulates a specific database operation.
+PreparedStatement : Prevents SQL injection and improves performance for repeated queries.
+Object Mapping : Converts database rows into Java objects (Customer, Staff, Product).
+Polymorphism : Uses subclass constructors (HeatPump, SolarPanel) based on product type.
+Error handling : Uses try-catch-finally blocks to manage exceptions and ensure stability.
+Login Validation : Implements basic credential checking using object comparison.
+Separation of Concerns : Keeps database logic separate from UI and business logic.
+
+*/
+package models; // the class is part of the models package
+
+import java.sql.Connection;// JDBC classes to connect to and interact with the Access database
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+        
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.sql.PreparedStatement;// added manually
 
 /*
@@ -18,16 +37,30 @@ import java.sql.PreparedStatement;// added manually
  * @author 30246196
  */
 public class DBManager {
+    
+    // 1. Static Constants and Variables. 
+    /*   Constants(Final Variables) 
+     A final variable in Java is a variable whose value cannot be changed once it is assigned. 
+    It’s essentially a constant, and it’s declared using the final keyword.
+    */
+    
     // global variables definition, final is for a constant variable
+    // specifies the JDBC driver class
     private final String driver = "net.ucanaccess.jdbc.UcanaccessDriver";
     // we need a connection for a db
+    // Path to the Access database file
     private final String connectionString="jdbc:ucanaccess://Data\\ShopDB.accdb";
     
+    // 2. Method Write Order to Database
+
     // writeOrder() method added in stage 8
+    
     // Insert a new order record into a database.
     // Purpose is to save an Order object into a database table called Orders,
     // associating it with a customer's username.
-    // Order o is an object containing date,status and total
+    // Order o is an object containing date,status and total.
+    // Uses SimpleDateFormat to format the order date.
+    // Ensures safe SQL execution and prevents SQL injection.
     public void writeOrder(Order o, String customerUsername)
     {
         // using PreparedStatement  for safety and clarity:
@@ -60,37 +93,74 @@ public class DBManager {
         }
     }
     
-    // create a method loadCustomers() for ddbb
+    // 3. Method Load Customers() for ddbb
+    
+    // Executes SELECT * FROM Customers
+    // Iterates through the result set and creates Customer objects.
+    // Returns an ArrayList<Customer>.
     public ArrayList<Customer> loadCustomers()// right click, Fix Imports
     {
-        ArrayList<Customer> allCustomers = new ArrayList();
+        //ArrayList<Customer> allCustomers = new ArrayList();
+        ArrayList<Customer> allCustomers = new ArrayList<>();
+        /*
+        Exception handling Improvement: 
+        * Log detailed errors(not just ex.getMessage)
+        * Close resources properly using try-with-resources
+        * Avoid returnung from finally blocks
+        * Use custom messages to clarify context
+        * Optionally rethrow exceptions if needed for higher-level handling
+        */
         
-        try // check the connection
+        /*
+        - ArrayList is a class that implements a resizable array.
+        - <Type> is a generic placeholder for the type of objects you want to store (e.g., String, Customer, Product).
+        - new ArrayList<>() creates a new, empty list.
+        */
+         
+        
+        // checkthe connection
+        try (Connection conn = DriverManager.getConnection(connectionString);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM Customers")) 
         {
+              
+            
+//            Connection conn = DriverManager.getConnection(connectionString);
+//            // check the connection Edith
+//            System.out.println("Connected successfully to Oracle!");
+//            
+//            Statement stmt = conn.createStatement();
+//            // because the type of.SELECT statement
+//            ResultSet rs = stmt.executeQuery("SELECT * FROM Customers");
+//            // store the result in a table
+            
             // sql language and taking the value for this column
-            Class.forName(driver);  
-            
-            Connection conn = DriverManager.getConnection(connectionString);
-            // check the connection Edith
-            System.out.println("Connected successfully to Oracle!");
-            
-            Statement stmt = conn.createStatement();
-            // because the type of.SELECT statement
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Customers");
-            // store the result in a table
+            Class.forName(driver);
             
             // going through the results and ** Customers
             while(rs.next())
             {
-                // we need to know the column name  and the data type
-                String username = rs.getString("Username");
-                String password = rs.getString("Password");
-                String firstName = rs.getString("FirstName");
-                String lastName = rs.getString("LastName");
-                String addressLine1 = rs.getString("AddressLine1");
-                String addressLine2 = rs.getString("AddressLine2");
-                String town = rs.getString("Town");
-                String postcode=rs.getString("Postcode");
+                Customer c = new Customer(
+                rs.getString("Username"),
+                rs.getString("Password"),
+                rs.getString("FirstName"),
+                rs.getString("LastName"),
+                rs.getString("AddressLine1"),
+                rs.getString("AddressLine2"),
+                rs.getString("Town"),
+                rs.getString("Postcode")
+            );
+
+
+//                // we need to know the column name  and the data type
+//                String username = rs.getString("Username");
+//                String password = rs.getString("Password");
+//                String firstName = rs.getString("FirstName");
+//                String lastName = rs.getString("LastName");
+//                String addressLine1 = rs.getString("AddressLine1");
+//                String addressLine2 = rs.getString("AddressLine2");
+//                String town = rs.getString("Town");
+//                String postcode=rs.getString("Postcode");
                 
                 // need a Customer
                 // we need to pick the best Customer() constructor
@@ -98,27 +168,41 @@ public class DBManager {
                 // Customer(String userNameIn, String passwordIn, String firstNameIn, 
                 //String lastNameIn,String AddressLine1In,String AddressLine2In,
                 //String townIn,String postcodeIn)
-                Customer c = new Customer(username, password, firstName, 
-                    lastName, addressLine1, addressLine2,
-                    town, postcode);
+                        
+//                Customer c = new Customer(username, password, firstName, 
+//                    lastName, addressLine1, addressLine2,
+//                    town, postcode);
                 
                 // next, 
                 allCustomers.add(c);
             }
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Error loading Customers: " + ex.getMessage());
-        }
-        finally
-        {
-            return allCustomers;
-        }
-        
+//        }
+//        catch(Exception ex)
+//        {
+//            System.out.println("Error loading Customers: " + ex.getMessage());
+//        }
+//        finally
+//        {
+          
+//    } catch (SQLException sqlEx) {
+//                System.err.println("SQL error while loading customers:");
+//                sqlEx.printStackTrace();
+    } catch (ClassNotFoundException cnfEx) {
+                System.err.println("JDBC driver not found:");
+                cnfEx.printStackTrace();
+    } catch (Exception ex) {
+                System.err.println("Unexpected error in loadCustomers:");
+                ex.printStackTrace();
     }
+
+        return allCustomers;
+    }
+        
+
     
     
-    // MEthod loadStaff()
+    // 4. Method Load Staff
+    
     public ArrayList<Staff> loadStaff()// right click, Fix Imports
     {
         ArrayList<Staff> allStaff = new ArrayList();
@@ -170,7 +254,9 @@ public class DBManager {
     
     // Assessment Stage 5 
     
-    // method to check if there is any Customer with same username and password
+    // 5. Method Customer Login
+    
+    // check if there is any Customer with same username and password
     public Customer CustomerLogin(String username, String password) 
     {
         //  ArrayList is a collection
@@ -189,7 +275,9 @@ public class DBManager {
         return null;// if username and password are not in any customer 'c'
               
     } 
-    //method to check if there is any Staff with same username and password
+    
+    // 6. Method Staff Login
+    // to check if there is any Staff with same username and password
     
     public Staff StaffLogin(String username, String password)    
     {
@@ -212,7 +300,7 @@ public class DBManager {
     // Stage 6
     // Create the method loadproducts() method
     
-    // Method loadproducts()
+    // 7. Method Load Products
     
     public ArrayList<Product> loadProducts() // fix imports
     {
@@ -273,5 +361,25 @@ public class DBManager {
             return allProducts;
         }
     }
-}   
+    
+    // 7. Method delete animal
+    // stage 9
+   public void deleteProduct(int productId)
+   {
+      try
+        {
+            // load
+            Class.forName(driver);
+            Connection conn = DriverManager.getConnection(connectionString);
+            Statement stmt = conn.createStatement();
+                                                           //Product.getProduct()
+            stmt.executeUpdate("DELETE FROM Products WHERE ProductID = " + productId);// update the db, by deleting
+            
+        }
+        catch(Exception ex )
+        {
+            System.out.println("Error loading products: " + ex.getMessage());
+        }
+   }       
+}
 

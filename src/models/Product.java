@@ -1,4 +1,15 @@
+/*
+This class defines a Product model in the models package,
+It is used to represent items in a shop.
+
+Key concepts
+
+Encapsulation: Attributes productId,productName, price,stockLevel are private;
+accessed via getters/setters, ensuring data integrity.
+*/
+
 package models;
+//place the class in the models package
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,23 +20,21 @@ package models;
  *
  * @author 30246196
  */
+// Declares a public class Product, accesible from other packages
+// has 2 subclasses : HeatPump and SolarPanel
 public class Product {
     
-    // Attributes
+    // 1. Static constants and variables
+    
+    // 2. Attributes
+    // private instance variables, only accessible or modified through getter/setter
     private int productId;
     private String productName;
     private double price;
     private int stockLevel;
      
-    // redefine the method toString() to display parts of product on the list
-    @Override // from clicking on the warning on line 18 and select
-    public String toString() // stage 6
-    {
-        String productOutput = productName;// display only productName value
-        return productOutput;
-    }
     
-    // Constructors
+    // 3. Constructors
     
     // Product() Constructor with 0 Parameters
     // the assignation is an example, a 'by default' object's values
@@ -54,6 +63,18 @@ public class Product {
         stockLevel = stockLevelIn;       
     }
 
+    // 4. Overridden Methods (toString())
+    
+    // redefine the method toString() to display parts of product on the list
+    @Override // from clicking on the warning on line 18 and select
+    public String toString() // stage 6
+    {
+        String productOutput = productName;// display only productName value
+        return productOutput;
+    }
+    
+    // 5. Getters and Setters
+    
     // Getters     a getter does not require no input
     
     public int getProductId() {
@@ -88,9 +109,14 @@ public class Product {
     public void setStockLevel(int stockLevel) {
         this.stockLevel = stockLevel;
     }
-
+    
+    // 6. Custom Methods Stub Method
+    // This is a placeholder method intended for future implementation.
+    // It signals that the logic(checking stock availability) is not yet defined.
+    
     public boolean getIsAvailable() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
+        // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

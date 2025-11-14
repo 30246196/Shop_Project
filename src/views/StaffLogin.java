@@ -49,12 +49,6 @@ public class StaffLogin extends javax.swing.JFrame {
 
         lblPassword.setText("Password: ");
 
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
-
         btnLogin.setText("LOGIN");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,14 +122,7 @@ public class StaffLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
         // When staff logs in correctly they should be taken to the new frame called
         // StaffHome
         
@@ -154,10 +141,10 @@ public class StaffLogin extends javax.swing.JFrame {
         DBManager  db = new DBManager();// fix imports
         Staff loggedInStaff = db.StaffLogin(username, password);// fix imports
         
-        // check if 
+        // If Login sucessful, open StaffHome and pass logged-in staff 
         if (loggedInStaff != null)
         {
-            StaffHome sHome = new StaffHome();
+            StaffHome sHome = new StaffHome(loggedInStaff);// TODO pass the loggedInStaff to StaffHome
             sHome.setVisible(true);
             this.setVisible(false);
         }

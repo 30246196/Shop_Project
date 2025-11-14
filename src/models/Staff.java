@@ -15,9 +15,42 @@ import models.User;
 
 //Staff inherits from User
 public class Staff extends User{
-   //Attributes
+    
+    // 1. Static constants and variables
+    
+    // 2. Attributes
+    
     private String position;
     private double salary;
+    
+    // 3. Constructors
+
+    //Constructor Staff(0-input parameter)
+    
+    public Staff()
+    {
+        // Call Staff()
+        super();//we use super(as parent class) instead Customer()
+        //object class
+        
+        position="Shop Manager";
+        salary=40000;
+	
+    }
+    //Constructor Staff(Everything  - 6 parameters)
+    public Staff(String userNameIn, String passwordIn, String firstNameIn, 
+            String lastNameIn,String positionIn,double salaryIn)
+    {
+        //Staff(String userNameIn, String passwordIn, String firstNameIn, 
+        //   String lastNameIn)
+        // when you do a call do not write the variable type      
+        super(userNameIn, passwordIn, firstNameIn, lastNameIn);
+        
+        position=positionIn;
+        salary=salaryIn;
+    } 
+    
+    // 4. Getters and Setters
     
     //Getter
     public String getPosition()
@@ -41,29 +74,5 @@ public class Staff extends User{
         salary=salaryIn;
     }
     
-    // Constructors
-    
-    //Constructor Staff(0-input parameter)
-    public Staff()
-    {
-        // Call Staff()
-        super();//we use super(as parent class) instead Customer()
-        //object class
-        
-        position="Shop Manager";
-        salary=40000;
-	
-    }
-    //Constructor Staff(Everything  - 6 parameters)
-    public Staff(String userNameIn, String passwordIn, String firstNameIn, 
-            String lastNameIn,String positionIn,double salaryIn)
-    {
-        //Staff(String userNameIn, String passwordIn, String firstNameIn, 
-        //   String lastNameIn)
-        // when you do a call do not write the variable type      
-        super(userNameIn, passwordIn, firstNameIn, lastNameIn);
-        
-        position=positionIn;
-        salary=salaryIn;
-    } 
+
 }

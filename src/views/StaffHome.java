@@ -4,19 +4,34 @@
  */
 package views;
 
+import models.Staff;
+
 /**
  *
  * @author 30246196
  */
 public class StaffHome extends javax.swing.JFrame {
     
+    // 1. Static variables
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(StaffHome.class.getName());
 
     /**
      * Creates new form StaffHome
      */
-    public StaffHome() {
+    // Edith added : Modify StaffHome to accept a Staff object in its constructor.
+    // declaration of loggedInStaff as Staff object
+    private final Staff loggedInStaff;// fix imports added after stage 8 , changed to final
+    
+    // 2. Constructor
+    
+    public StaffHome(Staff staff) // added the parameter after stage 8
+    { 
+        this.loggedInStaff = staff;// added after stage 8    
         initComponents();
+        
+        // Show customised welcome for staff:
+        lblWelcomeStaff.setText("Welcome to work " + loggedInStaff.getFirstName());
     }
 
     /**
@@ -89,8 +104,11 @@ public class StaffHome extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // 3. Event Handling Methods
+    
+    // a) btnLOgOut Event Method
+    
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        // TODO add your handling code here:
         // FROM Staff Login Frame to Main Menu Frame
         MainMenu mMainMenu = new MainMenu();
         // get visible the new form
@@ -99,10 +117,11 @@ public class StaffHome extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnLogOutActionPerformed
 
+    // b) btnModifyProducts Event Method
+    
     private void btnModifyProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyProductsActionPerformed
-        // TODO add your handling code here:
-        // from Staff Login Frame to EditProductForStaff frame, 'EDIT PRODUCTS' button
-        EditProductForStaff sEditProductForStaff = new EditProductForStaff();
+        // from Staff Login Frame to ModifyProductForStaff frame, 'EDIT PRODUCTS' button
+        ModifyProductForStaff sEditProductForStaff = new ModifyProductForStaff(loggedInStaff);
         //get visible the new frame
         sEditProductForStaff.setVisible(true);
         // hide the current frame
@@ -113,6 +132,9 @@ public class StaffHome extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    // 4. Main 
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -132,9 +154,11 @@ public class StaffHome extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new StaffHome().setVisible(true));
+//        java.awt.EventQueue.invokeLater(() -> new StaffHome().setVisible(true));
     }
 
+    // 5. Declaration of Variables
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnModifyOrders;

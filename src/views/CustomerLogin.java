@@ -2,21 +2,55 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package views;
 
-import models.Customer;
-import models.DBManager;
+// Package and Imports
+package views; // Organise the class inside the 'views' package
+
+import models.Customer; // Import Customer model for Login validation
+import models.DBManager; // Import DBManager for db operations
+//import javax.swing.*;  // Import swing methods (Edith : it is no necessary)
+//import java.util.logging.Logger;
 
 /**
- *
+ *The CustomerLogin class is part of a Java Swing application 
+ * that provides a graphical interface for customers to log in. 
+ * It allows users to enter their username and password, validates the input,
+ * checks credentials against a database,
+ * and navigates to the CustomerHome screen if authentication succeeds. 
+ * It also includes navigation back to the main menu.
+ * 
+ * Key Concepts
+ * 
+ * Swing GUI Framework: Used for building desktop applications in Java.
+ * JFrame: A top-level container that represents a window.
+ * Event Handling: Uses ActionListener to respond to button clicks.
+ * MVC Pattern: Separates views (CustomerLogin) from models (Customer, DBManager).
+ * Validation: Ensures username and password are not empty before checking credentials.
+ * Navigation: Switches between frames (CustomerLogin → CustomerHome or MainMenu).
+ * Thread Safety: GUI updates run on the Event Dispatch Thread using invokeLater().
+ * Logging: Uses Logger for error handling and debugging.
+ * 
  * @author 30246196
  */
+
+/*
+CustomerLogin class creates a login window for customers.
+It allows users to enter username and password, validates them,
+and navigates to CustomerHomer if successful.
+*/
+
 public class CustomerLogin extends javax.swing.JFrame {
+    
+    // 1. Static Constants
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerLogin.class.getName());
 
-    /**
-     * Creates new form CustomerLogin
+    // 2. Attributes
+    
+    // 3. Constructor
+    
+    /** CustomerLogin Default Constructor()
+     * Creates new form CustomerLogin and initialises components
      */
     public CustomerLogin() {
         initComponents();
@@ -48,12 +82,6 @@ public class CustomerLogin extends javax.swing.JFrame {
         lblUsername.setText("Username: ");
 
         lblPassword.setText("Password: ");
-
-        txtUsername.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsernameActionPerformed(evt);
-            }
-        });
 
         btnLogin.setText("LOGIN");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -130,8 +158,16 @@ public class CustomerLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // 4. Getters and Setters(Not needed here because GUI builder handles components)
+    
+    // 5. Public Methods (Event Handlers)
+    
+    /* a) btnLoginACtionPerformed()
+          Handles login button click.
+        Validates input, check credentials in DB, and navigates to CustomerHome.
+    */
+    
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
         // When customer logs in correctly they should be taken to a new form
         // called Customer Home
         
@@ -140,35 +176,39 @@ public class CustomerLogin extends javax.swing.JFrame {
         String password = txtPassword.getText();
         
         // Edith's improvement to check that they are not empty
+        // Validates input
         if (username.isEmpty() || password.isEmpty()) 
         {
             lblErrorMessage.setText("Please enter both username and password.");
             return;
         }
 
-        
         //Attempt to authentificate the customer via a DBManager class.
         DBManager db = new DBManager();// fix imports
         Customer loggedInCustomer =db.CustomerLogin(username, password);
         
+        // If Login sucessful, open CustomerHome and pass logged-in customer
         if (loggedInCustomer != null)
         {   // changed in stage 8 
             //CustomerHome cHome = new CustomerHome();
             CustomerHome cHome = new CustomerHome(loggedInCustomer);// changed in stage 8
             cHome.setVisible(true);
             this.setVisible(false);
-            
         }
         else
         {
             lblErrorMessage.setText("Error: Incorrect Username/ Password");
-            
         }
         
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    // b) btnReturnToMainMenu Event Handle Method
+    /*
+     * Handles return button click.
+     * Navigates back to MainMenu.
+    */
+    
     private void btnReturnToMainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnToMainMenuActionPerformed
-        // add your handling code here:
         // FROM Customer Login Frame to Main Menu Frame
         MainMenu mMainMenu = new MainMenu();
         // get visible the new form
@@ -177,13 +217,17 @@ public class CustomerLogin extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnReturnToMainMenuActionPerformed
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsernameActionPerformed
-
     /**
      * @param args the command line arguments
      */
+    
+    // 6. Main Method
+    
+    /**
+     * @param args
+     */
+    
+    // * Entry point: Sets look and feel and launches CustomerLogin window.
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -206,6 +250,8 @@ public class CustomerLogin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new CustomerLogin().setVisible(true));
     }
 
+    // 7. Instance Attributes (GUI components declared here)
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
