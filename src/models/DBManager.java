@@ -117,13 +117,11 @@ public class DBManager {
         - new ArrayList<>() creates a new, empty list.
         */
          
-        
-        // checkthe connection
+        // check the connection
         try (Connection conn = DriverManager.getConnection(connectionString);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM Customers")) 
         {
-              
             
 //            Connection conn = DriverManager.getConnection(connectionString);
 //            // check the connection Edith
@@ -331,25 +329,56 @@ public class DBManager {
             int stockLevel = rs.getInt("StockLevel");
             String category = rs.getString("ProductType");
             int wattageOutput = rs.getInt("WattageOutput");
-            double efficiencyRating =rs.getDouble("EfficiencyRating");
-            
+            double efficiencyRating = rs.getDouble("EfficiencyRating");
+            String partFor = rs.getString("PartFor");// added in stage 8 extra
             
             // create a product category based on 
             // String1.equals(String2)
             //suitable constructor for
-            if(category.equals("Heat Pump"))
+//            if(category.equals("Heat Pump"))
+//            {
+//                HeatPump h = new HeatPump(productId, productName, price, stockLevel, efficiencyRating);
+//                // add to allProducts list
+//                allProducts.add(h);
+//               
+//            }
+//            else if(category.equals("Solar Panel"))
+//            {
+//                SolarPanel s = new SolarPanel(productId, productName, price, stockLevel, wattageOutput);
+//                // add
+//                allProducts.add(s);
+//            }
+//            
+//            // added in stage 8 extra credit Replacement_Part
+//            else if(category.equals("Replacement Part"))
+//            {
+//                ReplacementPart r = new ReplacementPart(productId, productName, price, stockLevel,partFor);
+//                // add
+//                allProducts.add(r);
+//            }
+
+        // Converted to a switch: //stage 8 extra 
+         switch (category) 
             {
+            case "Heat Pump":
                 HeatPump h = new HeatPump(productId, productName, price, stockLevel, efficiencyRating);
-                // add to allProducts list
                 allProducts.add(h);
-               
-            }
-            else if(category.equals("Solar Panel"))
-            {
+                break;
+
+            case "Solar Panel":
                 SolarPanel s = new SolarPanel(productId, productName, price, stockLevel, wattageOutput);
-                // add
                 allProducts.add(s);
-            }
+                break;
+
+            case "Replacement Part":
+                ReplacementPart r = new ReplacementPart(productId, productName, price, stockLevel, partFor);
+                allProducts.add(r);
+                break;
+
+            default:
+                System.out.println("Unknown category: " + category);
+                break;
+            }   
         }
     }
     catch(Exception ex)

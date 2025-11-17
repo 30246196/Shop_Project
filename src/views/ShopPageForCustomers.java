@@ -93,6 +93,9 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         txtQuantity = new javax.swing.JTextField();
         lblConfirmation = new javax.swing.JLabel();
         lblWelcomeBasket = new javax.swing.JLabel();
+        lblPartFor = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstPartFor = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -124,7 +127,7 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         lblProduct.setText("PRODUCT");
 
         lstCategories.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "HeatPump", "SolarPanel" };
+            String[] strings = { "HeatPump", "SolarPanel", "ReplacementPart" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -140,6 +143,20 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         lblQuantity.setText("Quantity: ");
 
         lblWelcomeBasket.setText("Shop Welcome");
+
+        lblPartFor.setText("REPLACEMENT FOR");
+
+        lstPartFor.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "SolarPanel", "HeatPump", " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lstPartFor.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstPartForValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(lstPartFor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,23 +182,30 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(102, 102, 102)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblProducts)
-                                        .addGap(121, 121, 121)
-                                        .addComponent(btnViewBasket)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(lblProducts)
+                                .addGap(121, 121, 121)
+                                .addComponent(btnViewBasket)
+                                .addContainerGap(66, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAddToBasket, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 99, Short.MAX_VALUE))))
+                        .addGap(0, 99, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblPartFor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,9 +228,14 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
                         .addGap(56, 56, 56)))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(lblPartFor)
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblQuantity))
@@ -238,7 +267,7 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         // loops through allProducts and 
         for(Product p: allProducts)
         {
-            //checks if each product belongs to the selected category ("Solar Panel" or "Heat Pump")
+            //checks if each product belongs to the selected category ("Solar Panel" or "Heat Pump" or "ReplacementPart")
                                             //package.class name
             if (p.getClass().getName().equals("models." + selectedCategory))//
             {
@@ -364,6 +393,13 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnViewBasketActionPerformed
 
+    // e) partFor selection (Replacement Part for SolarPanel or for Heat Pump) added in stage 8 extra
+    private void lstPartForValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstPartForValueChanged
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_lstPartForValueChanged
+
     /**
      * @param args the command line arguments
      */
@@ -402,13 +438,16 @@ public class ShopPageForCustomers extends javax.swing.JFrame {
     private javax.swing.JButton btnViewBasket;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCategories;
     private javax.swing.JLabel lblConfirmation;
+    private javax.swing.JLabel lblPartFor;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblProducts;
     private javax.swing.JLabel lblQuantity;
     private javax.swing.JLabel lblWelcomeBasket;
     private javax.swing.JList<String> lstCategories;
+    private javax.swing.JList<String> lstPartFor;
     private javax.swing.JList<String> lstProductsByCategory;
     private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
