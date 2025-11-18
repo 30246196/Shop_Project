@@ -197,7 +197,6 @@ public class DBManager {
     }
         
 
-// (stage 9 delete product by Staff)
     // 4. Method Load Staff
     
     public ArrayList<Staff> loadStaff()// right click, Fix Imports
@@ -274,7 +273,7 @@ public class DBManager {
     } 
     
     // 6. Method Staff Login
-// (stage 9 delete product by Staff)
+    
     // to check if there is any Staff with same username and password
     
     public Staff StaffLogin(String username, String password)    
@@ -296,7 +295,7 @@ public class DBManager {
     }
     
     // Stage 6
-// (stage 9 delete product by Staff)
+    
     // Create the method loadproducts() method
     
     // 7. Method Load Products
@@ -392,10 +391,8 @@ public class DBManager {
         }
     }
     
-
     // 7. Method delete product
     
-//(stage 9 delete product by Staff)
     // stage 9
    public void deleteProduct(int productId)
    {

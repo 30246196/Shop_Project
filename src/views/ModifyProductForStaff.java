@@ -18,7 +18,8 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
     
     // 1. Static constants and Static variables
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ModifyProductForStaff.class.getName());
-
+    
+    // 
     // add a global ArrayList variable to store the products
     private ArrayList<Product> allProducts;// fix imports create 'import models.Product; ' line above
     // added after stage 8 
@@ -190,6 +191,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+   
     // 3. Event Handlers
     
     // a)  Back/Return button
@@ -201,6 +203,8 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnReturnStaffHomeActionPerformed
 
+    // b) lst lstCategoriesValueChanged
+    
     private void lstCategoriesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCategoriesValueChanged
         // from ValueChanged in Events in LstCategories:
         
@@ -233,7 +237,6 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
             if(p.getClass().getName().equals("models." + selectedCategory))
             {
                 categoryModel.addElement(p);// addd this element to the categoryModel list
-                
             }
         }
         //Sets the model that represents the contents or "value" of the list, 
@@ -241,6 +244,8 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
         lstProductsByCategory.setModel(categoryModel);
     }//GEN-LAST:event_lstCategoriesValueChanged
 
+    // c) btn EditProduct
+    
     private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
         
         // error detection
@@ -260,35 +265,67 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
             lblHandlingError.setText("Please select a product from the list.");
             //return;
         }
-        
+        //TODO sort error
     }//GEN-LAST:event_btnEditProductActionPerformed
 
-    // Handler event method
-    // stage 9
+    // d) Method delete product Event Handler by Staff
     
+    // stage 9
+    // Validate selection
+    // Delete a selected product from both the database and the list shown in the UI.
+    // refresh the product list 
+    // provide user feedback
+    
+    //This method is triggered when the user clicks the Delete button.
+    //evt is the event object,but it's not used directly here.
     private void btnDeleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteProductActionPerformed
-        // check if a product is selected
-       
+        
+       // Check if a product is selected:
         if (lstProductsByCategory.getSelectedIndex() !=-1)
+            // lstProductsByCategory is a JList showing products.
+            //getSelectedIndex() returns -1 if nothing is selected.
+            //This condition ensures the user has selected a product.
         {
-            Object selectedProductObject = (Object)lstCategories.getSelectedValue();
-            Product selectedProduct= (Product)selectedProductObject;
+            // Get the selected product:
+            //Retrieves the selected item from the list.
+            //Stored as Object so it can be type-checked.
+            Object selectedProductObject = (Object)lstProductsByCategory.getSelectedValue();
             
+            
+            // Check if it's a Product:
+            //Ensures the selected item is actually a Product object.
+            //Prevents casting errors.
+            if (selectedProductObject instanceof Product) 
+            {
+            //Casts the object to Product    
+            Product selectedProduct= (Product)selectedProductObject;
+            //Creates a DBManager instance.
             DBManager db = new DBManager();
+            //Calls deleteProduct() using the product’s ID.
             db.deleteProduct(selectedProduct.getProductId());// need getProductId()
             
-            // make the animal delete from the listbox
-            DefaultListModel productsModel = (DefaultListModel)lstProductsByCategory.getModel();// check the meaning
-            productsModel.remove(lstProductsByCategory.getSelectedIndex());// delete the animal from the list
+            // make the product delete from the listbox:
             
-            // refresh db
+            // Get the model behind the lstProductsByCategory list, 
+            // assume it’s a DefaultListModel, and store it in a variable
+            // so I can modify the list (e.g., remove a product)
+            DefaultListModel productsModel = (DefaultListModel)lstProductsByCategory.getModel();
+            // delete the product from the list
+            productsModel.remove(lstProductsByCategory.getSelectedIndex());
+            
+            // refresh,by loading all products from the database, to 'do not see' the deleted products
             allProducts = db.loadProducts();
-            
+            // show confirmation
             lblConfirmation.setText("Product Deleted Successfully");
-        }
-        else
-        lblConfirmation.setText("Error: Select Product First");
-        
+            }
+            else// error handling:If no product is selected
+               {
+                   lblConfirmation.setText("Error: Invalid selection type");
+                }
+        }else // error handling: If selected item isn’t a Product:
+         {
+            lblConfirmation.setText("Error: Select Product First");
+          }
     }//GEN-LAST:event_btnDeleteProductActionPerformed
 
     /**
@@ -313,7 +350,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(() -> new ModifyProductForStaff().setVisible(true));
+   //   java.awt.EventQueue.invokeLater(() -> new ModifyProductForStaff(loggedInStaff).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
