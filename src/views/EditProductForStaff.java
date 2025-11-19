@@ -8,6 +8,7 @@ import java.util.ArrayList;// from defining  ArrayList allProducts
 import javax.swing.DefaultListModel;// from fix imports in categoryModel definition
 import models.DBManager;// from fix imports
 import models.Product;// from fix imports
+import models.Staff;
 
 /**
  *
@@ -17,12 +18,16 @@ public class EditProductForStaff extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditProductForStaff.class.getName());
 
+    private final Staff loggedInStaff;
+    
     // add a global ArrayList variable to store the products
     private ArrayList<Product> allProducts;// fix imports create 'import models.Product; ' line above
     /**
      * Creates new form EditProductForStaff
      */
-    public EditProductForStaff() {
+    public EditProductForStaff(Staff staff) {
+        
+        this.loggedInStaff = staff;
         // add the connection to load the products
         DBManager db = new DBManager();//fix imports
         
@@ -143,7 +148,7 @@ public class EditProductForStaff extends javax.swing.JFrame {
     // 
     private void btnReturnStaffHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnStaffHomeActionPerformed
         //  add your handling code here:
-        StaffHome sHome = new StaffHome();// added by ne in stage 6
+        StaffHome sHome = new StaffHome(loggedInStaff);// added by ne in stage 6
         sHome.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnReturnStaffHomeActionPerformed
@@ -211,7 +216,7 @@ public class EditProductForStaff extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new EditProductForStaff().setVisible(true));
+//        java.awt.EventQueue.invokeLater(() -> new EditProductForStaff().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
