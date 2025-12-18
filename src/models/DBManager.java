@@ -361,17 +361,17 @@ public class DBManager {
          switch (category) 
             {
             case "Heat Pump":
-                HeatPump h = new HeatPump(productId, productName, price, stockLevel, efficiencyRating);
+                HeatPump h = new HeatPump(productId, productName, price, stockLevel,category, efficiencyRating);
                 allProducts.add(h);
                 break;
 
             case "Solar Panel":
-                SolarPanel s = new SolarPanel(productId, productName, price, stockLevel, wattageOutput);
+                SolarPanel s = new SolarPanel(productId, productName, price, stockLevel,category, wattageOutput);
                 allProducts.add(s);
                 break;
 
             case "Replacement Part":
-                ReplacementPart r = new ReplacementPart(productId, productName, price, stockLevel, partFor);
+                ReplacementPart r = new ReplacementPart(productId, productName, price, stockLevel,category, partFor);
                 allProducts.add(r);
                 break;
 
@@ -410,6 +410,64 @@ public class DBManager {
         {
             System.out.println("Error loading products: " + ex.getMessage());
         }
-   }       
+   }  
+   
+   
+   // 8. Method edit product
+   
+   // stage 10
+   
+   public void editProduct(Product p)
+    {
+        String extraAttributeSQL = "";
+        
+        String category = p.getProductType();
+        
+        switch (category) 
+            {
+           case "Heat Pump":
+               HeatPump hp = (HeatPump)p; 
+               extraAttributeSQL = "EfficiencyRating = '" + hp.getEfficiencyRating() + "',";
+               break;
+
+           case "Solar Panel":
+               SolarPanel sp = (SolarPanel)p;
+               extraAttributeSQL = "WattageOutput = '" + sp.getWattageOutput() + "',";
+               break;
+              
+            case "Replacement Part":
+               ReplacementPart rp = (ReplacementPart)p;
+               extraAttributeSQL = "PartFor = '" + rp.getPartFor() + "',";
+                break;
+
+            default:
+                System.out.println("Unknown category: " + category);
+                break;
+            }  
+        
+       
+        try
+        {
+          Class.forName(driver);
+          Connection conn = DriverManager.getConnection(connectionString);
+          //conn.prepareStatement() TODO
+          Statement stmt = conn.createStatement();
+          stmt.executeUpdate("UPDATE Products SET "
+          + "ProductName = '" + p.getProductName() + "',"
+          + "Price = '" + p.getPrice() + "',"
+          + "StockLevel = '" + p.getStockLevel() + "',"
+          + "ProductType = '" + p.getProductType() + "',"
+          + "Extra = '" + p.getExtraAttribute() + "',"
+          + extraAttributeSQL                
+         
+          + "WHERE ProductID = '" + p.getProductId() +"'");
+         
+         
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error Editing Product: " + ex.getMessage());
+        }
+    }
 }
 

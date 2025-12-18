@@ -10,6 +10,7 @@ import models.DBManager;// from fix imports
 import models.Product;// from fix imports
 import models.Staff;
 
+
 /**
  *
  * @author 30246196
@@ -116,8 +117,6 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
 
         lblStaffInEditProduct.setText("by Staff");
 
-        lblConfirmation.setText("Confirmation");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,13 +132,13 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
                         .addComponent(lblStaffInEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblHandlingError, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
                                 .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37)
-                                .addComponent(btnDeleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblHandlingError, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnDeleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(85, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
@@ -150,14 +149,13 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
                         .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(119, 119, 119))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,11 +176,11 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblHandlingError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblConfirmation))
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblHandlingError, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditProduct)
                     .addComponent(btnDeleteProduct))
@@ -231,7 +229,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
         DefaultListModel categoryModel = new DefaultListModel();// fix imports
         
         // see User or Staff class file
-        for(Product p:allProducts)
+        for(Product p : allProducts)
         {
                                             //package.class name
             if(p.getClass().getName().equals("models." + selectedCategory))
@@ -265,7 +263,19 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
             lblHandlingError.setText("Please select a product from the list.");
             //return;
         }
-        //TODO sort error
+        else
+        {
+            Object selectedProductObject = (Object)lstProductsByCategory.getSelectedValue();
+            Product selectedProduct = (Product)selectedProductObject;
+            
+            // pass to EditProduct.java
+            EditProduct editprod;
+            editprod = new EditProduct(loggedInStaff,selectedProduct);
+            editprod.setVisible(true);
+            this.setVisible(false);            
+        }
+        
+        
     }//GEN-LAST:event_btnEditProductActionPerformed
 
     // d) Method delete product Event Handler by Staff
@@ -350,7 +360,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-   //   java.awt.EventQueue.invokeLater(() -> new ModifyProductForStaff(loggedInStaff).setVisible(true));
+   //  java.awt.EventQueue.invokeLater(() -> new ModifyProductForStaff(loggedInStaff).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

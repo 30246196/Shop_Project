@@ -58,22 +58,22 @@ public class SolarPanel extends Product{
     //Constructor SolarPanel(Everything EXCEPT productId - 4 parameters)
     
     // Useful when productId is auto-generated (e.g.,by a database)
-    public SolarPanel(String productNameIn, double priceIn, int stockLevelIn,
+    public SolarPanel(String productNameIn, double priceIn, int stockLevelIn, String productTypeIn,
             int wattageOutputIn)
     {
         //SolarPanel(String productNameIn, double priceIn, int stockLevelIn,
         //int wattageOutputIn)
         // when you do a call do not write the variable type      
-        super( productNameIn, priceIn, stockLevelIn);
+        super( productNameIn, priceIn, stockLevelIn,productTypeIn);
         wattageOutput=wattageOutputIn;   
     }
     
     // Full Constructor SolarPanel(Everything - 5 parameters)
-    public SolarPanel(int productIdIn,String productNameIn, double priceIn, int stockLevelIn,
+    public SolarPanel(int productIdIn,String productNameIn, double priceIn, int stockLevelIn,String productTypeIn,
             int wattageOutputIn)
     {
         // when you do a call do not write the variable type      
-        super( productIdIn, productNameIn, priceIn, stockLevelIn);
+        super( productIdIn, productNameIn, priceIn, stockLevelIn,productTypeIn);
         wattageOutput=wattageOutputIn;   
     }
     

@@ -60,6 +60,11 @@ public class StaffHome extends javax.swing.JFrame {
         });
 
         btnModifyOrders.setText("VIEW ALL ORDERS");
+        btnModifyOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyOrdersActionPerformed(evt);
+            }
+        });
 
         btnLogOut.setText("LOG OUT");
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -128,6 +133,10 @@ public class StaffHome extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_btnModifyProductsActionPerformed
+
+    private void btnModifyOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyOrdersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModifyOrdersActionPerformed
 
     /**
      * @param args the command line arguments

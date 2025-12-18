@@ -48,21 +48,21 @@ public class ReplacementPart extends Product{
     // Constructor Replacement_Parts (everything except productId - 4 parameters)
     // Useful when productId is auto-generated (e.g.,by a database)
 //    Replacement_Part(productId, productName, price, stockLevel,partFor)
-    public ReplacementPart(String productNameIn, double priceIn, int stockLevelIn, String partForIn)
+    public ReplacementPart(String productNameIn, double priceIn, int stockLevelIn, String productTypeIn, String partForIn)
     {
         // when you do a call do not write the variable type      
-        super( productNameIn, priceIn, stockLevelIn);
+        super( productNameIn, priceIn, stockLevelIn, productTypeIn);
         partFor = partForIn;
     }
    
     // Full Constructor Replacement_Parts (everything - 5 parameters)
     // Allows full initialisation of both inherited and new attributes.
     // Replacement_Part(productId, productName, price, stockLevel,partFor)
-    public ReplacementPart(int productIdIn,String productNameIn, double priceIn, int stockLevelIn,
+    public ReplacementPart(int productIdIn,String productNameIn, double priceIn, int stockLevelIn, String productTypeIn,
             String partForIn)
     {
         // when you do a call do not write the variable type      
-        super( productIdIn, productNameIn, priceIn, stockLevelIn);
+        super( productIdIn, productNameIn, priceIn,stockLevelIn, productTypeIn);
         partFor = partForIn;   
     }
     

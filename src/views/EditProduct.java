@@ -1,12 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import models.DBManager;
+import models.HeatPump;
 import models.Product;
+import models.ReplacementPart;
+import models.SolarPanel;
 import models.Staff;
+import views.ModifyProductForStaff;
+
 
 /**
  *
@@ -17,7 +18,7 @@ public class EditProduct extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditProduct.class.getName());
 
     // Declaration of currentOrder and loggedInCustomer
-    private Product currentProduct;
+    private Product productToEdit;
     private Staff loggedInStaff;//fix imports
     
     /**
@@ -26,13 +27,55 @@ public class EditProduct extends javax.swing.JFrame {
     public EditProduct(Staff s,Product p) 
     {
         loggedInStaff = s;
-        currentProduct = p;
+        productToEdit = p;
         
         initComponents();
         
         // check with a  customised welcome:
-        lblStaff.setText("This is your basket, " + loggedInStaff.getFirstName());
+        lblStaff.setText("This is the product to modify , " + loggedInStaff.getFirstName());
         
+        // pass the attributes to the textfile:
+        // Product Id not editable, changed in txtProductId Options
+        txtProductId.setText(String.valueOf(productToEdit.getProductId()));
+        txtProductName.setText(productToEdit.getProductName());
+        txtPrice.setText(String.valueOf(productToEdit.getPrice()));
+        txtStock.setText(String.valueOf(productToEdit.getStockLevel()));
+        
+        String test1 =productToEdit.getProductType();
+        
+        txtProductType.setText(productToEdit.getProductType());
+        System.out.println(test1);
+        
+        // Product types: SolarPanel, Heat Pump and Replacement Part
+        switch(productToEdit.getProductType())
+        
+//        String test2 =productToEdit.getClass().getName();
+//        switch(test2)    
+        {
+            case "Solar Panel":
+                
+                SolarPanel sp = (SolarPanel)productToEdit;//fix imports
+                
+                lblExtraAttribute.setText("Wattage Output:");
+                txtExtraAttribute.setText(String.valueOf(sp.getWattageOutput()));
+                break;
+                
+            case "Heat Pump":
+                
+                HeatPump hp = (HeatPump)productToEdit;// fix imports
+                
+                lblExtraAttribute.setText("Efficiency Rating:");
+                txtExtraAttribute.setText(String.valueOf(hp.getEfficiencyRating()));
+                break;
+                
+            case "Replacement Part":
+                
+                ReplacementPart rp = (ReplacementPart)productToEdit;
+                
+                lblExtraAttribute.setText("Replacement For:");
+                txtExtraAttribute.setText(String.valueOf(rp.getPartFor()));
+                break;
+        }
     }
 
     /**
@@ -46,41 +89,26 @@ public class EditProduct extends javax.swing.JFrame {
 
         lblEditProduct = new javax.swing.JLabel();
         lblStaff = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblEditProduct = new javax.swing.JTable();
         btnConfirmEditProduct = new javax.swing.JButton();
         btnBackToModifyByStaff = new javax.swing.JButton();
+        blbProductId = new javax.swing.JLabel();
+        txtProductId = new javax.swing.JTextField();
+        txtProductName = new javax.swing.JTextField();
+        lblProductName = new javax.swing.JLabel();
+        txtPrice = new javax.swing.JTextField();
+        txtStock = new javax.swing.JTextField();
+        lblStock = new javax.swing.JLabel();
+        lblPrice = new javax.swing.JLabel();
+        txtProductType = new javax.swing.JTextField();
+        txtExtraAttribute = new javax.swing.JTextField();
+        lblExtraAttribute = new javax.swing.JLabel();
+        lblType = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblEditProduct.setText("EDIT PRODUCT");
+        lblEditProduct.setText("EDIT PRODUCT DETAILS");
 
         lblStaff.setText(" by Staff");
-
-        tblEditProduct.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "ProductId", "ProductType", "ProductName", "Price", "StockLevel", "WattageOut", "EfficiencyRating"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblEditProduct);
 
         btnConfirmEditProduct.setText("CONFIRM EDITION");
         btnConfirmEditProduct.addActionListener(new java.awt.event.ActionListener() {
@@ -96,26 +124,61 @@ public class EditProduct extends javax.swing.JFrame {
             }
         });
 
+        blbProductId.setText("Product ID");
+
+        txtProductId.setEditable(false);
+
+        lblProductName.setText("Product Name");
+
+        lblStock.setText("Stock Level:");
+
+        lblPrice.setText("Price");
+
+        lblExtraAttribute.setText("Extra Attribute ");
+
+        lblType.setText("Type of Product");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(lblEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
-                .addComponent(lblStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addGap(34, 34, 34))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(btnConfirmEditProduct)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
-                .addComponent(btnBackToModifyByStaff)
-                .addGap(188, 188, 188))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnConfirmEditProduct)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblExtraAttribute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblProductName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(blbProductId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(83, 83, 83)
+                                .addComponent(btnBackToModifyByStaff)
+                                .addContainerGap(78, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtProductType)
+                                        .addComponent(txtStock)
+                                        .addComponent(txtPrice)
+                                        .addComponent(txtProductId)
+                                        .addComponent(txtProductName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtExtraAttribute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(lblEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblStaff, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,12 +188,36 @@ public class EditProduct extends javax.swing.JFrame {
                     .addComponent(lblEditProduct)
                     .addComponent(lblStaff))
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(blbProductId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblProductName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblExtraAttribute, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtProductId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtProductName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPrice)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtStock)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtProductType)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtExtraAttribute)))
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmEditProduct)
                     .addComponent(btnBackToModifyByStaff))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(122, 122, 122))
         );
 
         pack();
@@ -143,8 +230,65 @@ public class EditProduct extends javax.swing.JFrame {
     private void btnConfirmEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEditProductActionPerformed
         //edit a product from Products table in the db
         
-        // Create a new DBManager instance to interact with the database.
-        DBManager db = new DBManager(); // fix imports
+        // define and get the values from the text:
+        String productName= txtProductName.getText( );
+        double price = Double.parseDouble(txtPrice.getText());
+        int stockLevel = Integer.parseInt(txtStock.getText());
+        String productType = txtProductType.getText();// todo add productType
+        String extra = txtExtraAttribute.getText();
+        
+        // getters and setters added to Product
+        
+        // assign the modified values 
+        productToEdit.setProductName(productName);
+        productToEdit.setPrice(price);
+        productToEdit.setStockLevel(stockLevel);
+        productToEdit.setProductType(productType);
+        
+        // add the extra Attribute in the corespondent : SolaPanel, Heat Pump or Replacement Part
+        productToEdit.setExtraAttribute(extra);
+
+        DBManager db = new DBManager();
+        
+        // Product types: SolarPanel, Heat Pump and Replacement Part
+        switch(productToEdit.getProductType())
+        {
+            case "Solar Panel":
+                
+                SolarPanel sp = (SolarPanel)productToEdit;
+                
+                int wattageOutput = Integer.parseInt(txtExtraAttribute.getText());
+                sp.setWattageOutput(wattageOutput);
+                
+                //DBManager db = new DBManager();// Create a new DBManager instance to interact with the database.
+                db.editProduct(sp);// create editProduct method in DBManager
+                
+                break;
+                
+            case "Heat Pump":
+                
+                HeatPump hp = (HeatPump)productToEdit;
+                
+                double efficiencyRating = Double.parseDouble(txtExtraAttribute.getText());
+                hp.setEfficiencyRating(efficiencyRating); 
+                
+                //DBManager db = new DBManager();
+                db.editProduct(hp);
+                
+                break;
+                
+            case "Replacement Part":
+                
+                ReplacementPart rp = (ReplacementPart)productToEdit;
+                
+                String partFor = txtExtraAttribute.getText();
+                rp.setPartFor(partFor);
+                
+                //DBManager db = new DBManager();
+                db.editProduct(rp);
+                break;
+        }
+
         
         // TODO create modifyProduct(product)
         
@@ -155,7 +299,11 @@ public class EditProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmEditProductActionPerformed
 
     private void btnBackToModifyByStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToModifyByStaffActionPerformed
-        // TODO add your handling code here:
+        //return to ModifyProductForStaff
+        ModifyProductForStaff ModifyStaff = new ModifyProductForStaff(loggedInStaff);// added by ne in stage 6
+        ModifyStaff.setVisible(true);
+        //this.setVisible(false);
+        
     }//GEN-LAST:event_btnBackToModifyByStaffActionPerformed
 
     /**
@@ -184,11 +332,21 @@ public class EditProduct extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel blbProductId;
     private javax.swing.JButton btnBackToModifyByStaff;
     private javax.swing.JButton btnConfirmEditProduct;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblEditProduct;
+    private javax.swing.JLabel lblExtraAttribute;
+    private javax.swing.JLabel lblPrice;
+    private javax.swing.JLabel lblProductName;
     private javax.swing.JLabel lblStaff;
-    private javax.swing.JTable tblEditProduct;
+    private javax.swing.JLabel lblStock;
+    private javax.swing.JLabel lblType;
+    private javax.swing.JTextField txtExtraAttribute;
+    private javax.swing.JTextField txtPrice;
+    private javax.swing.JTextField txtProductId;
+    private javax.swing.JTextField txtProductName;
+    private javax.swing.JTextField txtProductType;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
 }

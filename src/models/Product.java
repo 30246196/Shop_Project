@@ -32,7 +32,12 @@ public class Product {
     private String productName;
     private double price;
     private int stockLevel;
-     
+    
+    // added to check the Product Type ("Solar Panel", "Heat Pump", or "Replacement Part")
+    private String productType; // getter and setter
+    
+    // added to store the extra attribute in String to later change the type.
+    private String extraAttribute;
     
     // 3. Constructors
     
@@ -44,23 +49,26 @@ public class Product {
         productName = "product name";
         price = 0.99;
         stockLevel = 0;
+        productType="Replacement Part";
     }       
     
     // Product() Constructor with 3 Parameters, except productId
-    public Product(String productNameIn, double priceIn, int stockLevelIn)
+    public Product(String productNameIn, double priceIn, int stockLevelIn, String productTypeIn)
     {
         productId = 9999;// temporary value, it is going to be rewrritten by the data base
         productName = productNameIn;
         price = priceIn;
-        stockLevel = stockLevelIn;       
+        stockLevel = stockLevelIn;
+        productType= productTypeIn;
     }
     // Product() Constructor with 4 Parameters
-    public Product(int productIdIn, String productNameIn, double priceIn, int stockLevelIn)
+    public Product(int productIdIn, String productNameIn, double priceIn, int stockLevelIn, String productTypeIn)
     {
         productId = productIdIn;
         productName = productNameIn;
         price = priceIn;
-        stockLevel = stockLevelIn;       
+        stockLevel = stockLevelIn;
+        productType= productTypeIn;
     }
 
     // 4. Overridden Methods (toString())
@@ -92,6 +100,14 @@ public class Product {
         return stockLevel;
     }
     
+    public String getProductType() {
+        return productType;
+    }
+    
+    public String getExtraAttribute() {
+        return productType;
+    }
+    
     // Setters         a setter does not return anything, hence void
 
     public void setProductId(int productId) {
@@ -109,6 +125,16 @@ public class Product {
     public void setStockLevel(int stockLevel) {
         this.stockLevel = stockLevel;
     }
+    
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+    
+    public void setExtraAttribute(String extraAttribute) {
+        this.extraAttribute = extraAttribute;
+    } 
+    
+    
     
     // 6. Custom Methods Stub Method
     // This is a placeholder method intended for future implementation.

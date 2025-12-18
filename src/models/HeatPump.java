@@ -53,23 +53,23 @@ public class HeatPump extends Product{
         efficiencyRating=3.2;// default value for effieciencyRating
     }
     
-    //Constructor HeatPump(Everything EXCEPT productId - 4 parameters)
+    //Constructor HeatPump(Everything EXCEPT productId - 5 parameters)
     // Useful when productId is auto-generated (e.g.,by a database)
-    public HeatPump(String productNameIn, double priceIn, int stockLevelIn,
+    public HeatPump(String productNameIn, double priceIn, int stockLevelIn, String productTypeIn,
             double efficiencyRatingIn)
     {
         // when you do a call do not write the variable type      
-        super( productNameIn, priceIn, stockLevelIn);
+        super( productNameIn, priceIn, stockLevelIn,productTypeIn);
         efficiencyRating=efficiencyRatingIn;   
     }
     
-    //Full Constructor HeatPump(Everything - 5 parameters)
+    //Full Constructor HeatPump(Everything - 6 parameters)
     // Allows full initialisation of both inherited and new attributes.
-    public HeatPump(int productIdIn,String productNameIn, double priceIn, int stockLevelIn,
+    public HeatPump(int productIdIn,String productNameIn, double priceIn, int stockLevelIn, String productTypeIn,
             double efficiencyRatingIn)
     {
         // when you do a call do not write the variable type      
-        super( productIdIn, productNameIn, priceIn, stockLevelIn);
+        super( productIdIn, productNameIn, priceIn, stockLevelIn,productTypeIn);
         efficiencyRating=efficiencyRatingIn;   
     }
         
@@ -80,6 +80,7 @@ public class HeatPump extends Product{
     {
         return efficiencyRating;
     }
+    
     //Setter
     public void setEfficiencyRating(double efficiencyRatingIn)
     {
@@ -87,3 +88,4 @@ public class HeatPump extends Product{
     }
     
 }
+ 

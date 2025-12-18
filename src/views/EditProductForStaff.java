@@ -86,6 +86,11 @@ public class EditProductForStaff extends javax.swing.JFrame {
         jScrollPane2.setViewportView(lstProductsByCategory);
 
         btnEditProduct.setText("EDIT PRODUCT");
+        btnEditProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditProductActionPerformed(evt);
+            }
+        });
 
         btnDeleteProduct.setText("DELETE PRODUCT");
 
@@ -136,7 +141,7 @@ public class EditProductForStaff extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditProduct)
                     .addComponent(btnDeleteProduct))
@@ -147,7 +152,6 @@ public class EditProductForStaff extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     // 
     private void btnReturnStaffHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnStaffHomeActionPerformed
-        //  add your handling code here:
         StaffHome sHome = new StaffHome(loggedInStaff);// added by ne in stage 6
         sHome.setVisible(true);
         this.setVisible(false);
@@ -193,6 +197,10 @@ public class EditProductForStaff extends javax.swing.JFrame {
         //notifies property change listeners, and then clears the list's selection.
         lstProductsByCategory.setModel(categoryModel);
     }//GEN-LAST:event_lstCategoriesValueChanged
+
+    private void btnEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditProductActionPerformed
 
     /**
      * @param args the command line arguments
