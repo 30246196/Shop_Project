@@ -391,7 +391,7 @@ public class DBManager {
         }
     }
     
-    // 7. Method delete product
+    // 8. Method delete product
     
     // stage 9
    public void deleteProduct(int productId)
@@ -413,7 +413,7 @@ public class DBManager {
    }  
    
    
-   // 8. Method edit product
+   // 9. Method edit product
    
    // stage 10
    
