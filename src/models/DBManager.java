@@ -303,7 +303,7 @@ public class DBManager {
     public ArrayList<Product> loadProducts() // fix imports
     {
     // create ab ArrayList to store the content of the Products table
-    ArrayList<Product> allProducts = new ArrayList();
+    ArrayList<Product> allProducts = new ArrayList<>();
     
     try
     {
@@ -327,7 +327,16 @@ public class DBManager {
             String productName = rs.getString("ProductName");
             double price = rs.getDouble("Price");
             int stockLevel = rs.getInt("StockLevel");
-            String category = rs.getString("ProductType");
+            
+            String category = rs.getString("ProductType");//TODO check
+            
+            //Protection against NULL
+            if (category == null) 
+                { System.out.println("ProductType is NULL for product " + productId);
+                continue;
+                } // avoid crash
+            
+            // read extra attributes
             int wattageOutput = rs.getInt("WattageOutput");
             double efficiencyRating = rs.getDouble("EfficiencyRating");
             String partFor = rs.getString("PartFor");// added in stage 8 extra
@@ -421,45 +430,47 @@ public class DBManager {
     {
         String extraAttributeSQL = "";
         
-        String category = p.getProductType();
+        //String category = p.getProductType();
+        String productType = p.getClass().getName();
         
-        switch (category) 
+        switch (productType) 
             {
-           case "Heat Pump":
+           case "models.HeatPump":
                HeatPump hp = (HeatPump)p; 
-               extraAttributeSQL = "EfficiencyRating = '" + hp.getEfficiencyRating() + "',";
+               extraAttributeSQL = "EfficiencyRating = '" + hp.getEfficiencyRating() + "' ";
                break;
 
-           case "Solar Panel":
+           case "models.SolarPanel":
                SolarPanel sp = (SolarPanel)p;
-               extraAttributeSQL = "WattageOutput = '" + sp.getWattageOutput() + "',";
+               extraAttributeSQL = "WattageOutput = '" + sp.getWattageOutput() + "' ";
                break;
               
-            case "Replacement Part":
+            case "models.ReplacementPart":
                ReplacementPart rp = (ReplacementPart)p;
-               extraAttributeSQL = "PartFor = '" + rp.getPartFor() + "',";
+               extraAttributeSQL = "PartFor = '" + rp.getPartFor() + "' ";
                 break;
 
             default:
-                System.out.println("Unknown category: " + category);
+                System.out.println("Unknown category: " + productType);
                 break;
             }  
         
        
+        // st up connection
         try
         {
           Class.forName(driver);
           Connection conn = DriverManager.getConnection(connectionString);
           //conn.prepareStatement() TODO
           Statement stmt = conn.createStatement();
+          
           stmt.executeUpdate("UPDATE Products SET "
           + "ProductName = '" + p.getProductName() + "',"
           + "Price = '" + p.getPrice() + "',"
           + "StockLevel = '" + p.getStockLevel() + "',"
           + "ProductType = '" + p.getProductType() + "',"
-          + "Extra = '" + p.getExtraAttribute() + "',"
+         // + "Extra = '" + p.getExtraAttribute() + "',"
           + extraAttributeSQL                
-         
           + "WHERE ProductID = '" + p.getProductId() +"'");
          
          
