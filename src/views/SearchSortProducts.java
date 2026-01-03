@@ -29,6 +29,8 @@ public class SearchSortProducts extends javax.swing.JFrame {
         initComponents();
         lstProducts.setModel(model);
         
+        btnBinarySearch.setEnabled(false);// button not enabled
+        
         loadProductsFromDB();
         displayProducts();
     }
@@ -74,6 +76,78 @@ public class SearchSortProducts extends javax.swing.JFrame {
         }
     }
     
+    // Method Selection Sort Ascending
+    private void selectionSortProducts() 
+    {
+        int n = products.size();
+
+        for (int i = 0; i < n - 1; i++)
+        {
+            int minIndex = i;
+
+            // Look for the lowest price
+            for (int j = i + 1; j < n; j++)
+            {
+               if (products.get(j).getPrice() < products.get(minIndex).getPrice())
+                {
+                    minIndex = j;
+                }
+            }
+
+        // Swap if we find a lower value
+        if (minIndex != i)
+            {
+                Product temp = products.get(i);
+                products.set(i, products.get(minIndex));
+                products.set(minIndex, temp);
+            }
+        }
+    }
+    
+    // Method Linear Search
+    private void linearSearch(double targetPrice)
+    { 
+        model.clear();
+        boolean found = false;
+        
+        for (Product p : products)
+            { if (p.getPrice() == targetPrice)
+                { model.addElement(p.getProductName() + " - £" + p.getPrice());
+                found = true;
+                }
+            } if (!found)
+                { 
+                  model.addElement("No product found with price £" + targetPrice);
+                }
+    }
+    
+    // Method Binary Search
+    private void binarySearch(double targetPrice)
+    {
+       model.clear();
+       
+       int left = 0;
+       int right = products.size() - 1;
+       
+       while (left <= right)
+       {
+          int mid = (left + right) / 2;
+          double midPrice = products.get(mid).getPrice();
+          
+          if (midPrice == targetPrice)
+          {
+              Product p = products.get(mid);
+              model.addElement(p.getProductName() + " - £" + p.getPrice());
+              return;
+          }
+          else if (midPrice < targetPrice)
+          {
+              left = mid + 1;
+          }
+       }
+       model.addElement("No product found with price £" + targetPrice);
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,6 +162,10 @@ public class SearchSortProducts extends javax.swing.JFrame {
         lstProducts = new javax.swing.JList<>();
         btnBubbleSort = new javax.swing.JButton();
         btnSelectionSort = new javax.swing.JButton();
+        lblEnterProductPrice = new javax.swing.JLabel();
+        txtSearchPrice = new javax.swing.JTextField();
+        btnLinearSearch = new javax.swing.JButton();
+        btnBinarySearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,6 +185,22 @@ public class SearchSortProducts extends javax.swing.JFrame {
             }
         });
 
+        lblEnterProductPrice.setText("Enter Product Price:");
+
+        btnLinearSearch.setText("Linear Search");
+        btnLinearSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLinearSearchActionPerformed(evt);
+            }
+        });
+
+        btnBinarySearch.setText("Binary Search");
+        btnBinarySearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBinarySearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,24 +209,37 @@ public class SearchSortProducts extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(49, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBubbleSort, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSelectionSort, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(105, 105, 105))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBubbleSort)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSelectionSort)
+                                .addGap(25, 25, 25)
+                                .addComponent(lblEnterProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnLinearSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBinarySearch)
+                            .addComponent(txtSearchPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBubbleSort)
-                    .addComponent(btnSelectionSort))
-                .addGap(27, 27, 27))
+                    .addComponent(btnSelectionSort)
+                    .addComponent(lblEnterProductPrice)
+                    .addComponent(txtSearchPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLinearSearch)
+                    .addComponent(btnBinarySearch))
+                .addContainerGap())
         );
 
         pack();
@@ -141,36 +248,44 @@ public class SearchSortProducts extends javax.swing.JFrame {
     private void btnBubbleSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBubbleSortActionPerformed
         bubbleSortProducts();
         displayProducts();
+        btnBinarySearch.setEnabled(true); //now active
     }//GEN-LAST:event_btnBubbleSortActionPerformed
 
     private void btnSelectionSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectionSortActionPerformed
-        // TODO add your handling code here:
         selectionSortProducts();
         displayProducts();
+        btnBinarySearch.setEnabled(true); // now active
     }//GEN-LAST:event_btnSelectionSortActionPerformed
 
-    
-    private void selectionSortProducts() {
-    int n = products.size();
-
-    for (int i = 0; i < n - 1; i++) {
-        int minIndex = i;
-
-        // Buscar el índice del precio más bajo
-        for (int j = i + 1; j < n; j++) {
-            if (products.get(j).getPrice() < products.get(minIndex).getPrice()) {
-                minIndex = j;
+    private void btnLinearSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinearSearchActionPerformed
+        try
+        {
+          double price = Double.parseDouble(txtSearchPrice.getText());
+          linearSearch(price);
+        }
+        catch(NumberFormatException e)
+            {
+                model.clear();
+                model.addElement("Invalid price entered.");
             }
-        }
+    }//GEN-LAST:event_btnLinearSearchActionPerformed
 
-        // Intercambiar si encontramos un valor menor
-        if (minIndex != i) {
-            Product temp = products.get(i);
-            products.set(i, products.get(minIndex));
-            products.set(minIndex, temp);
+    private void btnBinarySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBinarySearchActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            double price = Double.parseDouble(txtSearchPrice.getText());
+            binarySearch(price);
         }
-    }
-}
+        catch(NumberFormatException e)
+        {
+            model.clear();
+            model.addElement("Invalid price entered.");
+        }
+                
+    }//GEN-LAST:event_btnBinarySearchActionPerformed
+
+ 
 
     /**
      * @param args the command line arguments
@@ -198,9 +313,13 @@ public class SearchSortProducts extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBinarySearch;
     private javax.swing.JButton btnBubbleSort;
+    private javax.swing.JButton btnLinearSearch;
     private javax.swing.JButton btnSelectionSort;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEnterProductPrice;
     private javax.swing.JList<String> lstProducts;
+    private javax.swing.JTextField txtSearchPrice;
     // End of variables declaration//GEN-END:variables
 }
