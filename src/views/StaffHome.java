@@ -45,8 +45,9 @@ public class StaffHome extends javax.swing.JFrame {
 
         lblWelcomeStaff = new javax.swing.JLabel();
         btnModifyProducts = new javax.swing.JButton();
-        btnModifyOrders = new javax.swing.JButton();
+        btnSearchSortProducts = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
+        btnModifyOrders1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,10 +60,10 @@ public class StaffHome extends javax.swing.JFrame {
             }
         });
 
-        btnModifyOrders.setText("VIEW ALL ORDERS");
-        btnModifyOrders.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchSortProducts.setText("SEARCH AND SORT PRODUCTS");
+        btnSearchSortProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModifyOrdersActionPerformed(evt);
+                btnSearchSortProductsActionPerformed(evt);
             }
         });
 
@@ -70,6 +71,13 @@ public class StaffHome extends javax.swing.JFrame {
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogOutActionPerformed(evt);
+            }
+        });
+
+        btnModifyOrders1.setText("VIEW ALL ORDERS");
+        btnModifyOrders1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyOrders1ActionPerformed(evt);
             }
         });
 
@@ -84,12 +92,10 @@ public class StaffHome extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModifyOrders, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                    .addComponent(btnModifyProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearchSortProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModifyProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnModifyOrders1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -99,11 +105,13 @@ public class StaffHome extends javax.swing.JFrame {
                 .addComponent(lblWelcomeStaff)
                 .addGap(53, 53, 53)
                 .addComponent(btnModifyProducts)
-                .addGap(31, 31, 31)
-                .addComponent(btnModifyOrders)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(btnSearchSortProducts)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(btnModifyOrders1)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogOut)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -134,9 +142,16 @@ public class StaffHome extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnModifyProductsActionPerformed
 
-    private void btnModifyOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyOrdersActionPerformed
+    private void btnSearchSortProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchSortProductsActionPerformed
+        // ADDED IN STAGE 12 
+        SearchSortProducts ssp = new SearchSortProducts();
+        ssp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSearchSortProductsActionPerformed
+
+    private void btnModifyOrders1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyOrders1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModifyOrdersActionPerformed
+    }//GEN-LAST:event_btnModifyOrders1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,8 +185,9 @@ public class StaffHome extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JButton btnModifyOrders;
+    private javax.swing.JButton btnModifyOrders1;
     private javax.swing.JButton btnModifyProducts;
+    private javax.swing.JButton btnSearchSortProducts;
     private javax.swing.JLabel lblWelcomeStaff;
     // End of variables declaration//GEN-END:variables
 }

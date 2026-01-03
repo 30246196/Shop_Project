@@ -31,14 +31,11 @@
           <Group type="102" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnModifyOrders" pref="151" max="32767" attributes="0"/>
+                  <Component id="btnSearchSortProducts" max="32767" attributes="0"/>
                   <Component id="btnModifyProducts" pref="0" max="32767" attributes="0"/>
+                  <Component id="btnModifyOrders1" max="32767" attributes="0"/>
+                  <Component id="btnLogOut" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
-              <Component id="btnLogOut" min="-2" pref="152" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -50,11 +47,13 @@
               <Component id="lblWelcomeStaff" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Component id="btnModifyProducts" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Component id="btnModifyOrders" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <Component id="btnSearchSortProducts" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <Component id="btnModifyOrders1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnLogOut" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="66" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -73,12 +72,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModifyProductsActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnModifyOrders">
+    <Component class="javax.swing.JButton" name="btnSearchSortProducts">
       <Properties>
-        <Property name="text" type="java.lang.String" value="VIEW ALL ORDERS"/>
+        <Property name="text" type="java.lang.String" value="SEARCH AND SORT PRODUCTS"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModifyOrdersActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSearchSortProductsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnLogOut">
@@ -87,6 +86,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogOutActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnModifyOrders1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="VIEW ALL ORDERS"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModifyOrders1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
