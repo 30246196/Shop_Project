@@ -122,7 +122,7 @@ public class StaffHome extends javax.swing.JFrame {
     // a) btnLOgOut Event Method
     
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
-        // FROM Staff Login Frame to Main Menu Frame
+        // From Staff Login Frame to Main Menu Frame
         MainMenu mMainMenu = new MainMenu();
         // get visible the new form
         mMainMenu.setVisible(true);

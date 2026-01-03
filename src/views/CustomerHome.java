@@ -66,10 +66,25 @@ public class CustomerHome extends javax.swing.JFrame {
         });
 
         btnViewOrders.setText("VIEW MY ORDERS");
+        btnViewOrders.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewOrdersActionPerformed(evt);
+            }
+        });
 
         btnEditDetails.setText("EDIT DETAILS");
+        btnEditDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditDetailsActionPerformed(evt);
+            }
+        });
 
         btnUnregister.setText("UNREGISTER FROM SHOP");
+        btnUnregister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnregisterActionPerformed(evt);
+            }
+        });
 
         btnLogOut.setText("LOG OUT");
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +165,21 @@ public class CustomerHome extends javax.swing.JFrame {
         // hide the current form
         this.setVisible(false);
     }//GEN-LAST:event_btnBrowseProductsActionPerformed
+
+    private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
+        // TODO add your handling code here:
+//        ViewOrders vo = new ViewOrders(loggedInCustomer);
+//        vo.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnViewOrdersActionPerformed
+
+    private void btnEditDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDetailsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditDetailsActionPerformed
+
+    private void btnUnregisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnregisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUnregisterActionPerformed
 
     
     // 4. Main
