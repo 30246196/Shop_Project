@@ -168,14 +168,21 @@ public class Basket extends javax.swing.JFrame {
         // uses the logged-in Customer's Username as identifier
         db.writeOrder(currentOrder,loggedInCustomer.getUsername());
         
-        // Show the Confirmation page
-        Confirmation conf = new Confirmation(loggedInCustomer);
-        
-        // display the confirmation frame
-        conf.setVisible(true);
-        this.setVisible(false);
+//        // Show the Confirmation page
+//        Confirmation conf = new Confirmation(loggedInCustomer);
+//        
+//        // display the confirmation frame
+//        conf.setVisible(true);
+//        this.setVisible(false);
         //dispose(); // optional: close current frame
-               
+        
+        //stage 11 go to SelectMethodPayment view
+        SelectPaymentMethod selPayment =new SelectPaymentMethod(currentOrder,loggedInCustomer);
+        
+        // display the SelectMethodPayment view
+        selPayment.setVisible(true);
+        this.setVisible(false);
+        
     }//GEN-LAST:event_btnBuyActionPerformed
 
     /**

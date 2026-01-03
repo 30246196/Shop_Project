@@ -5,6 +5,7 @@ package models;// the class belongs to the models package
 
 //import models.User;
 import java.util.HashMap;// used to store multiple Order objects for this customer
+import java.util.LinkedList; // added at stage 11
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -42,6 +43,9 @@ public class Customer extends User{
     // new attribute Assessment 3 TODO DONE
     private HashMap<Integer,Order> orders;// right button to Fix Imports
     
+       //Stage 11 Modify your Customer class to include a new attribute: a Linked List of integers
+    private LinkedList<Integer> cardNumbers;
+    
     // 3. Constructors    
     
     //orders= new HashMap(); to add in the Constructors
@@ -62,6 +66,7 @@ public class Customer extends User{
 	isRegistered=true;
         // added in Assessment 3
         orders= new HashMap();
+        cardNumbers = new LinkedList(); // added in stage 11
     }
     //Constructor Customer(Everything EXCEPT isRegistered - 8 parameters
     public Customer(String userNameIn, String passwordIn, String firstNameIn, 
@@ -79,6 +84,7 @@ public class Customer extends User{
         isRegistered=false; 
         // added in Assessment 3
         orders= new HashMap();// TODO check
+        cardNumbers = new LinkedList(); // added in stage 11
     }
     
     // 4. Getters and Setters
@@ -150,6 +156,38 @@ public class Customer extends User{
         orders=ordersIn;
     }
     
+    //Stage 11
+    // getter and setter for LinkedList cardNumbers
+    //Getter
+    public LinkedList<Integer> getCardNumbers()
+    {
+        return cardNumbers;
+    }
+    //Setter
+    public void setCardNumbers(LinkedList<Integer> cardNumbersIn)
+    {
+        cardNumbers = cardNumbersIn;
+    }
         
-       
+   // 5. Methods
+
+   // a)Method addCard(int cardNo)
+   // Adds the card number to the END of the linked list
+    public void addCard(int cardNo)
+    { 
+        cardNumbers.add(cardNo);
+    } 
+   // b)Method removeCard(int nodeNo) 
+   // Removes the card at the given index (node number) 
+    public void removeCard(int nodeNo)
+    { 
+        cardNumbers.remove(nodeNo);
+    } 
+   // c) Method addFirstCard(int cardNo)
+   // Adds the card number to the START of the linked list
+   public void addFirstCard(int cardNo)
+   {
+        cardNumbers.addFirst(cardNo);   
+   }
+   
 }//end Customer class
