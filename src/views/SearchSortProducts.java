@@ -87,6 +87,7 @@ public class SearchSortProducts extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         lstProducts = new javax.swing.JList<>();
         btnBubbleSort = new javax.swing.JButton();
+        btnSelectionSort = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +100,13 @@ public class SearchSortProducts extends javax.swing.JFrame {
             }
         });
 
+        btnSelectionSort.setText("Selection Sort");
+        btnSelectionSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectionSortActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,9 +114,14 @@ public class SearchSortProducts extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBubbleSort)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(49, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBubbleSort, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSelectionSort, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +129,9 @@ public class SearchSortProducts extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnBubbleSort)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBubbleSort)
+                    .addComponent(btnSelectionSort))
                 .addGap(27, 27, 27))
         );
 
@@ -127,6 +142,35 @@ public class SearchSortProducts extends javax.swing.JFrame {
         bubbleSortProducts();
         displayProducts();
     }//GEN-LAST:event_btnBubbleSortActionPerformed
+
+    private void btnSelectionSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectionSortActionPerformed
+        // TODO add your handling code here:
+        selectionSortProducts();
+        displayProducts();
+    }//GEN-LAST:event_btnSelectionSortActionPerformed
+
+    
+    private void selectionSortProducts() {
+    int n = products.size();
+
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+
+        // Buscar el índice del precio más bajo
+        for (int j = i + 1; j < n; j++) {
+            if (products.get(j).getPrice() < products.get(minIndex).getPrice()) {
+                minIndex = j;
+            }
+        }
+
+        // Intercambiar si encontramos un valor menor
+        if (minIndex != i) {
+            Product temp = products.get(i);
+            products.set(i, products.get(minIndex));
+            products.set(minIndex, temp);
+        }
+    }
+}
 
     /**
      * @param args the command line arguments
@@ -155,6 +199,7 @@ public class SearchSortProducts extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBubbleSort;
+    private javax.swing.JButton btnSelectionSort;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> lstProducts;
     // End of variables declaration//GEN-END:variables
