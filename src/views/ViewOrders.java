@@ -4,6 +4,7 @@
  */
 package views;
 
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import models.Customer;
 import models.DBManager;
@@ -11,7 +12,7 @@ import models.Order;
 
 /**
  *
- * @author edith
+ * @author 30246196
  */
 public class ViewOrders extends javax.swing.JFrame {
     
@@ -23,9 +24,10 @@ public class ViewOrders extends javax.swing.JFrame {
      * Creates new form ViewOrders
      */
     public ViewOrders(Customer c) {
+        this.loggedInCustomer = c;
         initComponents();
         
-        this.loggedInCustomer = c;
+        lblTitle.setText("Your orders " + loggedInCustomer.getFirstName() + ": reference, date and total" );
         lstOrders.setModel(model);
         loadOrdersForCustomer();
     }
@@ -33,24 +35,42 @@ public class ViewOrders extends javax.swing.JFrame {
     // Load only orders that belong to the logged-in customer
     private void loadOrdersForCustomer()
     {
-        DBManager db = new DBManager();
-        ArrayList<Order> allOrders = db.loadOrders(); // loads all orders
-        
-        model.clear();
-        
-        for (Order o : allOrders)
+       model.clear();
+       
+       // validate customer
+       String customerUsername =(loggedInCustomer != null)? loggedInCustomer.getUsername() : null;
+       if (customerUsername == null || customerUsername.trim().isEmpty() )
+       {
+           model.addElement("No customer is logged in.");
+           return;
+       }
+       
+       // load orders from this customer from DB
+       DBManager db = new DBManager();
+       //ArrayList<Order> orders = db.loadOrders(customerUsername); // DB filters by username
+       java.util.ArrayList<models.Order> orders = db.loadOrders(customerUsername);
+       java.text.NumberFormat currency = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK);
+       
+        for (models.Order o : orders)
         { 
             if (o.getUsername().equals(loggedInCustomer.getUsername()))
             { 
-                model.addElement("Order #" + o.getOrderId() + " - £" + o.getTotal());
+                //String line = "Order #" + o.getOrderId() + " - £" + o.getOrderTotal();
+                
+                //String line = "Order #" + o.getOrderId() + " - " + currency.format(o.getOrderTotal());
+                
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+                String dateStr = sdf.format(o.getOrderDate());
+                String line = "Order #" + o.getOrderId() + " | " + dateStr + " | " + currency.format(o.getOrderTotal());
+                model.addElement(line);
             }
         }
-        if (model.isEmpty())
+        if (model.getSize() == 0)
             {
                 model.addElement("No orders found for this customer.");
             }
     }
-  }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,6 +91,11 @@ public class ViewOrders extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lstOrders);
 
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         lblTitle.setText("Your Orders:");
 
@@ -81,17 +106,13 @@ public class ViewOrders extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBack)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(109, 109, 109))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,15 +121,30 @@ public class ViewOrders extends javax.swing.JFrame {
                 .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 280, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addGap(18, 18, 18)
                 .addComponent(btnBack)
                 .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        // FROM ViewOrders to CustomerHome
+        // FROM Customer Home Frame to Main Menu Frame
+        
+        CustomerHome ch = new CustomerHome(loggedInCustomer);
+        // get visible the new form
+        ch.setVisible(true);
+        // hide the current form
+        this.setVisible(false);// or this.dispose();
+         
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments

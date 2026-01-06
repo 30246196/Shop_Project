@@ -168,8 +168,8 @@ public class CustomerHome extends javax.swing.JFrame {
 
     private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
         // TODO add your handling code here:
-//        ViewOrders vo = new ViewOrders(loggedInCustomer);
-//        vo.setVisible(true);
+        ViewOrders vo = new ViewOrders(loggedInCustomer);
+        vo.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 

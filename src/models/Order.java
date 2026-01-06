@@ -1,12 +1,4 @@
-/*
-The Order class represents a customer order with 
-attributes :orderId,orderDate, status and orderTotal
-The order will be stored in a table called Orders from a db 
-with an attribute from customer(username)
-Manages multiple OrderLine item objects(each representing a product and quantity)
-using a HashMap 
-and recalculates the total whenever items are added.
-*/
+
 package models;// Order class belongs to the models package
 
 import java.util.Date;// for storing the order date
@@ -19,10 +11,19 @@ import java.util.Map;// added when fix imports in the for loop of calculateOrder
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
+/*
  *
  * @author 30246196
- */
+ * 
+* The Order class represents a customer order with 
+* attributes :orderId,orderDate, status and orderTotal
+* The order will be stored in a table called Orders from a db 
+* with an attribute from customer(username)
+* Manages multiple OrderLine item objects(each representing a product and quantity)
+* using a HashMap 
+* and recalculates the total whenever items are added.
+*/
+
 public class Order {
     
     // 1. Static constants
@@ -37,6 +38,9 @@ public class Order {
     /*select the all line and right button -> fix imports*/
     private String status;// current state of the order("Ongoing","Completed")
     private double orderTotal;//Total cost of the order
+    
+    //added after stage 14,to help view the orders by username(Customer)
+    private String username;// 
     
     // A HashMap where:
     // HashMap<Data_Type_of_key,Data_Type_of_Value>
@@ -74,12 +78,12 @@ public class Order {
     // 4. Getters and setters
     
     // Getter
-    public int  getorderId()
+    public int  getOrderId()
     {
         return orderId;
     }
     // Setters
-    public void setorderId(int orderIdIn)
+    public void setOrderId(int orderIdIn)
     {
         orderId=orderIdIn;
     }  
@@ -128,6 +132,16 @@ public class Order {
         orderLines=orderLinesIn;
     }
     
+    //Getter username
+    public String getUsername()
+    {
+        return username;
+    }
+    //Setter
+    public void setUsername(String usernameIn)
+    {
+        username=usernameIn;
+    }
     
     // 5. Business methods
     

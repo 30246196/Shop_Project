@@ -1,5 +1,5 @@
 /*
-This Java class defines an OrderLine object with attributes: ordrlineId, product, quantity and line Total
+This Java class defines an OrderLine object with attributes: orderlineId, product, quantity and line Total
 help to calculate a 'line' total, the price of the product*quantity
 and 'stores' to look for the product
 Represents a single line in an order

@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.sql.PreparedStatement;// added manually
+import java.sql.SQLException;
+import java.util.HashSet;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -49,7 +51,31 @@ public class DBManager {
     private final String driver = "net.ucanaccess.jdbc.UcanaccessDriver";
     // we need a connection for a db
     // Path to the Access database file
-    private final String connectionString="jdbc:ucanaccess://Data\\ShopDB.accdb";
+    private final String connectionString="jdbc:ucanaccess://Data/ShopDB.accdb";
+    //private final String connectionString ="jdbc:ucanaccess:///C:/Users/30246196/OneDrive - City of Glasgow College/HND 2025/SOFT DEVELOPMENT/NetBeans/Data/ShopDB.accdb";
+
+    
+    //added after stage 14 to check the connection
+    
+public DBManager() {
+        try 
+        {
+            // load the driver UCanAccess
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("driver UCanAccessnot not found. Check the JARs in the classpath.", e);
+        }
+        
+        
+        String dbRel = "Data/ShopDB.accdb";
+        java.io.File f = new java.io.File(dbRel);
+        System.out.println("Resolved DB path: " + f.getAbsolutePath());
+        System.out.println("DB exists? " + f.exists());
+
+    }
+
+    
+    //
     
     // 2. Method Write Order to Database
 
@@ -58,7 +84,7 @@ public class DBManager {
     // Insert a new order record into a database.
     // Purpose is to save an Order object into a database table called Orders,
     // associating it with a customer's username.
-    // Order o is an object containing date,status and total.
+    // Order o is an object containing: date,username,total and status.
     // Uses SimpleDateFormat to format the order date.
     // Ensures safe SQL execution and prevents SQL injection.
     public void writeOrder(Order o, String customerUsername)
@@ -302,7 +328,7 @@ public class DBManager {
     
     public ArrayList<Product> loadProducts() // fix imports
     {
-    // create ab ArrayList to store the content of the Products table
+    // create an ArrayList to store the content of the Products table
     ArrayList<Product> allProducts = new ArrayList<>();
     
     try
@@ -456,7 +482,7 @@ public class DBManager {
             }  
         
        
-        // st up connection
+        // set up connection
         try
         {
           Class.forName(driver);
@@ -480,5 +506,55 @@ public class DBManager {
             System.out.println("Error Editing Product: " + ex.getMessage());
         }
     }
+   
+   // Method loadOrders from an specifc username customer
+   // It could be used for staff and customers,
+   // Can staff look for all orders and customer by their username
+   
+   
+   public ArrayList<Order> loadOrders(String username)
+   {
+       //TODO decide if loadOrders will be one method or 2
+       
+        if (username == null || username.isBlank()) {
+            throw new IllegalArgumentException("username cannot be neither null nor empty.");
+        }
+
+        
+        String sql = "SELECT OrderId, OrderDate, Username, OrderTotal, Status " +
+                     "FROM Orders WHERE Username = ?";
+
+        //ArrayList<Order> orders = new ArrayList<>();
+        java.util.ArrayList<Order> orders = new java.util.ArrayList<>();
+        
+        try(Connection conn = DriverManager.getConnection(connectionString);
+        PreparedStatement stmt = conn.prepareStatement(sql);)
+        {
+            stmt.setString(1, username);
+        
+            try(ResultSet rs = stmt.executeQuery())
+            {
+                while (rs.next())
+                {
+                    Order o = new Order();
+                    o.setOrderId(rs.getInt("OrderId"));
+                    o.setOrderDate(rs.getDate("OrderDate"));
+                    o.setUsername(rs.getString("Username"));
+                    o.setOrderTotal(rs.getDouble("OrderTotal"));
+                    o.setStatus(rs.getString("Status"));
+                    orders.add(o);
+                }
+            }
+        
+        }catch(SQLException ex)
+        {
+          throw new RuntimeException("Error loading orders from '" + username + "': " + ex.getMessage(), ex);  
+        }
+        return orders;
+        
+   }//end loadOrders()
+
+       
+   
 }
 
