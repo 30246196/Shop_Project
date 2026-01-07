@@ -94,6 +94,11 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         btnViewProducts.setText("VIEW PRODUCTS");
+        btnViewProducts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewProductsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,6 +167,16 @@ public class MainMenu extends javax.swing.JFrame {
         // hide the current form
         this.setVisible(false);
     }//GEN-LAST:event_btnStaffLoginActionPerformed
+
+    
+    // c) btnViewProducts Method Event Handler
+    private void btnViewProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewProductsActionPerformed
+        // TODO add your handling code here:
+        // open a view with all the products by Heat Pump, Solar Panel and Replacement Part
+        new ViewProductsForGuests().setVisible(true);
+        // Cerrar la ventana actual (por ejemplo MainMenu)
+        this.dispose();
+    }//GEN-LAST:event_btnViewProductsActionPerformed
 
     /**
      * @param args the command line arguments
