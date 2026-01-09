@@ -628,6 +628,53 @@ public DBManager() {
         }
    }//end unregisterCustomer()
    
+   
+   // 13. Method update password for users
+   
+   public boolean updatePassword(String username, String currentPassword, String newPassword)
+   {    
+       try {
+            Class.forName(driver);
 
+            try (Connection conn = DriverManager.getConnection(connectionString))
+            {
+                
+            // Verify current password
+            String checkSql = "SELECT * FROM Customers WHERE Username = ? AND Password = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkSql))
+            {
+                checkStmt.setString(1, username);
+                checkStmt.setString(2, currentPassword);
+                
+                ResultSet rs = checkStmt.executeQuery();
+                if (!rs.next())
+                { // Current password is incorrect
+                    return false;
+                }
+            }
+            
+            // Update new password
+            String updateSql = "UPDATE Customers SET Password = ? WHERE Username = ?";
+            
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql))
+            { 
+                updateStmt.setString(1, newPassword);
+                updateStmt.setString(2, username);
+                
+                int rows = updateStmt.executeUpdate();
+                return rows > 0;
+            }
+            
+        } 
+            
+       }catch (Exception ex)
+       {
+           System.err.println("Error updating password:");
+           ex.printStackTrace();
+           return false;
+       }
+    
+   } // end updatePassword()
+       
 }// End DBManager
 

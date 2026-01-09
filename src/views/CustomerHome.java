@@ -167,14 +167,15 @@ public class CustomerHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBrowseProductsActionPerformed
 
     private void btnViewOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewOrdersActionPerformed
-        // TODO add your handling code here:
         ViewOrders vo = new ViewOrders(loggedInCustomer);
         vo.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnViewOrdersActionPerformed
 
     private void btnEditDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditDetailsActionPerformed
-        // TODO add your handling code here:
+        EditPasswordForm editPassword = new EditPasswordForm(loggedInCustomer.getUsername());
+        editPassword.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnEditDetailsActionPerformed
 
     private void btnUnregisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnregisterActionPerformed
