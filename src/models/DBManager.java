@@ -605,6 +605,29 @@ public DBManager() {
         }   
     }
 
+   // 12. Method Unregister an existing Customer
+   
+   public boolean unregisterCustomer(String username)
+   { 
+    try { 
+       Class.forName(driver);
+   
+        try (Connection conn = DriverManager.getConnection(connectionString);
+           PreparedStatement pstmt = conn.prepareStatement( "DELETE FROM Customers WHERE Username = ?" ))
+        { 
+            pstmt.setString(1, username);
+        
+            int rows = pstmt.executeUpdate();
+            return rows > 0;// true if a customer was deleted
+        }
+    } catch (Exception ex)
+        { 
+            System.err.println("Error in unregisterCustomer:");
+            ex.printStackTrace();
+            return false;// if there is no customer with this username or another issue
+        }
+   }//end unregisterCustomer()
+   
 
 }// End DBManager
 

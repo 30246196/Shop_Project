@@ -178,7 +178,7 @@ public class CustomerHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditDetailsActionPerformed
 
     private void btnUnregisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnregisterActionPerformed
-        // TODO add your handling code here:
+        new UnregisterForm(loggedInCustomer.getUsername()).setVisible(true);
     }//GEN-LAST:event_btnUnregisterActionPerformed
 
     
