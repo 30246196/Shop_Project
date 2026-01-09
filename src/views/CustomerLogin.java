@@ -91,6 +91,11 @@ public class CustomerLogin extends javax.swing.JFrame {
         });
 
         btnRegister.setText("REGISTER");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         btnReturnToMainMenu.setText("RETURN TO MAIN MENU");
         btnReturnToMainMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -216,6 +221,12 @@ public class CustomerLogin extends javax.swing.JFrame {
         // hide the current form
         this.setVisible(false);
     }//GEN-LAST:event_btnReturnToMainMenuActionPerformed
+
+    // c) btnRegister
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        new RegisterForm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegisterActionPerformed
 
     /**
      * @param args the command line arguments

@@ -507,7 +507,7 @@ public DBManager() {
         }
     }
    
-   // Method loadOrders from an specifc username customer
+   // 10. Method loadOrders from an specifc username customer
    // It could be used for staff and customers,
    // Can staff look for all orders and customer by their username
    
@@ -554,7 +554,57 @@ public DBManager() {
         
    }//end loadOrders()
 
-       
+    
+   /* 11.  Method Register new Customer
+   *
+   * added after stage 14
+   */
    
-}
+   public boolean registerCustomer(String username , String password,
+                                   String firstName,String lastName,
+                                   String address1, String address2,
+                                   String town, String postcode )
+   {
+       try {
+           //  Load all customers from DB
+           ArrayList<Customer> allCustomers = loadCustomers();
+           
+           //  Check if username already exists
+            for (Customer c : allCustomers)
+            {
+                if (c.getUsername().equalsIgnoreCase(username))
+                {
+                    System.out.println("Username already exists: " + username);
+                    return false; // registration fails
+                }
+            }
+        
+            //  Insert new customer into DB
+            Class.forName(driver);
+            
+            try (Connection conn = DriverManager.getConnection(connectionString);
+                    PreparedStatement pstmt = conn.prepareStatement("INSERT INTO Customers (Username, Password, FirstName, LastName, AddressLine1, AddressLine2, Town, Postcode) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)" ))
+            {
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+                pstmt.setString(3, firstName);
+                pstmt.setString(4, lastName);
+                pstmt.setString(5, address1);
+                pstmt.setString(6, address2);
+                pstmt.setString(7, town);
+                pstmt.setString(8, postcode);
+                pstmt.executeUpdate();
+                return true; // Registration successful
+            }
+                
+        }catch (Exception ex)
+        {
+            System.err.println("Error in registerCustomer:");
+            ex.printStackTrace();
+            return false;
+        }   
+    }
+
+
+}// End DBManager
 
