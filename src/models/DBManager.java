@@ -27,7 +27,8 @@ import java.util.ArrayList;
 
 import java.sql.PreparedStatement;// added manually
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.Date;
+import java.util.List;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -675,6 +676,95 @@ public DBManager() {
        }
     
    } // end updatePassword()
+   
+   // 14. Method getAllOrders() for Staff
+   
+   public List<String[]> getAllOrders() {
+       List<String[]> orders = new ArrayList<>();
        
+       try {
+           Class.forName(driver);
+       try (Connection conn = DriverManager.getConnection(connectionString))
+       { 
+           String sql = "SELECT OrderId, OrderDate, UserName, OrderTotal, Status FROM Orders";
+           
+           try (PreparedStatement stmt = conn.prepareStatement(sql))
+            { 
+                ResultSet rs = stmt.executeQuery();
+                
+                // Date formatters: input = Access format, output = dd/MM/yyyy
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                
+                while (rs.next())
+                {
+                    // Read the raw date string from Access
+                    String rawDate = rs.getString("OrderDate");
+                    
+                    // Convert the raw date into desired format
+                    String formattedDate ="";
+                    try
+                    {
+                        Date date = inputFormat.parse(rawDate);
+                        formattedDate = outputFormat.format(date);
+                    }catch (Exception ex)
+                    {
+                        //If parsing fails, keep the original format
+                        formattedDate = rawDate;
+                    }
+                    
+                    // Buid the row for the tableOrders
+                    String[] row = new String[]
+                        { 
+                            rs.getString("OrderId"),
+                            formattedDate, //changed
+                            rs.getString("UserName"),
+                            rs.getString("OrderTotal"),
+                            rs.getString("Status")
+                        };
+                        orders.add(row);
+                }
+            }
+       }
+       } catch (Exception ex)
+            { 
+                ex.printStackTrace();
+            }
+   
+   return orders;
+   }// end getAllOrders()
+   
+   // 15. Method updateOrderStatus
+   
+   public boolean updateOrderStatus(String orderId, String newStatus)
+   { 
+       try
+       {
+           Class.forName(driver);
+           
+           try (Connection conn = DriverManager.getConnection(connectionString))
+           {
+               String sql = "UPDATE Orders SET Status = ? WHERE OrderId = ?";
+               
+               try (PreparedStatement stmt = conn.prepareStatement(sql))
+               {
+                   stmt.setString(1, newStatus);
+                   stmt.setString(2, orderId);
+                   
+                   int rows = stmt.executeUpdate();
+                   return rows > 0;
+               }
+           }
+           
+       }catch (Exception ex)
+       {
+           System.err.println("Error updating order status:");
+           ex.printStackTrace();
+           return false;
+       }
+       
+   }// end updateOrderStatus 
+   
+   
 }// End DBManager
 

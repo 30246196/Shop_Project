@@ -33,8 +33,9 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnSearchSortProducts" max="32767" attributes="0"/>
                   <Component id="btnModifyProducts" pref="0" max="32767" attributes="0"/>
-                  <Component id="btnModifyOrders1" max="32767" attributes="0"/>
+                  <Component id="btnModifyOrders" max="32767" attributes="0"/>
                   <Component id="btnLogOut" max="32767" attributes="0"/>
+                  <Component id="btnChangePassword" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -47,11 +48,13 @@
               <Component id="lblWelcomeStaff" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               <Component id="btnModifyProducts" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
-              <Component id="btnSearchSortProducts" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
-              <Component id="btnModifyOrders1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnSearchSortProducts" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnModifyOrders" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnChangePassword" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
               <Component id="btnLogOut" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
@@ -88,12 +91,20 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLogOutActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnModifyOrders1">
+    <Component class="javax.swing.JButton" name="btnModifyOrders">
       <Properties>
         <Property name="text" type="java.lang.String" value="VIEW ALL ORDERS"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModifyOrders1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModifyOrdersActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnChangePassword">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="CHANGE PASSWORD"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChangePasswordActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

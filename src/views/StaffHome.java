@@ -47,7 +47,8 @@ public class StaffHome extends javax.swing.JFrame {
         btnModifyProducts = new javax.swing.JButton();
         btnSearchSortProducts = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
-        btnModifyOrders1 = new javax.swing.JButton();
+        btnModifyOrders = new javax.swing.JButton();
+        btnChangePassword = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,10 +75,17 @@ public class StaffHome extends javax.swing.JFrame {
             }
         });
 
-        btnModifyOrders1.setText("VIEW ALL ORDERS");
-        btnModifyOrders1.addActionListener(new java.awt.event.ActionListener() {
+        btnModifyOrders.setText("VIEW ALL ORDERS");
+        btnModifyOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModifyOrders1ActionPerformed(evt);
+                btnModifyOrdersActionPerformed(evt);
+            }
+        });
+
+        btnChangePassword.setText("CHANGE PASSWORD");
+        btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangePasswordActionPerformed(evt);
             }
         });
 
@@ -94,8 +102,9 @@ public class StaffHome extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSearchSortProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnModifyProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(btnModifyOrders1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnModifyOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -105,11 +114,13 @@ public class StaffHome extends javax.swing.JFrame {
                 .addComponent(lblWelcomeStaff)
                 .addGap(53, 53, 53)
                 .addComponent(btnModifyProducts)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(btnSearchSortProducts)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(btnModifyOrders1)
                 .addGap(18, 18, 18)
+                .addComponent(btnSearchSortProducts)
+                .addGap(18, 18, 18)
+                .addComponent(btnModifyOrders)
+                .addGap(18, 18, 18)
+                .addComponent(btnChangePassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(btnLogOut)
                 .addGap(34, 34, 34))
         );
@@ -149,9 +160,15 @@ public class StaffHome extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnSearchSortProductsActionPerformed
 
-    private void btnModifyOrders1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyOrders1ActionPerformed
+    private void btnModifyOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyOrdersActionPerformed
+        new ViewAllOrders(loggedInStaff).setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnModifyOrdersActionPerformed
+
+    private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModifyOrders1ActionPerformed
+    }//GEN-LAST:event_btnChangePasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,8 +201,9 @@ public class StaffHome extends javax.swing.JFrame {
     // 5. Declaration of Variables
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JButton btnModifyOrders1;
+    private javax.swing.JButton btnModifyOrders;
     private javax.swing.JButton btnModifyProducts;
     private javax.swing.JButton btnSearchSortProducts;
     private javax.swing.JLabel lblWelcomeStaff;
