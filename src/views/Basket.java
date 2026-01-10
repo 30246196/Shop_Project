@@ -154,7 +154,10 @@ public class Basket extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddMoreProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMoreProductsActionPerformed
-        // TODO add your handling code here:
+        // Go back to product selection screen
+        ShopPageForCustomers shop = new ShopPageForCustomers(loggedInCustomer, currentOrder);
+        shop.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAddMoreProductsActionPerformed
 
     // button Buy pressed
