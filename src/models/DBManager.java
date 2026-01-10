@@ -765,6 +765,33 @@ public DBManager() {
        
    }// end updateOrderStatus 
    
+   // 16. Method Update Staff Password
+   
+   public boolean updateStaffPassword(String username, String newPassword)
+   { 
+       try {
+           Class.forName(driver);
+           
+           try (Connection conn = DriverManager.getConnection(connectionString))
+           {
+               String sql = "UPDATE Staff SET Password = ? WHERE UserName = ?";
+               
+               try (PreparedStatement stmt = conn.prepareStatement(sql)) 
+               {
+                   stmt.setString(1, newPassword);
+                   stmt.setString(2, username);
+                   
+                   int rows = stmt.executeUpdate();
+                   return rows > 0;
+               }
+           }
+           
+       }catch (Exception ex)
+            {
+                ex.printStackTrace();
+                return false;
+            }
+   }
    
 }// End DBManager
 

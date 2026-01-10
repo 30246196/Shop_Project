@@ -118,9 +118,9 @@ public class StaffHome extends javax.swing.JFrame {
                 .addComponent(btnSearchSortProducts)
                 .addGap(18, 18, 18)
                 .addComponent(btnModifyOrders)
-                .addGap(18, 18, 18)
-                .addComponent(btnChangePassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addComponent(btnChangePassword)
+                .addGap(18, 18, 18)
                 .addComponent(btnLogOut)
                 .addGap(34, 34, 34))
         );
@@ -167,7 +167,9 @@ public class StaffHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModifyOrdersActionPerformed
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
-        // TODO add your handling code here:
+        ChangePasswordForStaff cpf = new ChangePasswordForStaff(loggedInStaff);
+        cpf.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnChangePasswordActionPerformed
 
     /**
