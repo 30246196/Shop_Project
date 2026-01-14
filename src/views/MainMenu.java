@@ -7,12 +7,19 @@
 
 package views; // place the class inside the views package, 
 // organise code into logical groups for better maintability
+import java.awt.BorderLayout;
+import utils.EcoPalette; // import the palette of colours from utils
+
+import utils.ThemeManager;
+import views.base.BaseFrame;
+import views.common.HeaderBar;
+
+
 
 // 2. Imports
 
 //import javax.swing.*; 
 //import java.util.logging.Logger;
-
 
 /*
  * This is the MainMenu class for a Java Swing application.
@@ -28,11 +35,18 @@ package views; // place the class inside the views package,
  *  Thread Safety: GUI updates on EDT.
  *  Navigation: Switching between frames.
  *  Logging: For error handling and debugging.
+ *
+ *  Background: Duck Egg (#E0F0E9) for calm eco feel.
+ *  Title: Stone Gray (#6B7A6F) for contrast.
+ *  Start (Primary): Leaf Green (#228B22) for strong emphasis.
+ *  Settings (Secondary): Eco Green (#A8D5BA) for softer emphasis.
+ *  Exit: Stone Gray for neutral tone.
  * 
  * @author 30246196
  */
 
-public class MainMenu extends javax.swing.JFrame {
+public class MainMenu extends BaseFrame {
+//public class MainMenu extends javax.swing.JFrame {
     
     // 3. Static Constants
     
@@ -52,6 +66,17 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents(); // Method that sets up the GUI elements
+        
+        applyCommonTheme(); // from BaseFrame
+        applyColors(); // apply the colors
+        
+        
+        HeaderBar header = new HeaderBar("Main Menu");
+        pnlHeader.setLayout(new BorderLayout());
+        pnlHeader.add(header, BorderLayout.CENTER);
+        
+        
+
     }
 
     // 8. Private Helper Methods
@@ -74,8 +99,10 @@ public class MainMenu extends javax.swing.JFrame {
         btnCustomerLogin = new javax.swing.JButton();
         btnStaffLogin = new javax.swing.JButton();
         btnViewProducts = new javax.swing.JButton();
+        pnlHeader = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblMainMenu.setText("MAIN MENU");
 
@@ -100,31 +127,35 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        pnlHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo_128x128_no_orange.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCustomerLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblMainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnStaffLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addComponent(pnlHeader)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStaffLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCustomerLogin)
+                    .addComponent(btnViewProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lblMainMenu)
-                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(btnCustomerLogin)
                 .addGap(18, 18, 18)
                 .addComponent(btnStaffLogin)
                 .addGap(18, 18, 18)
                 .addComponent(btnViewProducts)
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         pack();
@@ -178,6 +209,88 @@ public class MainMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnViewProductsActionPerformed
 
+    // d) Applies styling method eco-friendly colours to the Main Menu UI
+    
+    /**
+     * Applies Eco-friendly colours to the Main Menu UI.
+     */
+    
+    
+    protected void applyCommonTheme() {
+            super.applyCommonTheme();
+            // Example: style your heading & buttons with ThemeManager
+            ThemeManager.styleHeading(lblMainMenu);
+            ThemeManager.stylePrimary(btnViewProducts);
+            ThemeManager.styleSecondary(btnCustomerLogin);
+            ThemeManager.styleSecondary(btnStaffLogin);
+        }
+
+    
+    private void applyColors() {
+        // --- Backgrounds ---
+        // Frame content background (Duck Egg)
+        getContentPane().setBackground(
+            EcoPalette.DUCK_EGG
+            // Fallback without EcoPalette: new java.awt.Color(224, 240, 233)
+        );
+
+        // If you later add panels, set their background too:
+        // somePanel.setBackground(EcoPalette.DUCK_EGG);
+
+        // --- Label (Title) ---
+        lblMainMenu.setForeground(
+            EcoPalette.STONE_GRAY
+            // Fallback: new java.awt.Color(107, 122, 111)
+        );
+        lblMainMenu.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 22)); // a bit larger
+
+        // --- Buttons ---
+        // Primary: VIEW PRODUCTS → strong green (Accept)
+        stylePrimaryButton(btnViewProducts);
+
+        // Secondary: CUSTOMER LOGIN → soft green (Back)
+        styleSecondaryButton(btnCustomerLogin);
+
+        // Secondary/Neutral: STAFF LOGIN → soft green or stone gray
+        styleSecondaryButton(btnStaffLogin);
+
+        // Optional: make buttons consistent sizes (looks cleaner)
+        java.awt.Dimension btnSize = new java.awt.Dimension(160, 36);
+        btnCustomerLogin.setPreferredSize(btnSize);
+        btnStaffLogin.setPreferredSize(btnSize);
+        btnViewProducts.setPreferredSize(btnSize);
+    }
+
+    /**
+     * Styles a primary action button (Leaf Green, white text).
+     */
+    private void stylePrimaryButton(javax.swing.JButton b) {
+        b.setBackground(
+            EcoPalette.LEAF_GREEN
+            // Fallback: new java.awt.Color(34, 139, 34)
+        );
+        b.setForeground(java.awt.Color.WHITE);
+        b.setFocusPainted(false);
+        b.setOpaque(true);
+        b.setBorderPainted(false);
+    }
+
+    /**
+     * Styles a secondary action button (Eco Green, dark text).
+     */
+    private void styleSecondaryButton(javax.swing.JButton b) {
+        b.setBackground(
+            EcoPalette.ECO_GREEN
+            // Fallback: new java.awt.Color(168, 213, 186)
+        );
+        b.setForeground(java.awt.Color.BLACK);
+        b.setFocusPainted(false);
+        b.setOpaque(true);
+        b.setBorderPainted(false);
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -204,10 +317,24 @@ public class MainMenu extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
 
+        
+        // Apply global theme tweaks once
+        utils.ThemeManager.bootstrapLookAndFeel();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainMenu().setVisible(true));
-        
         
     }
 
@@ -216,5 +343,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnStaffLogin;
     private javax.swing.JButton btnViewProducts;
     private javax.swing.JLabel lblMainMenu;
+    private javax.swing.JLabel pnlHeader;
     // End of variables declaration//GEN-END:variables
 }

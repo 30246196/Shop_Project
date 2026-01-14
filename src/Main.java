@@ -33,7 +33,7 @@ public class Main
         
     // Optional: Test login
         String testUsername = "DonaldL";
-        String testPassword = "blehbleh"; // For CustomerLogin, password is postcode
+        String testPassword = "bleh"; // For CustomerLogin, password is postcode
         Customer loggedInCustomer = db.CustomerLogin(testUsername, testPassword);
         if (loggedInCustomer != null) {
             System.out.println("\n✅ Customer login successful: " + loggedInCustomer.getFirstName());

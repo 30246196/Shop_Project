@@ -4,6 +4,8 @@
  */
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import models.DBManager;
@@ -11,12 +13,18 @@ import models.HeatPump;
 import models.Product;
 import models.ReplacementPart;
 import models.SolarPanel;
+import utils.EcoPalette;
+import utils.ThemeManager;
+
+import views.base.BaseFrame;
+import views.common.HeaderBar;
 
 /**
  *
  * @author 30246196
  */
-public class ViewProductsForGuests extends javax.swing.JFrame {
+public class ViewProductsForGuests extends BaseFrame {
+//public class ViewProductsForGuests extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewProductsForGuests.class.getName());
 
@@ -32,9 +40,21 @@ public class ViewProductsForGuests extends javax.swing.JFrame {
         
         initComponents();
         
+        applyCommonTheme(); // base
+        applyViewTheme();   // this view's specifics (labels, lists, back button)
+        
+        
+        HeaderBar header = new HeaderBar("Products for Guests");//fix imports
+        pnlHeader.setLayout(new BorderLayout());
+        pnlHeader.add(header, BorderLayout.CENTER);
+
+
     }
     
     // Method loadProducts
+    // this method is used just ViewProductsForGuests and
+    //shows the name of the product and the price
+    
     private void loadProducts(String category)
     { 
         DefaultListModel<String> model = new DefaultListModel<>();//fix imports
@@ -67,7 +87,37 @@ public class ViewProductsForGuests extends javax.swing.JFrame {
         }
         lstProducts.setModel(model);
     }
+    
+    
+    protected void applyCommonTheme() {
+        
+        super.applyCommonTheme();
+        
+        // Common heading style
+        ThemeManager.styleHeading(lblWelcome);
+        
+        // If lblCategories/lblProducts are section labels:
+        ThemeManager.styleHeading(lblCategories);
+        ThemeManager.styleHeading(lblProducts);
+    }
 
+    
+    private void applyViewTheme() {
+        lblInformation.setForeground(EcoPalette.TEXT_MUTED);
+
+        // Lists
+        ThemeManager.styleList(lstCategories, jScrollPane3);
+        ThemeManager.styleList(lstProducts, jScrollPane2);
+
+        // Back button as primary
+        ThemeManager.stylePrimary(btnBack);
+
+        // (Optional) Tighten title size here if you like
+        lblWelcome.setFont(lblWelcome.getFont().deriveFont(
+                Font.BOLD, lblWelcome.getFont().getSize2D() + 1f));
+        }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,10 +136,12 @@ public class ViewProductsForGuests extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         lstCategories = new javax.swing.JList<>();
         lblInformation = new javax.swing.JLabel();
+        pnlHeader = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        lblWelcome.setText("Welcome to our shop, browse our products:");
+        lblWelcome.setText("WELCOME!");
 
         btnBack.setText("BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -121,46 +173,64 @@ public class ViewProductsForGuests extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(lstCategories);
 
+        javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
+        pnlHeader.setLayout(pnlHeaderLayout);
+        pnlHeaderLayout.setHorizontalGroup(
+            pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnlHeaderLayout.setVerticalGroup(
+            pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblCategories, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBack, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(176, 176, 176)
-                            .addComponent(lblProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCategories, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(149, 149, 149)
+                                .addComponent(lblProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnBack))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(lblWelcome)
-                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblWelcome)))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCategories)
                     .addComponent(lblProducts))
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118)
+                        .addComponent(btnBack))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblInformation, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(btnBack)
-                .addGap(19, 19, 19))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,14 +241,13 @@ public class ViewProductsForGuests extends javax.swing.JFrame {
     }//GEN-LAST:event_lstCategoriesVetoableChange
 
     private void lstCategoriesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCategoriesValueChanged
-        // TODO add your handling code here:
         if (!evt.getValueIsAdjusting()) {
         
             String selected = lstCategories.getSelectedValue();
             
             if (selected != null) {
                 // call the method to load the products
-                loadProducts(selected);                
+                loadProducts(selected);   //loadProducts local method             
             }
         }
     }//GEN-LAST:event_lstCategoriesValueChanged
@@ -240,5 +309,6 @@ public class ViewProductsForGuests extends javax.swing.JFrame {
     private javax.swing.JLabel lblWelcome;
     private javax.swing.JList<String> lstCategories;
     private javax.swing.JList<String> lstProducts;
+    private javax.swing.JPanel pnlHeader;
     // End of variables declaration//GEN-END:variables
 }

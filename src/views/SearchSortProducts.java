@@ -271,7 +271,6 @@ public class SearchSortProducts extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLinearSearchActionPerformed
 
     private void btnBinarySearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBinarySearchActionPerformed
-        // TODO add your handling code here:
         try
         {
             double price = Double.parseDouble(txtSearchPrice.getText());
