@@ -4,15 +4,16 @@
  */
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+
 import models.DBManager;
 import models.HeatPump;
 import models.Product;
 import models.ReplacementPart;
 import models.SolarPanel;
+
 import utils.EcoPalette;
 import utils.ThemeManager;
 
@@ -21,46 +22,77 @@ import views.common.HeaderBar;
 
 /**
  *
+ *  ViewProductsForGuests
+ * Displays product categories and product list for non‑logged‑in users.
+ * 
  * @author 30246196
  */
 public class ViewProductsForGuests extends BaseFrame {
-//public class ViewProductsForGuests extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewProductsForGuests.class.getName());
 
     //1. Attributes
+    
+    // array to save all the products of the db Shop
     private ArrayList<Product> allProducts;// fix imports
     
     /**
      * Creates new form ViewProductsForGuests
      */
     public ViewProductsForGuests() {
+        super();
+        
         DBManager db = new DBManager();// fix imports
         allProducts = db.loadProducts();
         
         initComponents();
         
-        applyCommonTheme(); // base
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
+        applyCommonTheme(); // Header + Footer + Background
         applyViewTheme();   // this view's specifics (labels, lists, back button)
+        applyThemeStyles(); // styles buttons, labels, etc.
         
-        
-        HeaderBar header = new HeaderBar("Products for Guests");//fix imports
-        pnlHeader.setLayout(new BorderLayout());
-        pnlHeader.add(header, BorderLayout.CENTER);
+//        HeaderBar header = new HeaderBar("Products for Guests");//fix imports
+//        pnlHeader.setLayout(new BorderLayout());
+//        pnlHeader.add(header, BorderLayout.CENTER);
 
 
     }
     
+    // Theme Methods
+    
+    @Override protected void applyCommonTheme()
+    {
+        super.applyCommonTheme();
+        ThemeManager.styleHeading(lblWelcome);
+        ThemeManager.styleHeading(lblCategories);
+        ThemeManager.styleHeading(lblProducts);
+    }
+    
+    private void applyThemeStyles()
+    {
+        ThemeManager.stylePrimary(btnBack);
+    }
+    
+    private void applyViewTheme()
+    {
+        lblInformation.setForeground(EcoPalette.TEXT_MUTED);
+        
+        ThemeManager.styleList(lstCategories, jScrollPane3);
+        ThemeManager.styleList(lstProducts, jScrollPane2);
+        
+        lblWelcome.setFont(lblWelcome.getFont().deriveFont( Font.BOLD, lblWelcome.getFont().getSize2D() + 1f));
+    }
+    
     // Method loadProducts
+    
     // this method is used just ViewProductsForGuests and
     //shows the name of the product and the price
     
     private void loadProducts(String category)
     { 
         DefaultListModel<String> model = new DefaultListModel<>();//fix imports
-        
-        //DBManager db = new DBManager();
-        //ArrayList<Product> products = db.loadProducts();
         
         for (Product p : allProducts)
         { 
@@ -88,35 +120,6 @@ public class ViewProductsForGuests extends BaseFrame {
         lstProducts.setModel(model);
     }
     
-    
-    protected void applyCommonTheme() {
-        
-        super.applyCommonTheme();
-        
-        // Common heading style
-        ThemeManager.styleHeading(lblWelcome);
-        
-        // If lblCategories/lblProducts are section labels:
-        ThemeManager.styleHeading(lblCategories);
-        ThemeManager.styleHeading(lblProducts);
-    }
-
-    
-    private void applyViewTheme() {
-        lblInformation.setForeground(EcoPalette.TEXT_MUTED);
-
-        // Lists
-        ThemeManager.styleList(lstCategories, jScrollPane3);
-        ThemeManager.styleList(lstProducts, jScrollPane2);
-
-        // Back button as primary
-        ThemeManager.stylePrimary(btnBack);
-
-        // (Optional) Tighten title size here if you like
-        lblWelcome.setFont(lblWelcome.getFont().deriveFont(
-                Font.BOLD, lblWelcome.getFont().getSize2D() + 1f));
-        }
-
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -160,11 +163,6 @@ public class ViewProductsForGuests extends BaseFrame {
             String[] strings = { "Heat Pump", "Solar Panel", "Replacement Part" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
-        });
-        lstCategories.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                lstCategoriesVetoableChange(evt);
-            }
         });
         lstCategories.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -236,10 +234,6 @@ public class ViewProductsForGuests extends BaseFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lstCategoriesVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_lstCategoriesVetoableChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lstCategoriesVetoableChange
-
     private void lstCategoriesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCategoriesValueChanged
         if (!evt.getValueIsAdjusting()) {
         
@@ -283,21 +277,6 @@ public class ViewProductsForGuests extends BaseFrame {
         java.awt.EventQueue.invokeLater(() -> new ViewProductsForGuests().setVisible(true));
     }
 
-    // Events
-    
-    // Event lstCategoriesValueChanged
-//    private void lstCategoriesValueChanged(javax.swing.event.ListSelectionEvent evt) {
-//        if (!evt.getValueIsAdjusting())
-//        { 
-//            String selected = lstCategories.getSelectedValue();
-//            if (selected != null)
-//            { 
-//                loadProducts(selected);
-//            }
-//        }
-//    }
-    
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

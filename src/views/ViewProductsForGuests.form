@@ -146,7 +146,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="vetoableChange" listener="java.beans.VetoableChangeListener" parameters="java.beans.PropertyChangeEvent" handler="lstCategoriesVetoableChange"/>
             <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="lstCategoriesValueChanged"/>
           </Events>
           <AuxValues>

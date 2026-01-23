@@ -105,7 +105,7 @@ public class Product {
     }
     
     public String getExtraAttribute() {
-        return productType;
+        return extraAttribute;
     }
     
     // Setters         a setter does not return anything, hence void

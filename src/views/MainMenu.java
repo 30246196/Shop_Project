@@ -7,19 +7,13 @@
 
 package views; // place the class inside the views package, 
 // organise code into logical groups for better maintability
-import java.awt.BorderLayout;
-import utils.EcoPalette; // import the palette of colours from utils
-
-import utils.ThemeManager;
-import views.base.BaseFrame;
-import views.common.HeaderBar;
-
-
 
 // 2. Imports
 
-//import javax.swing.*; 
-//import java.util.logging.Logger;
+import utils.EcoPalette; // import the palette of colours from utils
+import utils.ThemeManager;// import the theme to apply esier on the whole project
+import views.base.BaseFrame;
+
 
 /*
  * This is the MainMenu class for a Java Swing application.
@@ -42,6 +36,16 @@ import views.common.HeaderBar;
  *  Settings (Secondary): Eco Green (#A8D5BA) for softer emphasis.
  *  Exit: Stone Gray for neutral tone.
  * 
+ * eco‑themed background
+ *
+ * logo
+ *
+ * app name: GLASGOW GREEN RENEWABLES
+ *
+ * consistent spacing
+ *
+ * consistent styling
+ *
  * @author 30246196
  */
 
@@ -53,33 +57,27 @@ public class MainMenu extends BaseFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainMenu.class.getName());
     
 // 4. Instance Attributes (Fields)
-//    private JButton btnCustomerLogin;
-//    private JButton btnStaffLogin;
-//    private JButton btnViewProducts;
-//    private JLabel jLabel1;
 
-    // 5. Constructors
+
+// 5. Constructors
     
-       // Constructor: Creates the MainMenu window and initialises components.
+    // Constructor: Creates the MainMenu window and initialises components.
     /**
      * Creates new form MainMenu
      */
     public MainMenu() {
+        // set the title before calliing applyCommonTheme()
+        setTitle("GLASGOW GREEN RENEWABLES");
+        
         initComponents(); // Method that sets up the GUI elements
         
         applyCommonTheme(); // from BaseFrame
-        applyColors(); // apply the colors
+        applyThemeStyles();// centralize button/heading styles via ThemeManager
         
-        
-        HeaderBar header = new HeaderBar("Main Menu");
-        pnlHeader.setLayout(new BorderLayout());
-        pnlHeader.add(header, BorderLayout.CENTER);
-        
-        
-
     }
 
-    // 8. Private Helper Methods
+    
+// 8. Private Helper Methods
     
     /*
      * Initializes all GUI components (labels, buttons, layout).
@@ -170,7 +168,6 @@ public class MainMenu extends BaseFrame {
         Handles Customer Login button click.
         Opens CustomerLogin window and hides MainMenu.
     */
-    
     private void btnCustomerLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerLoginActionPerformed
         
         // Connects Main Menu with Customer Login Frame
@@ -215,82 +212,29 @@ public class MainMenu extends BaseFrame {
      * Applies Eco-friendly colours to the Main Menu UI.
      */
     
-    
+    // this will repeat and customised for each view
     protected void applyCommonTheme() {
             super.applyCommonTheme();
-            // Example: style your heading & buttons with ThemeManager
-            ThemeManager.styleHeading(lblMainMenu);
-            ThemeManager.stylePrimary(btnViewProducts);
-            ThemeManager.styleSecondary(btnCustomerLogin);
-            ThemeManager.styleSecondary(btnStaffLogin);
+            //  style the heading & buttons with ThemeManager
         }
 
     
-    private void applyColors() {
-        // --- Backgrounds ---
-        // Frame content background (Duck Egg)
-        getContentPane().setBackground(
-            EcoPalette.DUCK_EGG
-            // Fallback without EcoPalette: new java.awt.Color(224, 240, 233)
-        );
+    private void applyThemeStyles() {
+            // Heading
+            ThemeManager.styleHeading(lblMainMenu);
 
-        // If you later add panels, set their background too:
-        // somePanel.setBackground(EcoPalette.DUCK_EGG);
+            // Buttons
+            ThemeManager.stylePrimary(btnViewProducts);   // primary CTA (Leaf Green)
+            ThemeManager.styleSecondary(btnCustomerLogin); // soft Eco Green
+            ThemeManager.styleSecondary(btnStaffLogin);    // soft Eco Green
 
-        // --- Label (Title) ---
-        lblMainMenu.setForeground(
-            EcoPalette.STONE_GRAY
-            // Fallback: new java.awt.Color(107, 122, 111)
-        );
-        lblMainMenu.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 22)); // a bit larger
+            // Optional: ensure consistent sizing
+            java.awt.Dimension btnSize = new java.awt.Dimension(160, 36);
+            btnCustomerLogin.setPreferredSize(btnSize);
+            btnStaffLogin.setPreferredSize(btnSize);
+            btnViewProducts.setPreferredSize(btnSize);
+        }
 
-        // --- Buttons ---
-        // Primary: VIEW PRODUCTS → strong green (Accept)
-        stylePrimaryButton(btnViewProducts);
-
-        // Secondary: CUSTOMER LOGIN → soft green (Back)
-        styleSecondaryButton(btnCustomerLogin);
-
-        // Secondary/Neutral: STAFF LOGIN → soft green or stone gray
-        styleSecondaryButton(btnStaffLogin);
-
-        // Optional: make buttons consistent sizes (looks cleaner)
-        java.awt.Dimension btnSize = new java.awt.Dimension(160, 36);
-        btnCustomerLogin.setPreferredSize(btnSize);
-        btnStaffLogin.setPreferredSize(btnSize);
-        btnViewProducts.setPreferredSize(btnSize);
-    }
-
-    /**
-     * Styles a primary action button (Leaf Green, white text).
-     */
-    private void stylePrimaryButton(javax.swing.JButton b) {
-        b.setBackground(
-            EcoPalette.LEAF_GREEN
-            // Fallback: new java.awt.Color(34, 139, 34)
-        );
-        b.setForeground(java.awt.Color.WHITE);
-        b.setFocusPainted(false);
-        b.setOpaque(true);
-        b.setBorderPainted(false);
-    }
-
-    /**
-     * Styles a secondary action button (Eco Green, dark text).
-     */
-    private void styleSecondaryButton(javax.swing.JButton b) {
-        b.setBackground(
-            EcoPalette.ECO_GREEN
-            // Fallback: new java.awt.Color(168, 213, 186)
-        );
-        b.setForeground(java.awt.Color.BLACK);
-        b.setFocusPainted(false);
-        b.setOpaque(true);
-        b.setBorderPainted(false);
-    }
-
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -330,8 +274,8 @@ public class MainMenu extends BaseFrame {
         }
 
         
-        // Apply global theme tweaks once
-        utils.ThemeManager.bootstrapLookAndFeel();
+        // Apply global Eco tint once (before creating frames)
+        ThemeManager.bootstrapLookAndFeel();
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new MainMenu().setVisible(true));

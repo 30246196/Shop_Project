@@ -4,15 +4,19 @@
  */
 package views;
 
-import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;// for messages
+
 import models.DBManager;
 import models.Staff;
+import utils.ThemeManager;
+
+import views.base.BaseFrame;//for a general Frame style
 
 /**
  *
  * @author 30246196
  */
-public class ChangePasswordForStaff extends javax.swing.JFrame {
+public class ChangePasswordForStaff extends BaseFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ChangePasswordForStaff.class.getName());
 
@@ -23,11 +27,28 @@ public class ChangePasswordForStaff extends javax.swing.JFrame {
      */
     public ChangePasswordForStaff(Staff staff) {
         this.loggedInStaff = staff;
+        
+        
+        setTitle("Customer Home"); // title
         initComponents();
+        applyCommonTheme(); // adds HeaderBar + background
+        applyThemeStyles();// styles buttons, labels, etc.
         
         lblUsername.setText(loggedInStaff.getUsername());// after initComponents()
     }
 
+    protected void applyCommonTheme()
+    {
+        super.applyCommonTheme();
+        //  style the heading & buttons with ThemeManager
+    }
+    
+    protected void applyThemeStyles() {
+            ThemeManager.styleHeading(lblTitle);
+            ThemeManager.stylePrimary(btnSave);
+            ThemeManager.styleSecondary(btnCancel);
+        }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

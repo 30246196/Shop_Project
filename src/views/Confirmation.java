@@ -5,6 +5,7 @@
 package views;
 
 import models.Customer;
+import utils.ThemeManager;
 
 /**
  *
@@ -22,6 +23,7 @@ public class Confirmation extends javax.swing.JFrame {
      */
     public Confirmation(Customer c) {
         loggedInCustomer = c;
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
         initComponents();
         
         // check with a  customised welcome:
@@ -37,17 +39,17 @@ public class Confirmation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnBackToCustomerHome = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         lblTitleOrderConfirmation = new javax.swing.JLabel();
         lblConfirmation = new javax.swing.JLabel();
         lblWelcomeConfirmation = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnBackToCustomerHome.setText("RETURN TO HOME ");
-        btnBackToCustomerHome.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("RETURN TO HOME ");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackToCustomerHomeActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -65,7 +67,7 @@ public class Confirmation extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
-                        .addComponent(btnBackToCustomerHome))
+                        .addComponent(btnBack))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,19 +88,19 @@ public class Confirmation extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(btnBackToCustomerHome)
+                .addComponent(btnBack)
                 .addGap(54, 54, 54))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBackToCustomerHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToCustomerHomeActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // pass the logged customer back to CustomerHome page  changed in stage 8
         CustomerHome home = new CustomerHome(loggedInCustomer);//TODO CHECK
         home.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_btnBackToCustomerHomeActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,7 +129,7 @@ public class Confirmation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBackToCustomerHome;
+    private javax.swing.JButton btnBack;
     private javax.swing.JLabel lblConfirmation;
     private javax.swing.JLabel lblTitleOrderConfirmation;
     private javax.swing.JLabel lblWelcomeConfirmation;

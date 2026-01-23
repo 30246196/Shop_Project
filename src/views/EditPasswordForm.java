@@ -6,12 +6,13 @@ package views;
 
 import javax.swing.JOptionPane;
 import models.DBManager;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class EditPasswordForm extends javax.swing.JFrame {
+public class EditPasswordForm extends BaseFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditPasswordForm.class.getName());
     

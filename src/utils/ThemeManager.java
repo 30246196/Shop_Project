@@ -83,6 +83,15 @@ public final class ThemeManager {
         // Normalize size if desired:
         // b.setPreferredSize(new Dimension(160, 36));
     }
+    
+    //button for back
+    
+public static void styleBackButton(JButton b) {
+    b.setBackground(EcoPalette.ECO_GREEN);
+    b.setForeground(EcoPalette.TEXT_DARK);
+    baseButton(b);
+}
+
 
     /** Consistent JList look + selection. Call for any list + its scrollpane. */
     public static void styleList(JList<?> list, JScrollPane scroller) {

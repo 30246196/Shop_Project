@@ -7,12 +7,13 @@ package views;
 import javax.swing.DefaultListModel;
 import models.Customer;
 import models.Order;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class SelectPaymentMethod extends javax.swing.JFrame {
+public class SelectPaymentMethod extends BaseFrame {
     
     // 1. Static constants and Static variables
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SelectPaymentMethod.class.getName());

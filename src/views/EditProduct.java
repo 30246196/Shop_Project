@@ -6,14 +6,15 @@ import models.Product;
 import models.ReplacementPart;
 import models.SolarPanel;
 import models.Staff;
-import views.ModifyProductForStaff;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 
 /**
  *
  * @author 30246196
  */
-public class EditProduct extends javax.swing.JFrame {
+public class EditProduct extends BaseFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditProduct.class.getName());
 
@@ -30,6 +31,8 @@ public class EditProduct extends javax.swing.JFrame {
         productToEdit = p;
         
         initComponents();
+        
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
         
         // check with a  customised welcome:
         lblStaff.setText("This is the product to modify , " + loggedInStaff.getFirstName());
@@ -90,7 +93,7 @@ public class EditProduct extends javax.swing.JFrame {
         lblEditProduct = new javax.swing.JLabel();
         lblStaff = new javax.swing.JLabel();
         btnConfirmEditProduct = new javax.swing.JButton();
-        btnBackToModifyByStaff = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         blbProductId = new javax.swing.JLabel();
         txtProductId = new javax.swing.JTextField();
         txtProductName = new javax.swing.JTextField();
@@ -117,10 +120,10 @@ public class EditProduct extends javax.swing.JFrame {
             }
         });
 
-        btnBackToModifyByStaff.setText("BACK");
-        btnBackToModifyByStaff.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("BACK");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackToModifyByStaffActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -161,7 +164,7 @@ public class EditProduct extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(83, 83, 83)
-                                .addComponent(btnBackToModifyByStaff)
+                                .addComponent(btnBack)
                                 .addContainerGap(78, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +219,7 @@ public class EditProduct extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmEditProduct)
-                    .addComponent(btnBackToModifyByStaff))
+                    .addComponent(btnBack))
                 .addGap(122, 122, 122))
         );
 
@@ -298,13 +301,13 @@ public class EditProduct extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnConfirmEditProductActionPerformed
 
-    private void btnBackToModifyByStaffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToModifyByStaffActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         //return to ModifyProductForStaff
         ModifyProductForStaff ModifyStaff = new ModifyProductForStaff(loggedInStaff);// added by ne in stage 6
         ModifyStaff.setVisible(true);
         //this.setVisible(false);
         
-    }//GEN-LAST:event_btnBackToModifyByStaffActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,7 +336,7 @@ public class EditProduct extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel blbProductId;
-    private javax.swing.JButton btnBackToModifyByStaff;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnConfirmEditProduct;
     private javax.swing.JLabel lblEditProduct;
     private javax.swing.JLabel lblExtraAttribute;

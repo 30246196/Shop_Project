@@ -8,12 +8,15 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import models.DBManager;
 import models.Product;
+import models.Staff;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class SearchSortProducts extends javax.swing.JFrame {
+public class SearchSortProducts extends BaseFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SearchSortProducts.class.getName());
 
@@ -22,10 +25,14 @@ public class SearchSortProducts extends javax.swing.JFrame {
     // list of products load from the DB
     private ArrayList<Product> products = new ArrayList<>(); //fix imports  
     
+    private Staff loggedInStaff;// the staff logged-in 
     /**
      * Creates new form SearchSortProducts
      */
-    public SearchSortProducts() {
+    public SearchSortProducts(Staff s) {
+        this.loggedInStaff = s;
+        
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
         initComponents();
         lstProducts.setModel(model);
         
@@ -144,6 +151,10 @@ public class SearchSortProducts extends javax.swing.JFrame {
           {
               left = mid + 1;
           }
+          else
+          {
+              right = mid -1;
+          }
        }
        model.addElement("No product found with price £" + targetPrice);
     }
@@ -166,6 +177,7 @@ public class SearchSortProducts extends javax.swing.JFrame {
         txtSearchPrice = new javax.swing.JTextField();
         btnLinearSearch = new javax.swing.JButton();
         btnBinarySearch = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,6 +213,13 @@ public class SearchSortProducts extends javax.swing.JFrame {
             }
         });
 
+        btnBack.setText("BACK");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,9 +233,12 @@ public class SearchSortProducts extends javax.swing.JFrame {
                                 .addComponent(btnBubbleSort)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSelectionSort)
-                                .addGap(25, 25, 25)
-                                .addComponent(lblEnterProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnLinearSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblEnterProductPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBack)
+                                .addGap(165, 165, 165)
+                                .addComponent(btnLinearSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBinarySearch)
@@ -236,9 +258,11 @@ public class SearchSortProducts extends javax.swing.JFrame {
                     .addComponent(lblEnterProductPrice)
                     .addComponent(txtSearchPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLinearSearch)
-                    .addComponent(btnBinarySearch))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLinearSearch)
+                        .addComponent(btnBinarySearch))
+                    .addComponent(btnBack))
                 .addContainerGap())
         );
 
@@ -284,6 +308,12 @@ public class SearchSortProducts extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_btnBinarySearchActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // button to Staff Home page
+        new StaffHome(loggedInStaff).setVisible(true); 
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
  
 
     /**
@@ -306,12 +336,14 @@ public class SearchSortProducts extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SearchSortProducts().setVisible(true));
+    //    java.awt.EventQueue.invokeLater(() -> new SearchSortProducts().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBinarySearch;
     private javax.swing.JButton btnBubbleSort;
     private javax.swing.JButton btnLinearSearch;

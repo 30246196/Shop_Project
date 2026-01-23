@@ -8,18 +8,19 @@ import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import models.DBManager;
 import models.Staff;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class ViewAllOrders extends javax.swing.JFrame {
+public class ViewAllOrders extends BaseFrame {
     
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewAllOrders.class.getName());
@@ -34,6 +35,9 @@ public class ViewAllOrders extends javax.swing.JFrame {
         
         //JScrollPane scrollPane = new JScrollPane(tableOrders);
         initComponents();
+        
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
         loadOrders();//TODO DONE
     }
 
@@ -143,7 +147,7 @@ public class ViewAllOrders extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        // button to go to Staff Home page
         new StaffHome(loggedInStaff).setVisible(true); 
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed

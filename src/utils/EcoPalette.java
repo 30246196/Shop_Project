@@ -17,14 +17,7 @@ import java.awt.Color;
  * @author 30246196
  */
 public final class EcoPalette {
-    
-//    public static final Color DUCK_EGG = new Color(224, 240, 233);// fix imports
-//    public static final Color ECO_GREEN = new Color(168, 213, 186);
-//    public static final Color LEAF_GREEN = new Color(34, 139, 34);
-//    public static final Color STONE_GRAY = new Color(107, 122, 111);
-//    public static final Color COTTON_WHITE = new Color(248, 248, 244);
 
-    
 /** Central green/neutral palette shared by all screens. */
 
     private EcoPalette() {}

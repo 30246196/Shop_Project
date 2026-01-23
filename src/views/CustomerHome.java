@@ -6,13 +6,14 @@ package views;
 
 import models.Customer;// ADDED FROM fix imports in btnBrowseProductsActionPerformed loggedInCustomer definition
 import models.Order; // added from fix imports in btnBrowseProductsActionPerformed
+import views.base.BaseFrame;
 
 
 /**
  *
  * @author 30246196
  */
-public class CustomerHome extends javax.swing.JFrame {
+public class CustomerHome extends BaseFrame {
     
     // 1. Static variables
     
@@ -53,6 +54,7 @@ public class CustomerHome extends javax.swing.JFrame {
         btnEditDetails = new javax.swing.JButton();
         btnUnregister = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
+        btnChangeAddress = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,14 +74,14 @@ public class CustomerHome extends javax.swing.JFrame {
             }
         });
 
-        btnEditDetails.setText("EDIT DETAILS");
+        btnEditDetails.setText("CHANGE PASSWORD");
         btnEditDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditDetailsActionPerformed(evt);
             }
         });
 
-        btnUnregister.setText("UNREGISTER FROM SHOP");
+        btnUnregister.setText("UNREGISTER ");
         btnUnregister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUnregisterActionPerformed(evt);
@@ -93,6 +95,13 @@ public class CustomerHome extends javax.swing.JFrame {
             }
         });
 
+        btnChangeAddress.setText("CHANGE ADDRESS");
+        btnChangeAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangeAddressActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,12 +110,13 @@ public class CustomerHome extends javax.swing.JFrame {
                 .addGap(99, 99, 99)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblWelcomeCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnChangeAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnUnregister, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEditDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBrowseProducts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnUnregister)
-                    .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnBrowseProducts, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,10 +131,12 @@ public class CustomerHome extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnEditDetails)
                 .addGap(18, 18, 18)
+                .addComponent(btnChangeAddress)
+                .addGap(31, 31, 31)
                 .addComponent(btnUnregister)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btnLogOut)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,6 +194,13 @@ public class CustomerHome extends javax.swing.JFrame {
         new UnregisterForm(loggedInCustomer.getUsername()).setVisible(true);
     }//GEN-LAST:event_btnUnregisterActionPerformed
 
+    private void btnChangeAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeAddressActionPerformed
+        // TODO add your handling code here:
+        ChangeAddress changeAddress = new ChangeAddress(loggedInCustomer);
+        changeAddress.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnChangeAddressActionPerformed
+
     
     // 4. Main
     
@@ -214,6 +233,7 @@ public class CustomerHome extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowseProducts;
+    private javax.swing.JButton btnChangeAddress;
     private javax.swing.JButton btnEditDetails;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnUnregister;

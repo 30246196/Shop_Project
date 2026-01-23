@@ -39,7 +39,7 @@ public class Customer extends User{
     private String addressLine2;
     private String town;
     private String postcode;
-    private boolean isRegistered;
+    private boolean isRegistered;// customer registered or no in the shop
     // new attribute Assessment 3 TODO DONE
     private HashMap<Integer,Order> orders;// right button to Fix Imports
     
@@ -146,7 +146,7 @@ public class Customer extends User{
     
     //getter and setter for Orders HashMap of Orders
     //Getter
-    public HashMap<Integer,Order> getOrders() //**** TODO
+    public HashMap<Integer,Order> getOrders() //
     {
         return orders;
     }   

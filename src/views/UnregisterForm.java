@@ -6,12 +6,14 @@ package views;
 
 import javax.swing.JOptionPane;
 import models.DBManager;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class UnregisterForm extends javax.swing.JFrame {
+public class UnregisterForm extends BaseFrame {
     
     private String username;
     
@@ -24,6 +26,9 @@ public class UnregisterForm extends javax.swing.JFrame {
     {
         this.username = username;
         initComponents();
+        
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
         lblUser.setText(username);
     }
 
@@ -41,7 +46,7 @@ public class UnregisterForm extends javax.swing.JFrame {
         lblUserLabel = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
         btnConfirm = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,10 +65,10 @@ public class UnregisterForm extends javax.swing.JFrame {
             }
         });
 
-        btnCancel.setText("CANCEL");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("CANCEL");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -77,7 +82,7 @@ public class UnregisterForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnConfirm)
                         .addGap(81, 81, 81)
-                        .addComponent(btnCancel))
+                        .addComponent(btnBack))
                     .addComponent(lblQuestion)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -100,7 +105,7 @@ public class UnregisterForm extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirm)
-                    .addComponent(btnCancel))
+                    .addComponent(btnBack))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
@@ -124,9 +129,9 @@ public class UnregisterForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConfirmActionPerformed
 
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         this.dispose();
-    }//GEN-LAST:event_btnCancelActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,7 +159,7 @@ public class UnregisterForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JLabel lblQuestion;
     private javax.swing.JLabel lblTitle;

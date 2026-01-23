@@ -4,6 +4,9 @@
  */
 package views;
 
+import com.sun.jdi.connect.spi.Connection;
+import javax.swing.JOptionPane;
+import models.Customer;
 import models.DBManager;
 import utils.ThemeManager;
 import views.base.BaseFrame;
@@ -12,19 +15,107 @@ import views.base.BaseFrame;
  *
  * @author 30246196
  */
-public class RegisterForm extends BaseFrame {
+public class ChangeAddress extends BaseFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegisterForm.class.getName());
+    //private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ChangeAddress.class.getName());
+    
+    //private final String username;
+    private final Customer loggedInCustomer;
+    private final DBManager db = new DBManager();
 
-    /**
-     * Creates new form RegisterForm
-     */
-    public RegisterForm() {
+    /*
+    * 
+    * A view that lets a Customer update their address details.
+    *   Read-only: FirstName, LastName.
+    *   Editable: AddressLine1, AddressLine2, Town, Postcode.
+    */
+    public ChangeAddress(Customer customer) {
+        // pass customer 
+        this.loggedInCustomer = customer;
+         
+        setTitle("Change Address");
         initComponents();
-        
-        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        applyCommonTheme(); // adds HeaderBar
+        applyThemeStyles(); // styles buttons + fields
+        loadCustomer(); // loads existing address
+    }    
+      
+    //Method apply Theme Styles
+    private void applyThemeStyles()
+    {
+        ThemeManager.stylePrimary(btnModify);
+        ThemeManager.styleSecondary(btnBack);
+        txtAddress1.setPreferredSize(new java.awt.Dimension(250, 28));
+        txtAddress2.setPreferredSize(new java.awt.Dimension(250, 28));
+        txtTown.setPreferredSize(new java.awt.Dimension(250, 28));
+        txtPostcode.setPreferredSize(new java.awt.Dimension(250, 28));
+    }
+    
+
+    //Method load the logged In Customer
+    
+    private void loadCustomer()
+    {
+            if (loggedInCustomer == null) return;
+            txtFirstName.setText(loggedInCustomer.getFirstName());
+            txtLastName.setText(loggedInCustomer.getLastName());
+            txtAddress1.setText(safe(loggedInCustomer.getAddressLine1()));
+            txtAddress2.setText(safe(loggedInCustomer.getAddressLine2()));
+            txtTown.setText(safe(loggedInCustomer.getTown()));
+            txtPostcode.setText(safe(loggedInCustomer.getPostcode()));
+    }
+    
+    //Method to get the string "" (empty when there is null in the field in the db
+    
+    private static String safe(String s)
+    {
+        return s == null ? "" : s;
+    }
+    
+    
+private void onModify() {
+        try {
+            String address1 = txtAddress1.getText().trim();
+            String address2 = txtAddress2.getText().trim();
+            String town     = txtTown.getText().trim();
+            String postcode = txtPostcode.getText().trim();
+
+            // Basic validation
+            if (address1.isEmpty()) throw new IllegalArgumentException("Address Line 1 is required.");
+            if (town.isEmpty())     throw new IllegalArgumentException("Town is required.");
+            if (postcode.isEmpty()) throw new IllegalArgumentException("Postcode is required.");
+
+            boolean ok = db.updateCustomerAddress(loggedInCustomer.getUsername(), address1, address2, town, postcode);
+            // if the customer is updated correctly:
+            if (ok)
+            {
+                // reflect in-memory object too
+                loggedInCustomer.setAddressLine1(address1);
+                loggedInCustomer.setAddressLine2(address2);
+                loggedInCustomer.setTown(town);
+                loggedInCustomer.setPostcode(postcode);
+
+                JOptionPane.showMessageDialog(this, "Address updated successfully.", "Success",JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
+            else
+                
+            {
+                JOptionPane.showMessageDialog(this, "Could not update the address.",
+                        "Update failed", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (IllegalArgumentException iae) {
+            JOptionPane.showMessageDialog(this, iae.getMessage(), "Validation", JOptionPane.WARNING_MESSAGE);
+            
+        } catch (Exception ex)
+        {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unexpected error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,54 +125,51 @@ public class RegisterForm extends BaseFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtUsername = new javax.swing.JTextField();
-        btnRegister = new javax.swing.JButton();
-        btnBack = new javax.swing.JButton();
-        lblMessage = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
-        txtConfirmPassword = new javax.swing.JPasswordField();
-        lblFirstName = new javax.swing.JLabel();
-        lblLastName = new javax.swing.JLabel();
-        lblAddress1 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         txtAddress2 = new javax.swing.JTextField();
         lblAddress2 = new javax.swing.JLabel();
+        btnModify = new javax.swing.JButton();
         lblTown = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
         lblPostcode = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
         txtAddress1 = new javax.swing.JTextField();
         txtTown = new javax.swing.JTextField();
+        lblFirstName = new javax.swing.JLabel();
         txtPostcode = new javax.swing.JTextField();
+        lblLastName = new javax.swing.JLabel();
+        lblAddress1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        lblTitle.setText("REGISTER AS NEW CUSTOMER :");
+        txtFirstName.setEditable(false);
 
-        jLabel1.setText("Username :");
+        lblAddress2.setText("Address 2:");
 
-        jLabel2.setText("Password :");
-
-        jLabel3.setText("Confirm Password :");
-
-        btnRegister.setText("REGISTER");
-        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+        btnModify.setText("MODIFY");
+        btnModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegisterActionPerformed(evt);
+                btnModifyActionPerformed(evt);
             }
         });
 
-        btnBack.setText("BACK TO LOGIN");
+        lblTown.setText("Town:");
+
+        btnBack.setText("BACK TO HOME");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
 
+        lblPostcode.setText("Postcode:");
+
         lblMessage.setText("Welcome to our shop!");
+
+        txtLastName.setEditable(false);
 
         lblFirstName.setText("Name:");
 
@@ -89,11 +177,7 @@ public class RegisterForm extends BaseFrame {
 
         lblAddress1.setText("Address 1:");
 
-        lblAddress2.setText("Address 2:");
-
-        lblTown.setText("Town:");
-
-        lblPostcode.setText("Postcode:");
+        lblTitle.setText("MODIFY YOUR ADDRESS :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,32 +194,19 @@ public class RegisterForm extends BaseFrame {
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPassword)
-                                    .addComponent(txtConfirmPassword)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(152, 152, 152)
+                                .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnRegister)
-                                            .addComponent(lblFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(53, 53, 53))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(37, 37, 37)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnModify)
+                                    .addComponent(lblFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(53, 53, 53)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnBack)
-                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,26 +225,14 @@ public class RegisterForm extends BaseFrame {
                                         .addComponent(lblAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(53, 53, 53)
                                         .addComponent(txtAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addGap(106, 106, 106))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(lblTitle)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFirstName))
@@ -197,11 +256,11 @@ public class RegisterForm extends BaseFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPostcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPostcode))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addComponent(lblMessage)
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegister)
+                    .addComponent(btnModify)
                     .addComponent(btnBack))
                 .addGap(25, 25, 25))
         );
@@ -209,83 +268,77 @@ public class RegisterForm extends BaseFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        new CustomerLogin().setVisible(true); 
-        this.dispose();
-    }//GEN-LAST:event_btnBackActionPerformed
-
-    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+    private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
         
-        String username = txtUsername.getText();
-        String password = new String(txtPassword.getPassword());
-        String confirm =new String(txtConfirmPassword.getPassword());
-        
-        String firstName = txtFirstName.getText();
-        String lastName = txtLastName.getText();
         String address1 = txtAddress1.getText();
         String address2 = txtAddress2.getText();
         String town = txtTown.getText();
         String postcode =txtPostcode.getText();
-        
-        if (username.isEmpty() || password.isEmpty() || confirm.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || address1.isEmpty() || town.isEmpty() || postcode.isEmpty())
-        { 
-            lblMessage.setText("All fields except Address Line 2 are required.");
-            return;
-        }
-        else
-        {
-            lblMessage.setText("Thanks for filling the form.");
-        }
-        
-        if (!password.equals(confirm))
-        { 
-            lblMessage.setText("Passwords do not match.");
-            return;
-        }
-        
+
+
         DBManager db = new DBManager();
-        boolean success = db.registerCustomer(username,password,firstName, lastName, address1, address2, town, postcode);
-        
+        boolean success = db.updateCustomerAddress(loggedInCustomer.getUsername(),address1, address2, town, postcode);
+
         if (success)
-        { 
-            lblMessage.setText("Registration successful!");
+        {
+            //lblMessage.setText("Address updated successfully!");
+            // better option, allow have the info before going to Customer Home page
+            JOptionPane.showMessageDialog(this, "Address updated successfully.");
+            
+            // Update in-memory object
+            loggedInCustomer.setAddressLine1(address1);
+            loggedInCustomer.setAddressLine2(address2);
+            loggedInCustomer.setTown(town);
+            loggedInCustomer.setPostcode(postcode);
+            
+            // Reload fresh data from DB (fixes your bug)
+            //Customer refreshed = db.getCustomer(loggedInCustomer.getUsername());
+            
+            // Go back to CustomerHome with updated customer
+            // this avoid the error of keeping the old address even thogh the db is been updated correctly
+            new CustomerHome(loggedInCustomer).setVisible(true);
+            dispose();
+            
         } else
-                { 
-                    lblMessage.setText("Error: Username already exists.");
-                }
-    }//GEN-LAST:event_btnRegisterActionPerformed
+        {
+            lblMessage.setText("Error updating the address");
+        }
+    }//GEN-LAST:event_btnModifyActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        new CustomerHome(loggedInCustomer).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new RegisterForm().setVisible(true));
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex)
+//        {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//     //   java.awt.EventQueue.invokeLater(() -> new ChangeAddress().setVisible(true));
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnRegister;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnModify;
     private javax.swing.JLabel lblAddress1;
     private javax.swing.JLabel lblAddress2;
     private javax.swing.JLabel lblFirstName;
@@ -296,12 +349,9 @@ public class RegisterForm extends BaseFrame {
     private javax.swing.JLabel lblTown;
     private javax.swing.JTextField txtAddress1;
     private javax.swing.JTextField txtAddress2;
-    private javax.swing.JPasswordField txtConfirmPassword;
     private javax.swing.JTextField txtFirstName;
     private javax.swing.JTextField txtLastName;
-    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtPostcode;
     private javax.swing.JTextField txtTown;
-    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

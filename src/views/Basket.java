@@ -10,12 +10,14 @@ import models.Customer;
 import models.DBManager;
 import models.Order;
 import models.OrderLine;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class Basket extends javax.swing.JFrame { 
+public class Basket extends BaseFrame { 
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Basket.class.getName());
 
@@ -32,7 +34,10 @@ public class Basket extends javax.swing.JFrame {
         loggedInCustomer = c;
         currentOrder = o;
         
+        //setTitle("Customer Home"); // set title
         initComponents();
+        applyCommonTheme(); // adds HeaderBar + background
+        applyThemeStyles();// styles buttons, labels, etc.
         
         // check with a  customised welcome:
         lblWelcomeBasket.setText("This is your basket, " + loggedInCustomer.getFirstName());
@@ -56,7 +61,14 @@ public class Basket extends javax.swing.JFrame {
          tblProductBasket.setModel(productBasketModel);
         }
         
-        
+    }
+    
+    // Method apply Theme Style customised to this page;
+    private void applyThemeStyles()
+    {
+        ThemeManager.styleHeading(lblWelcomeBasket);
+        ThemeManager.stylePrimary(btnAddMoreProducts);
+        ThemeManager.styleSecondary(btnBuy);
     }
 
     /**
@@ -171,13 +183,13 @@ public class Basket extends javax.swing.JFrame {
         // uses the logged-in Customer's Username as identifier
         db.writeOrder(currentOrder,loggedInCustomer.getUsername());
         
-//        // Show the Confirmation page
+//        // Show the Confirmation page (previous stage)
 //        Confirmation conf = new Confirmation(loggedInCustomer);
 //        
 //        // display the confirmation frame
 //        conf.setVisible(true);
 //        this.setVisible(false);
-        //dispose(); // optional: close current frame
+        //dispose(); //  close current frame
         
         //stage 11 go to SelectMethodPayment view
         SelectPaymentMethod selPayment =new SelectPaymentMethod(currentOrder,loggedInCustomer);

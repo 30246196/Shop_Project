@@ -9,13 +9,15 @@ import javax.swing.DefaultListModel;// from fix imports in categoryModel definit
 import models.DBManager;// from fix imports
 import models.Product;// from fix imports
 import models.Staff;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 
 /**
  *
  * @author 30246196
  */
-public class ModifyProductForStaff extends javax.swing.JFrame {
+public class ModifyProductForStaff extends BaseFrame {
     
     // 1. Static constants and Static variables
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ModifyProductForStaff.class.getName());
@@ -45,6 +47,8 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
         
         initComponents();
         
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
         // Customised the frame with the staff's name
         lblStaffInEditProduct.setText("by " + loggedInStaff.getFirstName());
     }
@@ -59,7 +63,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
     private void initComponents() {
 
         lblEditProducts = new javax.swing.JLabel();
-        btnReturnStaffHome = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         lblCategories = new javax.swing.JLabel();
         lblProduct = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -76,10 +80,10 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
 
         lblEditProducts.setText("MODIFY PRODUCTS");
 
-        btnReturnStaffHome.setText("RETURN TO STAFF HOME");
-        btnReturnStaffHome.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("RETURN TO STAFF HOME");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReturnStaffHomeActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -125,7 +129,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnReturnStaffHome, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblEditProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -163,7 +167,7 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEditProducts)
-                    .addComponent(btnReturnStaffHome)
+                    .addComponent(btnBack)
                     .addComponent(lblStaffInEditProduct))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -195,11 +199,11 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
     // a)  Back/Return button
     // 
     // Navigates back to StaffHome
-    private void btnReturnStaffHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnStaffHomeActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         StaffHome sHome = new StaffHome(loggedInStaff);// added by ne in stage 6
         sHome.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_btnReturnStaffHomeActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
     // b) lst lstCategoriesValueChanged
     
@@ -364,9 +368,9 @@ public class ModifyProductForStaff extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeleteProduct;
     private javax.swing.JButton btnEditProduct;
-    private javax.swing.JButton btnReturnStaffHome;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCategories;

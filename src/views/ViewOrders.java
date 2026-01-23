@@ -4,38 +4,96 @@
  */
 package views;
 
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import models.Customer;
 import models.DBManager;
-import models.Order;
+import utils.EcoPalette;
+import utils.ThemeManager;
+import views.base.BaseFrame;
 
 /**
- *
+ * ViewOrders
+ * Shows all orders belonging to the logged‑in customer.
+ * 
  * @author 30246196
  */
-public class ViewOrders extends javax.swing.JFrame {
+public class ViewOrders extends BaseFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ViewOrders.class.getName());
 
     private Customer loggedInCustomer;
+    
+    // The list model that will hold the formatted order strings from the db
     private DefaultListModel<String> model = new DefaultListModel<>();
     /**
      * Creates new form ViewOrders
+     * 
+     *  - BaseFrame constructor runs first (super())
+     *  - initComponents() builds the UI from the .form file
+     *  - applyCommonTheme() adds header/footer + global theme
+     *  - applyViewTheme() styles lists and muted text
+     *  - applyThemeStyles() styles buttons and headings
      */
     public ViewOrders(Customer c) {
+        super(); // calls BaseFrame → sets title, icon, background, header/footer
         this.loggedInCustomer = c;
+        
         initComponents();
         
+        applyCommonTheme(); // header + footer + background
+        applyViewTheme(); // list colours + muted text
+        applyThemeStyles(); // button + heading styling
+        
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
+        // Personalised title for the customer
         lblTitle.setText("Your orders " + loggedInCustomer.getFirstName() + ": reference, date and total" );
+        
+        // Attach the list model to the JList
         lstOrders.setModel(model);
+        
+        // load the orders from the db
         loadOrdersForCustomer();
     }
 
+    // Theme Methods
+    
+    /** * applyCommonTheme()
+     * Called after initComponents().
+     * Adds header/footer and styles headings.
+     */ 
+    @Override protected void applyCommonTheme()
+    { 
+        super.applyCommonTheme(); // BaseFrame handles header + footer
+        ThemeManager.styleHeading(lblTitle); // style the title label
+    }
+    
+    /**
+     * applyThemeStyles()
+     * Styles buttons and other interactive components.
+     */
+    private void applyThemeStyles()
+    {
+        ThemeManager.styleBackButton(btnBack); // eco‑green primary button
+    }
+    
+    /**
+     * applyViewTheme()
+     * Styles view‑specific components (lists, muted text, etc.)
+     */
+    private void applyViewTheme()
+    {
+        // Apply eco‑theme colours to the orders list
+        lstOrders.setForeground(EcoPalette.STONE_GRAY);
+        lstOrders.setBackground(EcoPalette.DUCK_EGG);
+    }
+    
+    // Method Load customer Orders For Customers
+    
     // Load only orders that belong to the logged-in customer
     private void loadOrdersForCustomer()
     {
-       model.clear();
+       model.clear();// reset the list
        
        // validate customer
        String customerUsername =(loggedInCustomer != null)? loggedInCustomer.getUsername() : null;
@@ -49,22 +107,28 @@ public class ViewOrders extends javax.swing.JFrame {
        DBManager db = new DBManager();
        //ArrayList<Order> orders = db.loadOrders(customerUsername); // DB filters by username
        java.util.ArrayList<models.Order> orders = db.loadOrders(customerUsername);
-       java.text.NumberFormat currency = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK);
        
-        for (models.Order o : orders)
+       // Format currency and dates
+       java.text.NumberFormat currency = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.UK);
+       java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+       
+       // Build readable lines for each order
+       for (models.Order o : orders)
         { 
+            // Double‑check username match (extra safety)
             if (o.getUsername().equals(loggedInCustomer.getUsername()))
             { 
                 //String line = "Order #" + o.getOrderId() + " - £" + o.getOrderTotal();
-                
                 //String line = "Order #" + o.getOrderId() + " - " + currency.format(o.getOrderTotal());
                 
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
                 String dateStr = sdf.format(o.getOrderDate());
                 String line = "Order #" + o.getOrderId() + " | " + dateStr + " | " + currency.format(o.getOrderTotal());
-                model.addElement(line);
+                
+                model.addElement(line);// add a new line 
             }
         }
+        
+        // If no orders found, show a friendly message
         if (model.getSize() == 0)
             {
                 model.addElement("No orders found for this customer.");
@@ -90,7 +154,7 @@ public class ViewOrders extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstOrders);
 
-        btnBack.setText("Back");
+        btnBack.setText("BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -133,16 +197,17 @@ public class ViewOrders extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Events
+    
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
         // FROM ViewOrders to CustomerHome
-        // FROM Customer Home Frame to Main Menu Frame
         
         CustomerHome ch = new CustomerHome(loggedInCustomer);
         // get visible the new form
         ch.setVisible(true);
         // hide the current form
-        this.setVisible(false);// or this.dispose();
+        //this.setVisible(false);// or 
+        dispose();// close this window cleanly
          
     }//GEN-LAST:event_btnBackActionPerformed
 

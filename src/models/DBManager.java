@@ -793,5 +793,44 @@ public DBManager() {
             }
    }
    
+   // 17.Method Update Customer Address
+   
+   
+// In DBManager.java (add near other methods)
+public boolean updateCustomerAddress(String username,
+                                     String newaddress1,
+                                     String newaddress2,
+                                     String newtown,
+                                     String newpostcode) {
+    String sql = "UPDATE Customers " +
+                 "SET AddressLine1 = ?, AddressLine2 = ?, Town = ?, Postcode = ? " +
+                 "WHERE Username = ?";
+
+    try {
+        Class.forName(driver);
+        try (Connection conn = DriverManager.getConnection(connectionString);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newaddress1);
+            stmt.setString(2, newaddress2);
+            stmt.setString(3, newtown);
+            stmt.setString(4, newpostcode);
+            stmt.setString(5, username);
+
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        }
+    } catch (Exception ex) {
+        System.err.println("Error updating address for user '" + username + "': " + ex.getMessage());
+        ex.printStackTrace();
+        return false;
+    }
+}
+
+   
+   //18. Method Add New Product from Staff
+   
+   
+   
 }// End DBManager
 

@@ -5,12 +5,13 @@
 package views;
 
 import models.Staff;
+import views.base.BaseFrame;
 
 /**
  *
  * @author 30246196
  */
-public class StaffHome extends javax.swing.JFrame {
+public class StaffHome extends BaseFrame {
     
     // 1. Static variables
     
@@ -49,6 +50,7 @@ public class StaffHome extends javax.swing.JFrame {
         btnLogOut = new javax.swing.JButton();
         btnModifyOrders = new javax.swing.JButton();
         btnChangePassword = new javax.swing.JButton();
+        btnAddNewProduct = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +91,13 @@ public class StaffHome extends javax.swing.JFrame {
             }
         });
 
+        btnAddNewProduct.setText("MODIFY PRODUCTS");
+        btnAddNewProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddNewProductActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,7 +113,8 @@ public class StaffHome extends javax.swing.JFrame {
                     .addComponent(btnModifyProducts, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnModifyOrders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnChangePassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddNewProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,15 +122,17 @@ public class StaffHome extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(lblWelcomeStaff)
-                .addGap(53, 53, 53)
+                .addGap(38, 38, 38)
                 .addComponent(btnModifyProducts)
                 .addGap(18, 18, 18)
+                .addComponent(btnAddNewProduct)
+                .addGap(21, 21, 21)
                 .addComponent(btnSearchSortProducts)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(btnModifyOrders)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(btnChangePassword)
                 .addGap(18, 18, 18)
+                .addComponent(btnChangePassword)
+                .addGap(31, 31, 31)
                 .addComponent(btnLogOut)
                 .addGap(34, 34, 34))
         );
@@ -155,7 +167,7 @@ public class StaffHome extends javax.swing.JFrame {
 
     private void btnSearchSortProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchSortProductsActionPerformed
         // ADDED IN STAGE 12 
-        SearchSortProducts ssp = new SearchSortProducts();
+        SearchSortProducts ssp = new SearchSortProducts(loggedInStaff);
         ssp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnSearchSortProductsActionPerformed
@@ -171,6 +183,10 @@ public class StaffHome extends javax.swing.JFrame {
         cpf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnChangePasswordActionPerformed
+
+    private void btnAddNewProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddNewProductActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,6 +219,7 @@ public class StaffHome extends javax.swing.JFrame {
     // 5. Declaration of Variables
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddNewProduct;
     private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnModifyOrders;
