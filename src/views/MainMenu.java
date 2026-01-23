@@ -66,8 +66,8 @@ public class MainMenu extends BaseFrame {
      * Creates new form MainMenu
      */
     public MainMenu() {
-        // set the title before calliing applyCommonTheme()
-        setTitle("GLASGOW GREEN RENEWABLES");
+        // set the title before calling applyCommonTheme()
+        //setTitle("GLASGOW GREEN RENEWABLES");
         
         initComponents(); // Method that sets up the GUI elements
         

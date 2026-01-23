@@ -23,26 +23,37 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnConfirmPaymentMethod" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="lblSelectedPaymentCard" min="-2" pref="113" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnAddNewCard" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAddNewDefaultCard" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnDeleteSelectedCard" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblAddNewDefaultCard" min="-2" pref="147" max="-2" attributes="0"/>
-                  <Component id="lblEnterNewCard" alignment="0" min="-2" pref="147" max="-2" attributes="0"/>
-                  <Component id="txtEnterNewCard" alignment="0" max="32767" attributes="0"/>
-                  <Component id="txtAddNewDefaultCard" alignment="0" pref="172" max="32767" attributes="0"/>
+                  <Component id="btnConfirmPaymentMethod" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="lblSelectedPaymentCard" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnAddNewCard" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAddNewDefaultCard" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnDeleteSelectedCard" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblAddNewDefaultCard" min="-2" pref="147" max="-2" attributes="0"/>
+                          <Component id="lblEnterNewCard" alignment="0" min="-2" pref="147" max="-2" attributes="0"/>
+                          <Component id="txtEnterNewCard" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtAddNewDefaultCard" alignment="0" pref="172" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="btnBack" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="lblConfirmation" min="-2" pref="340" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,8 +86,13 @@
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="btnConfirmPaymentMethod" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="57" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnConfirmPaymentMethod" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblConfirmation" min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -146,6 +162,16 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add New Default Card:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblConfirmation">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnBack">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Back"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

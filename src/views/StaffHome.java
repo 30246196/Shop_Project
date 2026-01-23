@@ -91,7 +91,7 @@ public class StaffHome extends BaseFrame {
             }
         });
 
-        btnAddNewProduct.setText("MODIFY PRODUCTS");
+        btnAddNewProduct.setText("ADD NEW PRODUCT");
         btnAddNewProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddNewProductActionPerformed(evt);

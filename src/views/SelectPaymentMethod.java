@@ -5,8 +5,11 @@
 package views;
 
 import javax.swing.DefaultListModel;
+
 import models.Customer;
 import models.Order;
+import utils.ThemeManager;
+
 import views.base.BaseFrame;
 
 /**
@@ -37,8 +40,43 @@ public class SelectPaymentMethod extends BaseFrame {
         lstCards.setModel(model);
         
         loadCardsIntoList(loggedInCustomer);
+        
+        applyCommonTheme(); // adds HeaderBar + background
+        applyThemeStyles();// styles buttons, labels, etc.
     }
 
+    // Theme Events
+    
+    /**
+     * Applies Eco-friendly colours to the Main Menu UI.
+     */
+    
+    // this will repeat and customised for each view
+//    protected void applyCommonTheme() {
+//            super.applyCommonTheme();
+//            //  style the heading & buttons with ThemeManager
+//        }
+
+    
+    private void applyThemeStyles() {
+            // Heading
+            ThemeManager.styleHeading(lblSelectedPaymentCard);
+
+            // Buttons
+            ThemeManager.styleSecondary(btnDeleteSelectedCard); // soft Eco Green
+            ThemeManager.stylePrimary(btnAddNewCard); //primary CTA (Leaf Green) 
+            ThemeManager.stylePrimary(btnAddNewDefaultCard); // primary CTA (Leaf Green)
+            ThemeManager.stylePrimary(btnConfirmPaymentMethod); // primary CTA (Leaf Green)
+
+//            // Optional: ensure consistent sizing
+//            java.awt.Dimension btnSize = new java.awt.Dimension(160, 36);
+//            btnCustomerLogin.setPreferredSize(btnSize);
+//            btnStaffLogin.setPreferredSize(btnSize);
+//            btnViewProducts.setPreferredSize(btnSize);
+        }
+    
+    // Methods
+    
     public void loadCardsIntoList(Customer c)
     { 
         model.clear();
@@ -70,6 +108,8 @@ public class SelectPaymentMethod extends BaseFrame {
         txtEnterNewCard = new javax.swing.JTextField();
         txtAddNewDefaultCard = new javax.swing.JTextField();
         lblAddNewDefaultCard = new javax.swing.JLabel();
+        lblConfirmation = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,27 +149,42 @@ public class SelectPaymentMethod extends BaseFrame {
 
         lblAddNewDefaultCard.setText("Add New Default Card:");
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnConfirmPaymentMethod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1))
-                    .addComponent(lblSelectedPaymentCard, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAddNewCard)
-                    .addComponent(btnAddNewDefaultCard)
-                    .addComponent(btnDeleteSelectedCard)
-                    .addComponent(lblAddNewDefaultCard, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEnterNewCard, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEnterNewCard)
-                    .addComponent(txtAddNewDefaultCard, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                    .addComponent(btnConfirmPaymentMethod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(lblSelectedPaymentCard, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAddNewCard)
+                            .addComponent(btnAddNewDefaultCard)
+                            .addComponent(btnDeleteSelectedCard)
+                            .addComponent(lblAddNewDefaultCard, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEnterNewCard, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEnterNewCard)
+                            .addComponent(txtAddNewDefaultCard, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(btnBack)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(122, 122, 122))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,8 +211,12 @@ public class SelectPaymentMethod extends BaseFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDeleteSelectedCard)))
                 .addGap(30, 30, 30)
-                .addComponent(btnConfirmPaymentMethod)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConfirmPaymentMethod)
+                    .addComponent(btnBack))
+                .addGap(18, 18, 18)
+                .addComponent(lblConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -203,11 +262,25 @@ public class SelectPaymentMethod extends BaseFrame {
     }//GEN-LAST:event_btnDeleteSelectedCardActionPerformed
 
     private void btnConfirmPaymentMethodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmPaymentMethodActionPerformed
-        Confirmation conf = new Confirmation(loggedInCustomer); 
-        conf.setVisible(true);
+        // Check if a card is selected to pay
+        if (lstCards.getSelectedIndex() == -1) 
+        {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a card.");
+            return;
+        }else
+        {
+            javax.swing.JOptionPane.showMessageDialog(this, "Thanks for shopping with us, your payment was succesful!");
+            // pass the logged customer back to CustomerHome page  changed in stage 8
+        CustomerHome home = new CustomerHome(loggedInCustomer);//TODO CHECK
+        home.setVisible(true);
         this.setVisible(false);
+        }   
         
     }//GEN-LAST:event_btnConfirmPaymentMethodActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,10 +310,12 @@ public class SelectPaymentMethod extends BaseFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNewCard;
     private javax.swing.JButton btnAddNewDefaultCard;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnConfirmPaymentMethod;
     private javax.swing.JButton btnDeleteSelectedCard;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddNewDefaultCard;
+    private javax.swing.JLabel lblConfirmation;
     private javax.swing.JLabel lblEnterNewCard;
     private javax.swing.JLabel lblSelectedPaymentCard;
     private javax.swing.JList<Integer> lstCards;
