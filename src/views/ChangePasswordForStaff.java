@@ -29,7 +29,7 @@ public class ChangePasswordForStaff extends BaseFrame {
         this.loggedInStaff = staff;
         
         
-        setTitle("Customer Home"); // title
+        setTitle("GLASGOW GREEN ENERGY"); // title
         initComponents();
         applyCommonTheme(); // adds HeaderBar + background
         applyThemeStyles();// styles buttons, labels, etc.
@@ -104,13 +104,11 @@ public class ChangePasswordForStaff extends BaseFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnSave)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCancel))
-                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSave)
+                        .addGap(60, 60, 60)
+                        .addComponent(btnCancel))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(lblUsernameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -122,7 +120,8 @@ public class ChangePasswordForStaff extends BaseFrame {
                             .addComponent(lblUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
                             .addComponent(txtCurrentPassword)
                             .addComponent(txtNewPassword)
-                            .addComponent(txtConfirmPassword))))
+                            .addComponent(txtConfirmPassword)))
+                    .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

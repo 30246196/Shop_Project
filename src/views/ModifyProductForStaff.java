@@ -28,6 +28,8 @@ public class ModifyProductForStaff extends BaseFrame {
     // added after stage 8 
     private Staff loggedInStaff;// the staff logged-in , fix imports
     
+    private javax.swing.JList<Product> lstProductsByCategoryTyped;
+    
     // 2. Constructor
     
     /**
@@ -46,6 +48,8 @@ public class ModifyProductForStaff extends BaseFrame {
         allProducts = db.loadProducts();// load products
         
         initComponents();
+        
+        lstProductsByCategoryTyped = new javax.swing.JList<>(); jScrollPane2.setViewportView(lstProductsByCategoryTyped);
         
         ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
         
@@ -230,7 +234,7 @@ public class ModifyProductForStaff extends BaseFrame {
 
         This creates a new, empty list model object.
         */
-        DefaultListModel categoryModel = new DefaultListModel();// fix imports
+        DefaultListModel<Product> categoryModel = new DefaultListModel<>();// fix imports
         
         // see User or Staff class file
         for(Product p : allProducts)
@@ -243,7 +247,7 @@ public class ModifyProductForStaff extends BaseFrame {
         }
         //Sets the model that represents the contents or "value" of the list, 
         //notifies property change listeners, and then clears the list's selection.
-        lstProductsByCategory.setModel(categoryModel);
+        lstProductsByCategoryTyped.setModel(categoryModel);
     }//GEN-LAST:event_lstCategoriesValueChanged
 
     // c) btn EditProduct
@@ -262,14 +266,14 @@ public class ModifyProductForStaff extends BaseFrame {
         }
 
         // Check if is a product is selected
-        if(lstProductsByCategory.getSelectedIndex() == -1)// no selected
+        if(lstProductsByCategoryTyped.getSelectedIndex() == -1)// no selected
         {
             lblHandlingError.setText("Please select a product from the list.");
             //return;
         }
         else
         {
-            Object selectedProductObject = (Object)lstProductsByCategory.getSelectedValue();
+            Object selectedProductObject = (Object)lstProductsByCategoryTyped.getSelectedValue();
             Product selectedProduct = (Product)selectedProductObject;
             
             // pass to EditProduct.java
@@ -295,7 +299,7 @@ public class ModifyProductForStaff extends BaseFrame {
     private void btnDeleteProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteProductActionPerformed
         
        // Check if a product is selected:
-        if (lstProductsByCategory.getSelectedIndex() !=-1)
+        if (lstProductsByCategoryTyped.getSelectedIndex() !=-1)
             // lstProductsByCategory is a JList showing products.
             //getSelectedIndex() returns -1 if nothing is selected.
             //This condition ensures the user has selected a product.
@@ -303,7 +307,7 @@ public class ModifyProductForStaff extends BaseFrame {
             // Get the selected product:
             //Retrieves the selected item from the list.
             //Stored as Object so it can be type-checked.
-            Object selectedProductObject = (Object)lstProductsByCategory.getSelectedValue();
+            Object selectedProductObject = (Object)lstProductsByCategoryTyped.getSelectedValue();
             
             
             // Check if it's a Product:
@@ -323,9 +327,9 @@ public class ModifyProductForStaff extends BaseFrame {
             // Get the model behind the lstProductsByCategory list, 
             // assume it’s a DefaultListModel, and store it in a variable
             // so I can modify the list (e.g., remove a product)
-            DefaultListModel productsModel = (DefaultListModel)lstProductsByCategory.getModel();
+            DefaultListModel productsModel = (DefaultListModel)lstProductsByCategoryTyped.getModel();
             // delete the product from the list
-            productsModel.remove(lstProductsByCategory.getSelectedIndex());
+            productsModel.remove(lstProductsByCategoryTyped.getSelectedIndex());
             
             // refresh,by loading all products from the database, to 'do not see' the deleted products
             allProducts = db.loadProducts();

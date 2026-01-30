@@ -228,7 +228,7 @@ public DBManager() {
     
     public ArrayList<Staff> loadStaff()// right click, Fix Imports
     {
-        ArrayList<Staff> allStaff = new ArrayList();
+        ArrayList<Staff> allStaff = new ArrayList<>();
         
         try
         {

@@ -32,8 +32,12 @@ public class SearchSortProducts extends BaseFrame {
     public SearchSortProducts(Staff s) {
         this.loggedInStaff = s;
         
-        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
+        
         initComponents();
+        
+        ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
+        
         lstProducts.setModel(model);
         
         btnBinarySearch.setEnabled(false);// button not enabled

@@ -33,7 +33,7 @@ public class ChangeAddress extends BaseFrame {
         // pass customer 
         this.loggedInCustomer = customer;
          
-        setTitle("Change Address");
+        setTitle("GLASGOW GREEN ENERGY");
         initComponents();
         applyCommonTheme(); // adds HeaderBar
         applyThemeStyles(); // styles buttons + fields

@@ -65,8 +65,8 @@ public class Customer extends User{
 	postcode="G1 1UZ";
 	isRegistered=true;
         // added in Assessment 3
-        orders= new HashMap();
-        cardNumbers = new LinkedList(); // added in stage 11
+        orders= new HashMap<>();// or orders = new HashMap<>();
+        cardNumbers = new LinkedList<>(); // added in stage 11
     }
     //Constructor Customer(Everything EXCEPT isRegistered - 8 parameters
     public Customer(String userNameIn, String passwordIn, String firstNameIn, 
@@ -83,8 +83,8 @@ public class Customer extends User{
 	postcode=postcodeIn;
         isRegistered=false; 
         // added in Assessment 3
-        orders= new HashMap();// TODO check
-        cardNumbers = new LinkedList(); // added in stage 11
+        orders= new HashMap<>();// TODO check
+        cardNumbers = new LinkedList<>(); // added in stage 11
     }
     
     // 4. Getters and Setters

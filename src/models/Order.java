@@ -61,18 +61,18 @@ public class Order {
         orderDate=new Date();
         status="Ongoing";// we can add DEFAULT_STATUS static constant
         orderTotal=0;
-        orderLines=new HashMap();
+        orderLines=new HashMap<Integer,OrderLine>();
     }
     
     //Constructor - 4 input parameters
     public Order(int orderIdIn,Date orderDateIn,String statusIn,
-            double orderTotalIn,HashMap<Integer,OrderLine>orderLines)
+            double orderTotalIn,HashMap<Integer,OrderLine> orderLinesIn)
     {
         orderId=orderIdIn;
         orderDate=orderDateIn;
         status=statusIn;
         orderTotal=orderTotalIn;
-        orderLines=new HashMap();
+        orderLines=new HashMap<>(orderLinesIn);
     }
     
     // 4. Getters and setters

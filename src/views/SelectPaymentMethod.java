@@ -235,7 +235,7 @@ public class SelectPaymentMethod extends BaseFrame {
 
     private void btnAddNewDefaultCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewDefaultCardActionPerformed
         int cardNumber = Integer.parseInt(txtAddNewDefaultCard.getText());
-        // add the card at the begining of the LinkedList of customer
+        // add the card at the begining of the LinkedList cardNumbers of customer
         loggedInCustomer.addFirstCard(cardNumber);
         //refresh the listbox
         loadCardsIntoList(loggedInCustomer);

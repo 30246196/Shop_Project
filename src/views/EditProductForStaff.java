@@ -27,15 +27,21 @@ public class EditProductForStaff extends BaseFrame {
     /**
      * Creates new form EditProductForStaff
      */
+    
+    private javax.swing.JList<Product> lstProductsByCategory;
+    
     public EditProductForStaff(Staff staff) {
         
         this.loggedInStaff = staff;
         // add the connection to load the products
         DBManager db = new DBManager();//fix imports
         
-        allProducts = db.loadProducts();
+        initComponents();// first
         
-        initComponents();
+        lstProductsByCategory = new javax.swing.JList<>();
+        jScrollPane1.setViewportView(lstProductsByCategory);
+        
+        allProducts = db.loadProducts();
         
         ThemeManager.styleBackButton(btnBack);// fix imports, apply same colour to Back Button
     }
@@ -55,8 +61,6 @@ public class EditProductForStaff extends BaseFrame {
         lblProduct = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstCategories = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstProductsByCategory = new javax.swing.JList<>();
         btnEditProduct = new javax.swing.JButton();
         btnDeleteProduct = new javax.swing.JButton();
 
@@ -87,8 +91,6 @@ public class EditProductForStaff extends BaseFrame {
         });
         jScrollPane1.setViewportView(lstCategories);
 
-        jScrollPane2.setViewportView(lstProductsByCategory);
-
         btnEditProduct.setText("EDIT PRODUCT");
         btnEditProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,15 +116,9 @@ public class EditProductForStaff extends BaseFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEditProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(54, 54, 54)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)))
-                        .addContainerGap(44, Short.MAX_VALUE))))
+                        .addGap(62, 62, 62)
+                        .addComponent(btnDeleteProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(54, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,10 +138,8 @@ public class EditProductForStaff extends BaseFrame {
                     .addComponent(lblCategories)
                     .addComponent(lblProduct))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditProduct)
                     .addComponent(btnDeleteProduct))
@@ -185,7 +179,7 @@ public class EditProductForStaff extends BaseFrame {
 
         This creates a new, empty list model object.
         */
-        DefaultListModel categoryModel = new DefaultListModel();// fix imports
+        DefaultListModel<Product> categoryModel = new DefaultListModel<>();// fix imports
         
         // see User or Staff class file
         for(Product p:allProducts)
@@ -236,11 +230,9 @@ public class EditProductForStaff extends BaseFrame {
     private javax.swing.JButton btnDeleteProduct;
     private javax.swing.JButton btnEditProduct;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCategories;
     private javax.swing.JLabel lblEditProducts;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JList<String> lstCategories;
-    private javax.swing.JList<String> lstProductsByCategory;
     // End of variables declaration//GEN-END:variables
 }

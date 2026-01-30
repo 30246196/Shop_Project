@@ -36,6 +36,10 @@ public class Basket extends BaseFrame {
         
         //setTitle("Customer Home"); // set title
         initComponents();
+        
+        // resize the columns of the Basket table
+        tblProductBasket.setAutoResizeMode(WIDTH); 
+        
         applyCommonTheme(); // adds HeaderBar + background
         applyThemeStyles();// styles buttons, labels, etc.
         
@@ -52,7 +56,7 @@ public class Basket extends BaseFrame {
            {
                    // 
                 actualOrderLine.getProduct().getProductId(),// TODO
-                actualOrderLine.getProduct().getProductName() + " £" ,
+                actualOrderLine.getProduct().getProductName(),
                 actualOrderLine.getProduct().getPrice(),
                 actualOrderLine.getQuantity()//
                   // create getQuantity() method
@@ -155,11 +159,11 @@ public class Basket extends BaseFrame {
                 .addComponent(lblWelcomeBasket)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddMoreProducts)
                     .addComponent(btnBuy))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
